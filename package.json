@@ -1,5 +1,5 @@
 {
-  "name": "kindle-browser",
+  "name": "kindle-flashcards-browser",
   "version": "1.0.0",
   "scripts": {
     "typings-install": "typings install",
