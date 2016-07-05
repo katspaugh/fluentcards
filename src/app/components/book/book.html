@@ -1,0 +1,39 @@
+<div class="book container-fluid" *ngIf="book">
+  <div class="book__controls row">
+    <div class="pull-left">
+      <button class="btn btn-primary" (click)="addTranslations()" [disabled]="book.vocabs[0].translation != null">
+        <loader [isLoading]="isTranslationLoading"></loader> Add translations
+      </button>
+
+      <button class="btn btn-primary" (click)="addCloze()" [disabled]="book.vocabs[0].cloze != null">
+        Add cloze test
+      </button>
+    </div>
+
+    <div class="pull-right">
+      <button class="btn btn-success" (click)="exportCsv()">
+        Export as CSV
+      </button>
+    </div>
+  </div>
+
+  <table class="book__table table table-inverse">
+    <thead>
+      <th>#</th>
+      <th>Word</th>
+      <th *ngIf="book.vocabs[0].translation != null">Translation</th>
+      <th>Sentence</th>
+      <th *ngIf="book.vocabs[0].cloze != null">Cloze</th>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let vocab of book.vocabs; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ vocab[0] }}</td>
+        <td *ngIf="vocab.translation != null">{{ vocab.translation }}</td>
+        <td>{{ vocab[2] }}</td>
+        <td *ngIf="vocab.cloze != null">{{ vocab.cloze }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,33 @@
+.home {
+    height: 100%;
+}
+
+.home__hint {
+    font-size: 22px;
+    letter-spacing: 1.1px;
+    word-spacing: 0.05em;
+    line-height: 1.5;
+    font-weight: normal;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 50px;
+    border: 3px dashed #e5e5e5;
+    border-radius: 12px;
+    z-index: 1;
+}
+
+.home__steps {
+    text-align: left;
+}
+
+.home__screenshot {
+    display: block;
+    max-width: 600px;
+}
+
+.home__books {
+    padding: 30px;
+}
