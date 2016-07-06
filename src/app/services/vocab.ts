@@ -35,6 +35,7 @@ export class VocabService {
 
         if (!book) return;
 
+        let escapedTitle = book.title.replace(/'/g, "''");
         let vocabsQuery = this.db.exec(
 `
         SELECT
@@ -44,7 +45,7 @@ export class VocabService {
         ON lookups.book_key=book_info.id
         LEFT OUTER JOIN words
         ON lookups.word_key=words.id
-	WHERE title='${ book.title }';
+	WHERE title='${ escapedTitle }';
 `
         );
         return {
