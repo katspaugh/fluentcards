@@ -15,13 +15,21 @@
 
         <div class="home__card card">
           <div class="card-block">
-            <h4 class="card-title">{{ book.title }}</h4>
+            <div class="row">
+              <div class="col-xs-7">
+                <h6 class="card-title">{{ book.title }}</h6>
 
-            <p class="card-text">by <em>{{ book.authors }}</em></p>
+                <p class="card-text">by <em>{{ book.authors }}</em></p>
 
-            <a class="btn btn-primary home__show-vocab" [routerLink]="[ '/book/', book.id ]">
-              Open vocabulary
-            </a>
+                <a class="btn btn-primary home__show-vocab" [routerLink]="[ '/book/', book.id ]">
+                  Open vocabulary
+                </a>
+              </div>
+
+              <div class="col-xs-5">
+                <img class="card-img-top" [src]="book.cover" alt="{{ book.title }} cover" />
+              </div>
+            </div>
           </div>
         </div>
 
