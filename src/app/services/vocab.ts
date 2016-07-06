@@ -16,8 +16,9 @@ export class VocabService {
 
         let booksQuery = this.db.exec('SELECT id, title, authors FROM book_info;');
 
-        this.books = booksQuery[0].values.map((book) => {
-            let countQuery = this.db.exec(`SELECT COUNT(*) FROM lookups WHERE book_key='${ book[0] }'`);
+        let books = booksQuery[0].values.map((book) => {
+            let escapedId = book[0].replace(/'/g, "''");
+            let countQuery = this.db.exec(`SELECT COUNT(*) FROM lookups WHERE book_key='${ escapedId }'`);
 
             return {
                 id: btoa(book[0]),
@@ -27,7 +28,10 @@ export class VocabService {
             };
         });
 
-        return this.books;
+        // Cache
+        this.books = books;
+
+        return books;
     }
 
     getVocabs(id: string) {

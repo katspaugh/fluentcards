@@ -30,4 +30,11 @@
 
 .home__books {
     padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.home__book {
+    flex: 1 25%;
+    margin: 10px;
 }

@@ -10,10 +10,10 @@
       <img class="home__screenshot" src="https://cloud.githubusercontent.com/assets/381895/16584780/51a6e630-42c6-11e6-95ce-06f96612ff71.png" />
     </div>
 
-    <div class="home__books row" [hidden]="!hasData">
-      <div class="col-md-3" *ngFor="let book of books">
+    <div class="home__books" [hidden]="!hasData">
+      <div class="home__book" *ngFor="let book of books">
 
-        <div class="home__book card">
+        <div class="home__card card">
           <div class="card-block">
             <h4 class="card-title">{{ book.title }}</h4>
 
