@@ -20,6 +20,7 @@ export class Home {
     constructor(private vocabService: VocabService) {
         // Try getting cached books
         this.onUpload({ ok: true });
+        window.scrollTo(0, 0);
     }
 
     onUpload(data) {

@@ -63,8 +63,11 @@ export class VocabService {
 
         return {
             id: book.id,
+            cover: book.cover,
             title: book.title,
             authors: book.authors,
+            isbn: book.isbn,
+            count: book.count,
             vocabs: vocabsQuery[0].values
         };
     }

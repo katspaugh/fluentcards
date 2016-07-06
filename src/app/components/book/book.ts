@@ -40,6 +40,8 @@ export class Book {
             }
 
             this.book = book;
+
+            window.scrollTo(0, 0);
         });
     }
 
