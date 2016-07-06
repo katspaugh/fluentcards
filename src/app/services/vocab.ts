@@ -20,7 +20,7 @@ export class VocabService {
             let escapedId = book[0].replace(/'/g, "''");
             let countQuery = this.db.exec(`SELECT COUNT(*) FROM lookups WHERE book_key='${ escapedId }'`);
             let isbn = book[3];
-            let cover = isbn ? `http://images.amazon.com/images/P/${ isbn }.01.20TRZZZZ.jpg` : '';
+            let cover = isbn ? `//images.amazon.com/images/P/${ isbn }.01.20TRZZZZ.jpg` : '';
 
             return {
                 id: isbn || btoa(book[0]),

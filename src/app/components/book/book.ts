@@ -17,6 +17,7 @@ export class Book {
 
     private sub: any;
     book: any;
+    language: string;
     isTranslationLoading = false;
 
     constructor(
@@ -24,7 +25,9 @@ export class Book {
         private router: Router,
         private vocabService: VocabService,
         private translationService: TranslationService
-    ) {}
+    ) {
+        this.language = window.navigator.language.split('-')[0];
+    }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe((params) => {
@@ -72,11 +75,9 @@ export class Book {
     }
 
     addTranslations() {
-        let lang = window.navigator.language.split('-')[0];
-
         this.isTranslationLoading = true;
 
-        this.translationService.translate(this.book.vocabs, lang)
+        this.translationService.translate(this.book.vocabs, this.language)
             .subscribe((translations) => {
                 this.isTranslationLoading = false;
 

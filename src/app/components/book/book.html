@@ -1,12 +1,18 @@
 <div class="book container-fluid" *ngIf="book">
   <div class="book__controls row">
     <div class="pull-left">
-      <button class="btn btn-primary" (click)="addTranslations()" [disabled]="book.vocabs[0].translation != null">
-        <loader [isLoading]="isTranslationLoading"></loader> Add translations
-      </button>
+      <label>Choose your native language:&nbsp;
+        <select [(ngModel)]="language">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="ru">Русский</option>
+        </select>
+      </label>
 
-      <button class="btn btn-primary" (click)="addCloze()" [disabled]="book.vocabs[0].cloze != null">
-        Add cloze test
+      <button class="btn btn-primary" (click)="addTranslations()" [disabled]="isTranslationLoading">
+        <loader [isLoading]="isTranslationLoading"></loader> Add translations
       </button>
     </div>
 
@@ -16,6 +22,18 @@
       </button>
     </div>
   </div>
+
+  <div class="book__controls row">
+    <div class="pull-left">
+      <button class="btn btn-primary" (click)="addCloze()" [disabled]="book.vocabs[0].cloze != null">
+        Add cloze test
+      </button>
+
+      <a class="text-muted" href="http://ankisrs.net/docs/manual.html#cloze-deletion"><sup>What is a cloze test?</sup></a>
+    </div>
+  </div>
+
+  <div class="text-muted">Powered by Yandex.Translate</div>
 
   <table class="book__table table table-inverse">
     <thead>
