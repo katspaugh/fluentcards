@@ -19,15 +19,15 @@ export class VocabService {
         let books = booksQuery[0].values.map((book) => {
             let escapedId = book[0].replace(/'/g, "''");
             let countQuery = this.db.exec(`SELECT COUNT(*) FROM lookups WHERE book_key='${ escapedId }'`);
-            let isbn = book[3];
-            let cover = isbn ? `//images.amazon.com/images/P/${ isbn }.01.20TRZZZZ.jpg` : '';
+            let asin = book[3];
+            let cover = asin ? `http://images.amazon.com/images/P/${ asin }.01.20TRZZZZ.jpg` : '';
 
             return {
-                id: isbn || btoa(book[0]),
+                id: asin || btoa(book[0]),
                 cover: cover,
                 title: book[1],
                 authors: book[2],
-                isbn: book[3],
+                asin: book[3],
                 count: countQuery[0].values[0][0]
             };
         });
@@ -66,7 +66,7 @@ export class VocabService {
             cover: book.cover,
             title: book.title,
             authors: book.authors,
-            isbn: book.isbn,
+            asin: book.asin,
             count: book.count,
             vocabs: vocabsQuery[0].values
         };
