@@ -12,6 +12,7 @@
 
 .spinner_active {
     width: 1em;
+    border: 2px solid #0275d8;
 }
 
 @-webkit-keyframes sk-scaleout {

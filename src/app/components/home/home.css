@@ -1,6 +1,9 @@
 .home {
-    height: 100%;
     font-family: HelveticaNeue, Helvetica, Arial, sans-serif;
+}
+
+.home__nav {
+    background-color: #e3f2fd;
 }
 
 .home__hint {
@@ -44,6 +47,20 @@
     flex-grow: 1;
     width: 33%;
     max-width: 33%;
+}
+
+@media (max-width: 1024px) {
+    .home__book {
+        width: 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .home__book {
+        width: 100%;
+        max-width: 100%;
+    }
 }
 
 .home__book-link {

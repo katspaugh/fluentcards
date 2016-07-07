@@ -1,72 +1,82 @@
-<div class="book container-fluid" *ngIf="book">
-  <nav class="navbar navbar-light navbar-fixed-top book__nav">
+<div class="book">
+  <nav class="navbar navbar-light navbar-full book__nav">
     <nav class="nav nav-inline">
       <a class="nav-link" [routerLink]="[ '/' ]">Back to the list</a>
+      <a class="nav-link pull-right" href="https://github.com/katspaugh/kindle-flashcards-browser/issues">Having issues?</a>
+      <span class="nav-link pull-right text-muted">Powered by Yandex.Translate</span>
     </nav>
   </nav>
 
-  <div class="book__header">
-    <img *ngIf="book.cover" [src]="book.cover"
-         class="book__cover pull-left"
-         alt="{{ book.title }} cover" />
+  <div class="container-fluid">
+    <div class="book__header">
+      <img *ngIf="book.cover" [src]="book.cover"
+           class="book__cover pull-left"
+           alt="{{ book.title }} cover" />
 
-    <h4 class="book__title">
-      {{ book.title }}<br />
-      <small>by <em>{{ book.authors }}</em></small>
-    </h4>
+      <h4 class="book__title">
+        {{ book.title }}<br />
+        <small>by <em>{{ book.authors }}</em></small>
+      </h4>
+    </div>
+
+    <div class="book__controls row">
+      <div class="pull-left">
+        <label>Choose your native language:&nbsp;
+          <select class="c-select" [(ngModel)]="language">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="ru">Русский</option>
+          </select>
+
+          &nbsp;to&nbsp;
+        </label>
+
+        <button class="btn btn-primary-outline" (click)="addTranslations()" [disabled]="isTranslationLoading">
+          <loader [isLoading]="isTranslationLoading"></loader> add translations
+        </button>
+      </div>
+
+      <div class="pull-left book__button">
+        <label>Optionally,&nbsp;
+          <button class="btn btn-primary-outline" (click)="addCloze()" [disabled]="book.vocabs[0].cloze != null">
+            add cloze test
+          </button>
+        </label>
+
+        <span class="text-muted">
+          &nbsp;(<a class="text-muted" href="http://ankisrs.net/docs/manual.html#cloze-deletion">What is a <u>cloze test</u>?</a>)
+        </span>
+      </div>
+
+      <div class="pull-right book__button">
+        <button class="btn btn-success-outline" (click)="exportCsv()">
+          Export as CSV
+        </button>
+      </div>
+    </div>
+
+    <div class="text-muted"></div>
+
+    <table class="book__table table table-striped">
+      <thead>
+        <th>#</th>
+        <th>Word</th>
+        <th *ngIf="book.vocabs[0].translation != null">Translation</th>
+        <th>Sentence</th>
+        <th *ngIf="book.vocabs[0].cloze != null">Cloze</th>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let vocab of book.vocabs; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ vocab[0] }}</td>
+          <td *ngIf="vocab.translation != null">{{ vocab.translation }}</td>
+          <td>{{ vocab[2] }}</td>
+          <td *ngIf="vocab.cloze != null">{{ vocab.cloze }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-
-  <div class="book__controls row">
-    <div class="pull-left">
-      <label>Choose your native language:&nbsp;
-        <select [(ngModel)]="language">
-          <option value="en">English</option>
-          <option value="es">Español</option>
-          <option value="fr">Français</option>
-          <option value="de">Deutsch</option>
-          <option value="ru">Русский</option>
-        </select>
-      </label>
-
-      <button class="btn btn-primary" (click)="addTranslations()" [disabled]="isTranslationLoading">
-        <loader [isLoading]="isTranslationLoading"></loader> Add translations
-      </button>
-    </div>
-
-    <div class="pull-left book__button">
-      <button class="btn btn-primary" (click)="addCloze()" [disabled]="book.vocabs[0].cloze != null">
-        Add cloze test
-      </button>
-
-      <a class="text-muted" href="http://ankisrs.net/docs/manual.html#cloze-deletion"><sup>What is a cloze test?</sup></a>
-    </div>
-
-    <div class="pull-right book__button">
-      <button class="btn btn-success" (click)="exportCsv()">
-        Export as CSV
-      </button>
-    </div>
-  </div>
-
-  <div class="text-muted">Powered by Yandex.Translate</div>
-
-  <table class="book__table table table-striped">
-    <thead>
-      <th>#</th>
-      <th>Word</th>
-      <th *ngIf="book.vocabs[0].translation != null">Translation</th>
-      <th>Sentence</th>
-      <th *ngIf="book.vocabs[0].cloze != null">Cloze</th>
-    </thead>
-
-    <tbody>
-      <tr *ngFor="let vocab of book.vocabs; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ vocab[0] }}</td>
-        <td *ngIf="vocab.translation != null">{{ vocab.translation }}</td>
-        <td>{{ vocab[2] }}</td>
-        <td *ngIf="vocab.cloze != null">{{ vocab.cloze }}</td>
-      </tr>
-    </tbody>
-  </table>
 </div>
