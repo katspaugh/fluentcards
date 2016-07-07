@@ -40,8 +40,8 @@
 
 .home__book {
     margin: 10px;
-    flex: 1;
-    min-width: 320px;
+    flex: 1 0 auto;
+    width: 320px;
 }
 
 .home__book-link {

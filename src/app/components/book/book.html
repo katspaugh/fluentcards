@@ -1,4 +1,10 @@
 <div class="book container-fluid" *ngIf="book">
+  <nav class="navbar navbar-light navbar-fixed-top book__nav">
+    <nav class="nav nav-inline">
+      <a class="nav-link" [routerLink]="[ '/' ]">Back to the list</a>
+    </nav>
+  </nav>
+
   <div class="book__controls row">
     <div class="col-xs-2" *ngIf="book.cover">
       <img [src]="book.cover" alt="{{ book.title }} cover" />

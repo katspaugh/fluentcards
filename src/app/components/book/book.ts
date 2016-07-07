@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
+import {ROUTER_DIRECTIVES} from '@angular/router';
 
 import {VocabService} from '../../services/vocab';
 import {TranslationService} from '../../services/translation';
@@ -9,7 +10,7 @@ import {Loader} from '../loader/loader';
     selector: 'book',
     pipes: [],
     providers: [],
-    directives: [ Loader ],
+    directives: [ ROUTER_DIRECTIVES, Loader ],
     styleUrls: [ './book.css' ],
     templateUrl: './book.html'
 })

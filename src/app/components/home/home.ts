@@ -18,9 +18,10 @@ export class Home {
     hasData = false;
 
     constructor(private vocabService: VocabService) {
+        window.scrollTo(0, 0);
+
         // Try getting cached books
         this.onUpload({ ok: true });
-        window.scrollTo(0, 0);
     }
 
     onUpload(data) {

@@ -1,3 +1,11 @@
+.book {
+    padding-top: 50px;
+}
+
+.book__nav {
+    background-color: #e3f2fd;
+}
+
 .book__controls {
     margin: 20px 0;
 }
