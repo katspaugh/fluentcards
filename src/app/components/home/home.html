@@ -1,7 +1,7 @@
 <div class="home container-fluid">
-  <vb-drop (uploadData)="onUpload($event)">
-    <div class="home__hint" [hidden]="hasData">
-      <ol class="home__steps">
+  <drop (uploadData)="onUpload($event)">
+    <div class="home__hint jumbotron" [hidden]="hasData">
+      <ol class="home__steps lead">
         <li>Plug you Kindle into the computer.</li>
         <li>Locate the vocabulary DB file (on Mac: <code>/Volumes/Kindle/system/vocabulary/vocab.db</code>).</li>
         <li><nobr>Drag & drop</nobr> the file here.</li>
@@ -11,29 +11,37 @@
     </div>
 
     <div class="home__books" [hidden]="!hasData">
+      <div class="jumbotron home__jumbotron">
+        <p class="lead">This is a list of your Kindle books that have associated vocabulary. Click on any of them to view and export you vocabulary flashcards.</p>
+
+        <hr class="m-y-2">
+
+        <p class="text-muted">The books are cached in the browser. If you want to upload new vocabulary. Drag & drop your <code>vocab.db</code> here again.</p>
+      </div>
+
       <div class="home__book" *ngFor="let book of books">
 
         <div class="home__card card">
-          <div class="card-block">
-            <div class="row">
-              <div class="col-xs-7">
-                <h6 class="card-title">{{ book.title }}</h6>
+          <a class="home__book-link" [routerLink]="[ '/book/', book.id ]">
+            <div class="card-block" >
+              <div class="row">
+                <div [ngClass]="{ 'col-xs-12': !book.cover, 'col-xs-7': !!book.cover }">
+                  <h6 class="card-title">{{ truncateWords(book.title, 12) }}</h6>
 
-                <p class="card-text">by <em>{{ book.authors }}</em></p>
+                  <p class="card-text">by <em>{{ book.authors }}</em></p>
+                </div>
 
-                <a class="btn btn-primary home__show-vocab" [routerLink]="[ '/book/', book.id ]">
-                  Open vocabulary
-                </a>
-              </div>
-
-              <div class="col-xs-5">
-                <img [src]="book.cover" alt="{{ book.title }} cover" />
+                <div class="col-xs-5" *ngIf="book.cover">
+                  <img [src]="book.cover" alt="{{ book.title }} cover" />
+                </div>
               </div>
             </div>
-          </div>
+          </a>
+
+          <span class="home__word-count label">Words: {{ book.count }}</span>
         </div>
 
       </div>
     </div>
-  </vb-drop>
+  </drop>
 </div>

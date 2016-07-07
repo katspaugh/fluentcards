@@ -3,19 +3,12 @@
 }
 
 .home__hint {
-    font-size: 22px;
-    letter-spacing: 1.1px;
-    word-spacing: 0.05em;
-    line-height: 1.5;
-    font-weight: normal;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;
-    padding: 50px;
     border: 3px dashed #e5e5e5;
-    border-radius: 12px;
+    background-color: transparent;
     z-index: 1;
 }
 
@@ -23,9 +16,20 @@
     text-align: left;
 }
 
+.home__steps li {
+    margin: 0.5em;
+}
+
 .home__screenshot {
     display: block;
     max-width: 600px;
+}
+
+.home__jumbotron {
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 .home__books {
@@ -35,6 +39,32 @@
 }
 
 .home__book {
-    flex: 1 25%;
     margin: 10px;
+    flex: 1;
+    min-width: 320px;
+}
+
+.home__book-link {
+    min-height: 200px;
+    display: block;
+}
+
+.home__book-link:hover {
+    background-color: #d9edf7;
+}
+
+.home__card {
+    position: relative;
+}
+
+.home__card .card-text {
+    color: #333;
+}
+
+.home__word-count {
+    position: absolute;
+    z-index: 1;
+    left: 10px;
+    bottom: 8px;
+    background-color: rgba(0, 150, 255, 0.5);
 }

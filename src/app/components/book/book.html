@@ -1,6 +1,6 @@
 <div class="book container-fluid" *ngIf="book">
   <div class="book__controls row">
-    <div class="col-xs-2">
+    <div class="col-xs-2" *ngIf="book.cover">
       <img [src]="book.cover" alt="{{ book.title }} cover" />
     </div>
 

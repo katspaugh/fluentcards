@@ -3,14 +3,14 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {VocabService} from '../../services/vocab';
 
 @Component({
-  selector: 'vb-drop',
+  selector: 'drop',
   pipes: [],
   providers: [],
   directives: [],
-  styleUrls: [ './vb-drop.css' ],
-  templateUrl: './vb-drop.html'
+  styleUrls: [ './drop.css' ],
+  templateUrl: './drop.html'
 })
-export class VbDrop {
+export class Drop {
     @Output() uploadData: EventEmitter<{}> = new EventEmitter();
 
     private db;
