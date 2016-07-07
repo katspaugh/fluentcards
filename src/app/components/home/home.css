@@ -1,5 +1,6 @@
 .home {
     height: 100%;
+    font-family: HelveticaNeue, Helvetica, Arial, sans-serif;
 }
 
 .home__hint {
@@ -30,6 +31,7 @@
     margin-right: auto;
     padding-top: 1em;
     padding-bottom: 1em;
+    border-radius: 0;
 }
 
 .home__books {
@@ -39,14 +41,15 @@
 }
 
 .home__book {
-    margin: 10px;
-    flex: 1 0 auto;
-    width: 320px;
+    flex-grow: 1;
+    width: 33%;
+    max-width: 33%;
 }
 
 .home__book-link {
     min-height: 200px;
     display: block;
+    text-decoration: none;
 }
 
 .home__book-link:hover {
@@ -54,17 +57,42 @@
 }
 
 .home__card {
+    border: none;
+    border-radius: 0;
+}
+
+.home__card-container {
+    overflow: hidden;
     position: relative;
 }
 
-.home__card .card-text {
+.home__card-cover {
+    float: left;
+    min-width: 107px;
+    margin-right: 20px;
+}
+
+.home__card-content {
+    overflow: hidden;
     color: #333;
+    padding-bottom: 20px;
+}
+
+.home__card-content .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.33;
+}
+
+.home__card-content .card-text {
+    font-size: 14px;
 }
 
 .home__word-count {
+    font-size: 11px;
+    padding: 0.4em 0.6em;
+    background-color: #428bca;
     position: absolute;
     z-index: 1;
-    left: 10px;
-    bottom: 8px;
-    background-color: rgba(0, 150, 255, 0.5);
+    bottom: 0;
 }

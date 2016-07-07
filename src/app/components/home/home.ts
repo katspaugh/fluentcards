@@ -34,7 +34,7 @@ export class Home {
     }
 
     preload() {
-        this.books.forEach((book) => this.vocabService.getVocabs(book.id));
+        this.books.forEach((book) => this.vocabService.getVocabs(book.asin));
     }
 
     truncateWords(text, wordsCount) {

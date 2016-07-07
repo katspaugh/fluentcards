@@ -14,7 +14,16 @@
     margin-left: 40px;
 }
 
+.book__header {
+    overflow: hidden;
+}
+
+.book__cover {
+    margin-right: 20px;
+}
+
 .book__title {
+    overflow: hidden;
 }
 
 .book__table {
