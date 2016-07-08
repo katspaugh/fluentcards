@@ -11,21 +11,25 @@
     </div>
 
     <div *ngIf="hasData">
-      <nav class="navbar navbar-light navbar-full home__nav">
-        <nav class="nav nav-inline">
-          <a class="nav-link pull-right" href="https://github.com/katspaugh/kindle-flashcards-browser/issues">Having issues?</a>
-        </nav>
-      </nav>
-
-      <div class="home__books container-fluid">
-        <div class="jumbotron home__jumbotron">
-          <p class="lead">This is a list of your Kindle books that have associated vocabulary. Click on any of them to view and export you vocabulary flashcards.</p>
-
-          <hr class="m-y-2">
-
-          <p class="text-muted">The books & vocabulary are cached in the browser. If you want to upload new vocabulary, drag & drop your <code>vocab.db</code> here again.</p>
+      <div class="navbar navbar-light navbar-full home__nav">
+        <div class="container">
+          <nav class="nav nav-inline">
+            <span class="navbar-brand"><img src="./logo.svg" alt="▯▯▯" height="16" /></span>
+            <span class="nav-link active">List of books</span>
+            <a class="nav-link pull-right" href="https://github.com/katspaugh/kindle-flashcards-browser/issues">Having an issue?</a>
+          </nav>
         </div>
+      </div>
 
+      <div class="home__hero container">
+        <p class="home__lead">
+          This is a list of your Kindle books that have associated vocabulary. Click on any of them to view and export you vocabulary flashcards.
+        </p>
+
+        <p class="text-muted"><i class="fa fa-info-circle"></i> The books & vocabulary are cached in the browser. If you want to upload new vocabulary, drag & drop your <code>vocab.db</code> here again.</p>
+      </div>
+
+      <div class="home__books container">
         <div class="home__book" *ngFor="let book of books">
 
           <div class="home__card card">

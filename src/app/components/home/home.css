@@ -1,9 +1,16 @@
 .home {
     font-family: HelveticaNeue, Helvetica, Arial, sans-serif;
+    color: #555;
 }
 
 .home__nav {
-    background-color: #e3f2fd;
+    background-color: #fbea31;
+    margin-bottom: 20px;
+}
+
+.home__nav .active {
+    font-weight: bold;
+    color: #555;
 }
 
 .home__hint {
@@ -29,16 +36,18 @@
     max-width: 600px;
 }
 
-.home__jumbotron {
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    border-radius: 0;
+.home__hero {
+    margin-top: 64px;
+    margin-bottom: 40px;
+}
+
+.home__lead {
+    font-size: 36px;
+    font-weight: bold;
+    line-height: 1.39;
 }
 
 .home__books {
-    padding: 30px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -47,6 +56,8 @@
     flex-grow: 1;
     width: 33%;
     max-width: 33%;
+    margin-left: -20px;
+    margin-right: 20px;
 }
 
 @media (max-width: 1024px) {
@@ -64,13 +75,14 @@
 }
 
 .home__book-link {
+    color: #555;
     min-height: 200px;
     display: block;
     text-decoration: none;
 }
 
 .home__book-link:hover {
-    background-color: #d9edf7;
+    background-color: rgba(251, 234, 49, 0.2);
 }
 
 .home__card {
@@ -91,7 +103,6 @@
 
 .home__card-content {
     overflow: hidden;
-    color: #555;
     padding-bottom: 20px;
 }
 

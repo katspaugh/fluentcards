@@ -1,24 +1,27 @@
 <div class="book">
-  <nav class="navbar navbar-light navbar-full book__nav">
-    <nav class="nav nav-inline">
-      <a class="nav-link" [routerLink]="[ '/' ]">Back to the list</a>
-      <a class="nav-link pull-right" href="https://github.com/katspaugh/kindle-flashcards-browser/issues">Having issues?</a>
-      <span class="nav-link pull-right text-muted">Powered by Yandex.Translate</span>
-    </nav>
-  </nav>
+  <div class="navbar navbar-light navbar-full book__nav">
+    <div class="container">
+      <nav class="nav nav-inline">
+        <span class="navbar-brand"><img src="./logo.svg" alt="▯▯▯" height="16" /></span>
+        <a class="nav-link" [routerLink]="[ '/' ]">Back to the list</a>
+        <a class="nav-link pull-right" href="https://github.com/katspaugh/kindle-flashcards-browser/issues">Having an issue?</a>
+        <span class="nav-link pull-right text-muted">Powered by Yandex.Translate</span>
+      </nav>
+    </div>
+  </div>
+
+  <div class="book__header container">
+    <img *ngIf="book.cover" [src]="book.cover"
+         class="book__cover pull-left"
+         alt="{{ book.title }} cover" />
+
+    <h4 class="book__title">
+      {{ book.title }}<br />
+      <small>by <em>{{ book.authors }}</em></small>
+    </h4>
+  </div>
 
   <div class="container-fluid">
-    <div class="book__header">
-      <img *ngIf="book.cover" [src]="book.cover"
-           class="book__cover pull-left"
-           alt="{{ book.title }} cover" />
-
-      <h4 class="book__title">
-        {{ book.title }}<br />
-        <small>by <em>{{ book.authors }}</em></small>
-      </h4>
-    </div>
-
     <div class="book__controls row">
       <div class="pull-left">
         <label>Choose your native language:&nbsp;
@@ -56,8 +59,6 @@
         </button>
       </div>
     </div>
-
-    <div class="text-muted"></div>
 
     <table class="book__table table table-striped">
       <thead>

@@ -1,10 +1,17 @@
 .book {
     font-family: HelveticaNeue, Helvetica, Arial, sans-serif;
+    color: #555;
 }
 
 .book__nav {
-    background-color: #e3f2fd;
+    background-color: #fbea31;
     margin-bottom: 20px;
+}
+
+.book__header {
+    overflow: hidden;
+    margin-top: 50px;
+    margin-bottom: 30px;
 }
 
 .book__controls {
@@ -13,10 +20,6 @@
 
 .book__button {
     margin-left: 40px;
-}
-
-.book__header {
-    overflow: hidden;
 }
 
 .book__cover {
