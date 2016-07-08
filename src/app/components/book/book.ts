@@ -27,7 +27,7 @@ export class Book {
         private vocabService: VocabService,
         private translationService: TranslationService
     ) {
-        this.language = window.navigator.language.split('-')[0];
+        this.language = localStorage.getItem('language') || window.navigator.language.split('-')[0];
     }
 
     ngOnInit() {
@@ -88,5 +88,9 @@ export class Book {
                     vocab.translation = translations[index];
                 });
             });
+    }
+
+    onLanguageSelect() {
+        localStorage.setItem('language', this.language);
     }
 }

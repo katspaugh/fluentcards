@@ -22,7 +22,7 @@
     <div class="book__controls row">
       <div class="pull-left">
         <label>Choose your native language:&nbsp;
-          <select class="c-select" [(ngModel)]="language">
+          <select class="c-select" [(ngModel)]="language" (ngModelChange)="onLanguageSelect($event)">
             <option value="en">English</option>
             <option value="es">Español</option>
             <option value="fr">Français</option>
