@@ -18,11 +18,15 @@
       {{ book.title }}<br />
       <small>by <em>{{ book.authors }}</em></small>
     </h4>
+
+    <p class="book__count">
+      {{ book.count }}&nbsp;{{ book.count == 1 ? 'word' : 'words' }}
+    </p>
   </div>
 
   <div class="container-fluid">
     <div class="book__controls row">
-      <div class="pull-left">
+      <div class="col-lg-6 col-md-12 book__control">
         <label>Choose your native language:&nbsp;
           <select class="c-select" [(ngModel)]="language" (ngModelChange)="onLanguageSelect($event)">
             <option value="en">English</option>
@@ -32,7 +36,7 @@
             <option value="ru">Русский</option>
           </select>
 
-          &nbsp;to&nbsp;
+          &nbsp;and&nbsp;
         </label>
 
         <button class="btn btn-primary-outline" (click)="addTranslations()" [disabled]="isTranslationLoading">
@@ -41,22 +45,28 @@
         </button>
       </div>
 
-      <div class="pull-left book__button">
+      <div class="col-lg-4 col-md-12 book__control">
         <label>Optionally,&nbsp;
           <button class="btn btn-primary-outline" (click)="addCloze()" [disabled]="book.vocabs[0].cloze != null">
             add cloze test
           </button>
         </label>
 
-        <span class="text-muted">
-          &nbsp;(<a class="text-muted" href="http://ankisrs.net/docs/manual.html#cloze-deletion">What is a <u>cloze test</u>?</a>)
-        </span>
+        <small class="book__help">
+          &nbsp;<i class="fa fa-question-circle"></i>
+          <a class="text-muted" target="_blank" href="http://ankisrs.net/docs/manual.html#cloze-deletion">What is a <u>cloze test</u>?</a>
+        </small>
       </div>
 
-      <div class="pull-right book__button">
+      <div class="col-lg-2 col-md-12 book__control">
         <button class="btn btn-success-outline" (click)="exportCsv()">
-          Export as CSV
+          Export as text file
         </button>
+
+        <small class="book__help">
+          &nbsp;<i class="fa fa-question-circle"></i>
+          <a class="text-muted" target="_blank" href="http://ankisrs.net/docs/manual.html#importing-text-files">How to <u>import into Anki</u>?</a>
+        </small>
       </div>
     </div>
 
@@ -66,16 +76,16 @@
 
     <table class="book__table table table-striped">
       <thead>
-        <th>#</th>
-        <th>Word</th>
-        <th *ngIf="isTranslationLoading || book.vocabs[0].translation != null">Translation</th>
-        <th>Sentence</th>
-        <th *ngIf="book.vocabs[0].cloze != null">Cloze</th>
+        <th style="width: 2em">#</th>
+        <th width="10%">Word</th>
+        <th width="10%" *ngIf="isTranslationLoading || book.vocabs[0].translation != null">Translation</th>
+        <th width="40%">Sentence</th>
+        <th width="40%" *ngIf="book.vocabs[0].cloze != null">Cloze</th>
       </thead>
 
       <tbody>
         <tr *ngFor="let vocab of book.vocabs; let i = index">
-          <td>{{ i + 1 }}</td>
+          <td class="text-muted">{{ i + 1 }}</td>
           <td>{{ vocab[0] }}</td>
           <td *ngIf="isTranslationLoading || book.vocabs[0].translation != null">
             <span [hidden]="!vocab.translation">{{ vocab.translation }}</span>
@@ -95,7 +105,7 @@
         <span class="nav-link">UI design by <a href="https://dribbble.com/romasketch">Roma</a></span>
         <a class="nav-link" href="https://github.com/katspaugh/kindle-flashcards-browser/issues">Source code on GitHub</a>
 
-        <span class="nav-link pull-right">Powered by Yandex.Translate</span>
+        <a class="nav-link pull-right" href="http://translate.yandex.com/">Powered by Yandex.Translate</a>
       </nav>
     </div>
   </footer>

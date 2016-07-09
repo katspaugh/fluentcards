@@ -18,8 +18,8 @@
     margin: 20px 0;
 }
 
-.book__button {
-    margin-left: 40px;
+.book__control {
+    white-space: nowrap;
 }
 
 .book__cover {
@@ -30,11 +30,32 @@
     overflow: hidden;
 }
 
+.book__count {
+    margin-top: 2em;
+}
+
 .book__table {
     margin: 20px 0;
+    table-layout: fixed;
 }
 
 .book__footer {
     margin-top: 50px;
     margin-bottom: 0;
+}
+
+.book__help {
+    cursor: pointer;
+    font-size: 12px;
+}
+
+@media (min-width: 992px) {
+    .book__help {
+        position: absolute;
+        transform: translate(-100%, 50px);
+    }
+}
+
+.book__help a {
+    text-decoration: none;
 }
