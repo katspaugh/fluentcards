@@ -5,7 +5,6 @@
         <span class="navbar-brand"><img src="./logo.svg" alt="▯▯▯" height="16" /></span>
         <a class="nav-link" [routerLink]="[ '/' ]">Back to the list</a>
         <a class="nav-link pull-right" href="https://github.com/katspaugh/kindle-flashcards-browser/issues">Having an issue?</a>
-        <span class="nav-link pull-right text-muted">Powered by Yandex.Translate</span>
       </nav>
     </div>
   </div>
@@ -38,6 +37,7 @@
 
         <button class="btn btn-primary-outline" (click)="addTranslations()" [disabled]="isTranslationLoading">
           <loader [isLoading]="isTranslationLoading"></loader> add translations
+          <span [hidden]="!isTranslationLoading">&nbsp;({{ translationProgress }}%)</span>
         </button>
       </div>
 
@@ -60,11 +60,15 @@
       </div>
     </div>
 
+    <div class="container">
+      <div class="alert alert-danger" role="alert" [hidden]="!errorMessage">{{ errorMessage }}</div>
+    </div>
+
     <table class="book__table table table-striped">
       <thead>
         <th>#</th>
         <th>Word</th>
-        <th *ngIf="book.vocabs[0].translation != null">Translation</th>
+        <th *ngIf="isTranslationLoading || book.vocabs[0].translation != null">Translation</th>
         <th>Sentence</th>
         <th *ngIf="book.vocabs[0].cloze != null">Cloze</th>
       </thead>
@@ -73,11 +77,26 @@
         <tr *ngFor="let vocab of book.vocabs; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ vocab[0] }}</td>
-          <td *ngIf="vocab.translation != null">{{ vocab.translation }}</td>
+          <td *ngIf="isTranslationLoading || book.vocabs[0].translation != null">
+            <span [hidden]="!vocab.translation">{{ vocab.translation }}</span>
+            <center [hidden]="vocab.translation"><loader [isLoading]="isTranslationLoading"></loader></center>
+          </td>
           <td>{{ vocab[2] }}</td>
           <td *ngIf="vocab.cloze != null">{{ vocab.cloze }}</td>
         </tr>
       </tbody>
     </table>
   </div>
+
+  <footer class="navbar navbar-light navbar-full book__nav book__footer">
+    <div class="container">
+      <nav class="nav nav-inline">
+        <span class="nav-link">© 2016 <a href="https://github.com/katspaugh">katspaugh</a></span>
+        <span class="nav-link">UI design by <a href="https://dribbble.com/romasketch">Roma</a></span>
+        <a class="nav-link" href="https://github.com/katspaugh/kindle-flashcards-browser/issues">Source code on GitHub</a>
+
+        <span class="nav-link pull-right">Powered by Yandex.Translate</span>
+      </nav>
+    </div>
+  </footer>
 </div>

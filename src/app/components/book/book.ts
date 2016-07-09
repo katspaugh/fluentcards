@@ -19,7 +19,9 @@ export class Book {
     private sub: any;
     book: any;
     language: string;
+    errorMessage: string;
     isTranslationLoading = false;
+    translationProgress = 0;
 
     constructor(
         private route: ActivatedRoute,
@@ -79,15 +81,24 @@ export class Book {
 
     addTranslations() {
         this.isTranslationLoading = true;
+        this.errorMessage = null;
+        this.book.vocabs.forEach((vocab) => delete vocab.translation);
+        this.translationProgress = 0;
 
         this.translationService.translate(this.book.vocabs, this.language)
-            .subscribe((translations) => {
-                this.isTranslationLoading = false;
-
-                this.book.vocabs.forEach((vocab, index) => {
-                    vocab.translation = translations[index];
-                });
-            });
+            .subscribe(
+                (translations) => {
+                    translations.forEach((word, index) => {
+                        this.book.vocabs[index].translation = word
+                    });
+                    this.translationProgress = Math.round(translations.length / this.book.vocabs.length * 100);
+                },
+                (errMessage) => {
+                    this.isTranslationLoading = false;
+                    this.errorMessage = errMessage;
+                },
+                () => this.isTranslationLoading = false
+            );
     }
 
     onLanguageSelect() {

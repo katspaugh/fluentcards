@@ -33,3 +33,8 @@
 .book__table {
     margin: 20px 0;
 }
+
+.book__footer {
+    margin-top: 50px;
+    margin-bottom: 0;
+}
