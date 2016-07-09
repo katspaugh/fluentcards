@@ -77,22 +77,24 @@
     <table class="book__table table table-striped">
       <thead>
         <th style="width: 2em">#</th>
-        <th width="10%">Word</th>
-        <th width="10%" *ngIf="isTranslationLoading || book.vocabs[0].translation != null">Translation</th>
-        <th width="40%">Sentence</th>
-        <th width="40%" *ngIf="book.vocabs[0].cloze != null">Cloze</th>
+        <th style="width: 2.5em" *ngIf="hasSpeechSynthesis"></th>
+        <th width="12%">Word</th>
+        <th width="12%" *ngIf="isTranslationLoading || book.vocabs[0].translation != null">Translation</th>
+        <th width="70%">Context<span [hidden]="book.vocabs[0].cloze == null"> with cloze deletions</span></th>
       </thead>
 
       <tbody>
         <tr *ngFor="let vocab of book.vocabs; let i = index">
           <td class="text-muted">{{ i + 1 }}</td>
+          <td *ngIf="hasSpeechSynthesis">
+            <i class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab[0])"></i>
+          </td>
           <td>{{ vocab[0] }}</td>
           <td *ngIf="isTranslationLoading || book.vocabs[0].translation != null">
             <span [hidden]="!vocab.translation">{{ vocab.translation }}</span>
             <center [hidden]="vocab.translation"><loader [isLoading]="isTranslationLoading"></loader></center>
           </td>
-          <td>{{ vocab[2] }}</td>
-          <td *ngIf="vocab.cloze != null">{{ vocab.cloze }}</td>
+          <td>{{ vocab.cloze || vocab[2] }}</td>
         </tr>
       </tbody>
     </table>

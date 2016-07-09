@@ -44,6 +44,11 @@
     margin-bottom: 0;
 }
 
+.book__speak {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
 .book__help {
     cursor: pointer;
     font-size: 12px;

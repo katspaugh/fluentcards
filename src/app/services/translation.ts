@@ -57,10 +57,13 @@ export class TranslationService {
             let body = lines.map((line) => 'text=' + encodeURIComponent(line)).join('&');
 
             return this.makeRequest(url, body)
-                .then((data) => data.text.map(this.decodeLine))
-                .then((words) => {
-                    translatedWords = translatedWords.concat(words);
-                    resultOberserver.next(translatedWords)
+                .then((data) => {
+                    translatedWords = translatedWords.concat(data.text.map(this.decodeLine));
+
+                    resultOberserver.next({
+                        language: data.lang.split('-')[0],
+                        translations: translatedWords
+                    })
                 });
         };
 

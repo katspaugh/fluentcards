@@ -22,6 +22,7 @@ export class Book {
     errorMessage: string;
     isTranslationLoading = false;
     translationProgress = 0;
+    hasSpeechSynthesis = window.speechSynthesis != null;
 
     constructor(
         private route: ActivatedRoute,
@@ -54,14 +55,13 @@ export class Book {
 
     exportCsv() {
         let lines = this.book.vocabs.map((vocab) => {
-            let items = vocab.slice();
+            let items = [
+                vocab[0], // stem
+                vocab.cloze || vocab[2] // text
+            ];
 
             if (vocab.translation) {
-                items.splice(2, 0, vocab.translation);
-            }
-
-            if (vocab.cloze) {
-                items.push(vocab.cloze);
+                items.splice(1, 0, vocab.translation);
             }
 
             return items.join('\t');
@@ -87,11 +87,13 @@ export class Book {
 
         this.translationService.translate(this.book.vocabs, this.language)
             .subscribe(
-                (translations) => {
-                    translations.forEach((word, index) => {
+                (data) => {
+                    data.translations.forEach((word, index) => {
                         this.book.vocabs[index].translation = word
                     });
-                    this.translationProgress = Math.round(translations.length / this.book.vocabs.length * 100);
+
+                    this.book.language = data.language;
+                    this.translationProgress = Math.round(data.translations.length / this.book.vocabs.length * 100);
                 },
                 (errMessage) => {
                     this.isTranslationLoading = false;
@@ -103,5 +105,13 @@ export class Book {
 
     onLanguageSelect() {
         localStorage.setItem('language', this.language);
+    }
+
+    speakWord(word) {
+        var speech = new window.SpeechSynthesisUtterance();
+        speech.text = word;
+        speech.lang = this.book.language;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(speech);
     }
 }

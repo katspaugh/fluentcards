@@ -34,19 +34,20 @@ export class VocabService {
     getBooks() {
         if (!this.db) return this.books;
 
-        let booksQuery = this.db.exec('SELECT id, title, authors, asin FROM book_info GROUP BY asin;');
+        let booksQuery = this.db.exec('SELECT id, title, authors, lang, asin FROM book_info GROUP BY asin;');
 
         let books = booksQuery[0].values.map((book) => {
             let escapedId = book[0].replace(/'/g, "''");
             let countQuery = this.db.exec(`SELECT COUNT(timestamp) FROM lookups WHERE book_key='${ escapedId }'`);
             let timestampQuery = this.db.exec(`SELECT timestamp FROM lookups WHERE book_key='${ escapedId }' ORDER BY timestamp DESC LIMIT 1;`);
-            let asin = book[3];
+            let asin = book[4];
             let cover = asin.length == 10 ? `http://images.amazon.com/images/P/${ asin }.01.20TRZZZZ.jpg` : '';
 
             return {
                 id: book[0],
                 title: book[1],
                 authors: book[2],
+                language: book[3].split('-')[0],
                 asin: asin,
                 cover: cover,
                 count: countQuery[0].values[0][0],
@@ -85,6 +86,7 @@ export class VocabService {
         let vocabs = {
             title: book.title,
             authors: book.authors,
+            language: book.language,
             asin: book.asin,
             cover: book.cover,
             count: book.count,
