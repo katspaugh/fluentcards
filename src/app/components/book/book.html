@@ -3,7 +3,7 @@
     <div class="container">
       <nav class="nav nav-inline">
         <span class="navbar-brand"><img src="./logo.svg" alt="▯▯▯" height="16" /></span>
-        <a class="nav-link" [routerLink]="[ '/' ]">Back to the list</a>
+        <a class="nav-link" [routerLink]="[ '/' ]">Back to books</a>
         <a class="nav-link pull-right" href="https://github.com/katspaugh/kindle-flashcards-browser/issues">Having an issue?</a>
       </nav>
     </div>
@@ -59,13 +59,13 @@
       </div>
 
       <div class="col-lg-2 col-md-12 book__control">
-        <button class="btn btn-success-outline" (click)="exportCsv()">
-          Export as text file
-        </button>
+        <a class="btn btn-success-outline" download="{{ book.title }}" [href]="exportUrl">
+          Download as CSV
+        </a>
 
         <small class="book__help">
           &nbsp;<i class="fa fa-question-circle"></i>
-          <a class="text-muted" target="_blank" href="http://ankisrs.net/docs/manual.html#importing-text-files">How to <u>import into Anki</u>?</a>
+          <a class="text-muted" target="_blank" href="http://ankisrs.net/docs/manual.html#importing-text-files">How to <u>import it into Anki</u>?</a>
         </small>
       </div>
     </div>

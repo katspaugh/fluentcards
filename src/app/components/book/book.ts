@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {ROUTER_DIRECTIVES} from '@angular/router';
+import {DomSanitizationService} from '@angular/platform-browser';
 
 import {VocabService} from '../../services/vocab';
 import {TranslationService} from '../../services/translation';
@@ -18,6 +19,7 @@ export class Book {
 
     private sub: any;
     book: any;
+    exportUrl: any;
     language: string;
     errorMessage: string;
     isTranslationLoading = false;
@@ -27,10 +29,33 @@ export class Book {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private sanitizer: DomSanitizationService,
         private vocabService: VocabService,
         private translationService: TranslationService
     ) {
         this.language = localStorage.getItem('language') || window.navigator.language.split('-')[0];
+    }
+
+    private getExportUrl() {
+        let hasTranslations = this.book.vocabs[0].translation;
+
+        let lines = this.book.vocabs.map((vocab) => {
+            let items = [
+                vocab[0], // stem
+                vocab.cloze || vocab[2] // text
+            ];
+
+            if (hasTranslations) {
+                items.splice(1, 0, vocab.translation || '');
+            }
+
+            return items.join('\t');
+        });
+
+        let csv = lines.join('\n');
+        let url = 'data:text/tab-separated-values;charset=utf-8,' + encodeURIComponent(csv)
+
+        return this.sanitizer.bypassSecurityTrustUrl(url);
     }
 
     ngOnInit() {
@@ -44,6 +69,7 @@ export class Book {
             }
 
             this.book = book;
+            this.exportUrl = this.getExportUrl();
 
             window.scrollTo(0, 0);
         });
@@ -53,23 +79,6 @@ export class Book {
         this.sub.unsubscribe();
     }
 
-    exportCsv() {
-        let lines = this.book.vocabs.map((vocab) => {
-            let items = [
-                vocab[0], // stem
-                vocab.cloze || vocab[2] // text
-            ];
-
-            if (vocab.translation) {
-                items.splice(1, 0, vocab.translation);
-            }
-
-            return items.join('\t');
-        });
-        let csv = lines.join('\n');
-        window.open('data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
-    }
-
     addCloze() {
         this.book.vocabs.forEach((vocab) => {
             let word = vocab[1];
@@ -77,6 +86,7 @@ export class Book {
             let cloze = context.replace(new RegExp('\\b' + word + '\\b', 'g'), '{{c1::$&}}');
             vocab.cloze = cloze;
         });
+        this.exportUrl = this.getExportUrl();
     }
 
     addTranslations() {
@@ -94,6 +104,7 @@ export class Book {
 
                     this.book.language = data.language;
                     this.translationProgress = Math.round(data.translations.length / this.book.vocabs.length * 100);
+                    this.exportUrl = this.getExportUrl();
                 },
                 (errMessage) => {
                     this.isTranslationLoading = false;
