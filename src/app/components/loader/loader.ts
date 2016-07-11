@@ -6,10 +6,11 @@ import {Component, Input} from '@angular/core';
     providers: [],
     directives: [],
     styleUrls: [ './loader.css' ],
-    template: '<div class="spinner" [ngClass]="{ spinner_active: isLoading }"></div>'
+    template: '<div class="spinner" [ngClass]="{ spinner_active: isLoading, spinner_dark: dark }"></div>'
 })
 export class Loader {
 
     @Input() isLoading: boolean = false;
+    @Input() dark: boolean = false;
 
 }

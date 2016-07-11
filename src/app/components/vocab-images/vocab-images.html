@@ -1,0 +1,11 @@
+<div class="images">
+  <div class="images__row" *ngIf="images">
+    <div class="images__thumb" *ngFor="let item of images">
+      <img [src]="item.thumbnail" (click)="selectImage(item)" />
+    </div>
+  </div>
+
+  <div class="images__loader" [hidden]="!isLoading">
+    <loader [isLoading]="isLoading" [dark]="true"></loader>
+  </div>
+</div>

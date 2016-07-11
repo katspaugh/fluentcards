@@ -54,6 +54,11 @@ export class Drop {
                     ok: true
                 });
             };
+            r.onerror = (err) => {
+                console.log(err);
+                this.error = 'Error reading the file';
+            };
+
             r.readAsArrayBuffer(file);
         });
     }

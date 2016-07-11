@@ -49,6 +49,10 @@
     cursor: pointer;
 }
 
+.book__get-image {
+    cursor: pointer;
+}
+
 .book__help {
     cursor: pointer;
     font-size: 12px;
@@ -63,4 +67,15 @@
 
 .book__help a {
     text-decoration: none;
+}
+
+.book__images {
+    position: absolute;
+    z-index: 2;
+}
+
+.book__thumb {
+    cursor: pointer;
+    height: 24px;
+    display: block;
 }

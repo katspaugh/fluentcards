@@ -6,12 +6,13 @@ import {DomSanitizationService} from '@angular/platform-browser';
 import {VocabService} from '../../services/vocab';
 import {TranslationService} from '../../services/translation';
 import {Loader} from '../loader/loader';
+import {VocabImages} from '../vocab-images/vocab-images';
 
 @Component({
     selector: 'book',
     pipes: [],
     providers: [],
-    directives: [ ROUTER_DIRECTIVES, Loader ],
+    directives: [ ROUTER_DIRECTIVES, Loader, VocabImages ],
     styleUrls: [ './book.css' ],
     templateUrl: './book.html'
 })
@@ -38,15 +39,21 @@ export class Book {
 
     private getExportUrl() {
         let hasTranslations = this.book.vocabs[0].translation;
+        let hasImages = this.book.vocabs.some((vocab) => vocab.image);
 
         let lines = this.book.vocabs.map((vocab) => {
             let items = [
-                vocab[0], // stem
-                vocab.cloze || vocab[2] // text
+                vocab[0]
             ];
 
             if (hasTranslations) {
-                items.splice(1, 0, vocab.translation || '');
+                items.push(vocab.translation || '');
+            }
+
+            items.push(vocab.cloze || vocab[2]);
+
+            if (hasImages) {
+                items.push(vocab.image ? `<img src="${ vocab.image.full }" />` : '');
             }
 
             return items.join('\t');
@@ -124,5 +131,18 @@ export class Book {
         speech.lang = this.book.language;
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(speech);
+    }
+
+    addImage(vocab) {
+        vocab.isAddingImages = true;
+    }
+
+    onImageAdd(data, vocab) {
+        vocab.isAddingImages = false;
+
+        if (data.image) {
+            vocab.image = data.image;
+            this.exportUrl = this.getExportUrl();
+        }
     }
 }
