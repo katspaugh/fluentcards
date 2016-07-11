@@ -1,4 +1,4 @@
-import { provideRouter, RouterConfig } from '@angular/router';
+import {provideRouter, RouterConfig} from '@angular/router';
 
 import {Home} from './components/home/home';
 import {Book} from './components/book/book';

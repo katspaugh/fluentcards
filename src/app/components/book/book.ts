@@ -53,7 +53,7 @@ export class Book {
             items.push(vocab.cloze || vocab[2]);
 
             if (hasImages) {
-                items.push(vocab.image ? `<img src="${ vocab.image.full }" />` : '');
+                items.push(vocab.image ? `<img src="${ vocab.image.thumbnail }" />` : '');
             }
 
             return items.join('\t');
