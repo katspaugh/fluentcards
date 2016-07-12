@@ -1,7 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 
-import {VocabService} from '../../services/vocab';
-
 @Component({
   selector: 'drop',
   pipes: [],
@@ -15,9 +13,8 @@ export class Drop {
 
     private db;
     isDragover = false;
-    error = '';
 
-    constructor(private vocabService: VocabService) {}
+    constructor() {}
 
     private stopEvent(e) {
         e.preventDefault();
@@ -37,26 +34,23 @@ export class Drop {
     onDrop(e) {
         this.stopEvent(e);
         this.isDragover = false;
-        this.error = '';
 
         Array.prototype.forEach.call(e.dataTransfer.files, (file) => {
-            if (file.name != 'vocab.db') {
-                this.error = 'Wrong vocab.db file';
-                return;
-            }
-
             var r = new FileReader();
             r.onload = () => {
                 let uints = new Uint8Array(r.result);
-                this.vocabService.init(uints);
 
                 this.uploadData.next({
-                    ok: true
+                    ok: true,
+                    data: uints
                 });
             };
             r.onerror = (err) => {
                 console.log(err);
-                this.error = 'Error reading the file';
+
+                this.uploadData.next({
+                    ok: false
+                });
             };
 
             r.readAsArrayBuffer(file);

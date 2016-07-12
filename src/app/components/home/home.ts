@@ -2,13 +2,19 @@ import {Component} from '@angular/core';
 import {ROUTER_DIRECTIVES} from '@angular/router';
 
 import {VocabService} from '../../services/vocab';
-import {Drop} from '../drop/drop'
+import {Drop} from '../drop/drop';
+import {Header} from '../header/header';
+import {Footer} from '../footer/footer';
+
+
+const FILE_ERROR = 'Error reading the file';
+const DATA_ERROR = 'No vocabulary found in the file';
 
 @Component({
     selector: 'home',
     pipes: [],
     providers: [],
-    directives: [ ROUTER_DIRECTIVES, Drop ],
+    directives: [ ROUTER_DIRECTIVES, Drop, Header, Footer ],
     styleUrls: [ './home.css' ],
     templateUrl: './home.html'
 })
@@ -16,25 +22,36 @@ export class Home {
 
     books = null;
     hasData = false;
+    errorMessage = '';
 
     constructor(private vocabService: VocabService) {
         window.scrollTo(0, 0);
 
         // Try getting cached books
-        this.onUpload({ ok: true });
+        this.books = this.vocabService.getBooks();
+        this.hasData = Boolean(this.books);
     }
 
-    onUpload(data) {
-        if (!data.ok) return;
+    private preload() {
+        this.books.forEach((book) => this.vocabService.getVocabs(book.asin));
+    }
 
+    onUpload(event) {
+        if (!event.ok) {
+            this.errorMessage = FILE_ERROR;
+            return;
+        }
+
+        this.vocabService.init(event.data);
         this.books = this.vocabService.getBooks();
         this.hasData = Boolean(this.books);
 
-        this.hasData && setTimeout(() => this.preload(), 300);
-    }
+        if (!this.hasData) {
+            this.errorMessage = DATA_ERROR;
+            return;
+        }
 
-    preload() {
-        this.books.forEach((book) => this.vocabService.getVocabs(book.asin));
+        setTimeout(() => this.preload(), 300);
     }
 
     truncateWords(text, wordsCount) {

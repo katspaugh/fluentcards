@@ -6,13 +6,15 @@ import {DomSanitizationService} from '@angular/platform-browser';
 import {VocabService} from '../../services/vocab';
 import {TranslationService} from '../../services/translation';
 import {Loader} from '../loader/loader';
+import {Header} from '../header/header';
+import {Footer} from '../footer/footer';
 import {VocabImages} from '../vocab-images/vocab-images';
 
 @Component({
     selector: 'book',
     pipes: [],
     providers: [],
-    directives: [ ROUTER_DIRECTIVES, Loader, VocabImages ],
+    directives: [ ROUTER_DIRECTIVES, Loader, Header, Footer, VocabImages ],
     styleUrls: [ './book.css' ],
     templateUrl: './book.html'
 })
@@ -35,6 +37,8 @@ export class Book {
         private translationService: TranslationService
     ) {
         this.language = localStorage.getItem('language') || window.navigator.language.split('-')[0];
+
+        window.scrollTo(0, 0);
     }
 
     private getExportUrl() {
@@ -78,7 +82,7 @@ export class Book {
             this.book = book;
             this.exportUrl = this.getExportUrl();
 
-            window.scrollTo(0, 0);
+            console.log(JSON.stringify(this.book));
         });
     }
 

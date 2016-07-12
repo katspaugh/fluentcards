@@ -3,16 +3,6 @@
     color: #555;
 }
 
-.home__nav {
-    background-color: #fbea31;
-    margin-bottom: 20px;
-}
-
-.home__nav .active {
-    font-weight: bold;
-    color: #555;
-}
-
 .home__hint {
     position: absolute;
     top: 50%;
@@ -123,10 +113,4 @@
     position: absolute;
     z-index: 1;
     bottom: 0;
-}
-
-.home__footer {
-    border-radius: 0;
-    margin-top: 50px;
-    margin-bottom: 0;
 }

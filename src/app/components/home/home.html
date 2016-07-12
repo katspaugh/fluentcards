@@ -1,26 +1,23 @@
 <div class="home">
   <drop (uploadData)="onUpload($event)">
+    <header *ngIf="hasData">
+      <strong class="nav-link active">List of books</strong>
+    </header>
+
     <div class="home__hint jumbotron" *ngIf="!hasData">
+      <div class="alert alert-danger" role="alert" [hidden]="!errorMessage">{{ errorMessage }}</div>
+
       <ol class="home__steps lead">
         <li>Plug you Kindle into the computer.</li>
-        <li>Locate the vocabulary DB file (on Mac: <code>/Volumes/Kindle/system/vocabulary/vocab.db</code>).</li>
+        <li>
+          Locate the vocabulary DB file (on Mac: <code>/Volumes/Kindle/system/vocabulary/vocab.db</code>).
+          <img class="home__screenshot" src="https://cloud.githubusercontent.com/assets/381895/16584780/51a6e630-42c6-11e6-95ce-06f96612ff71.png" />
+        </li>
         <li><nobr>Drag & drop</nobr> the file here.</li>
       </ol>
-
-      <img class="home__screenshot" src="https://cloud.githubusercontent.com/assets/381895/16584780/51a6e630-42c6-11e6-95ce-06f96612ff71.png" />
     </div>
 
     <div *ngIf="hasData">
-      <div class="navbar navbar-light navbar-full home__nav">
-        <div class="container">
-          <nav class="nav nav-inline">
-            <span class="navbar-brand"><img src="./logo.svg" alt="▯▯▯" height="16" /></span>
-            <span class="nav-link active">List of books</span>
-            <a class="nav-link pull-right" href="https://github.com/katspaugh/kindle-flashcards-browser/issues">Having an issue?</a>
-          </nav>
-        </div>
-      </div>
-
       <div class="home__hero container">
         <p class="home__lead">
           This is a list of your Kindle books that have associated vocabulary. Click on any of them to view and export you vocabulary flashcards.
@@ -57,19 +54,7 @@
         </div>
       </div>
     </div>
+
+    <footer [hidden]="!hasData"></footer>
   </drop>
-
-  <footer class="navbar navbar-light navbar-full home__nav home__footer" *ngIf="hasData">
-    <div class="star"></div>
-
-    <div class="container">
-      <nav class="nav nav-inline">
-        <span class="nav-link">© 2016 <a href="https://github.com/katspaugh">katspaugh</a></span>
-        <span class="nav-link">UI design by <a href="https://dribbble.com/romasketch">Roma</a></span>
-        <a class="nav-link" href="https://github.com/katspaugh/kindle-flashcards-browser/issues">Source code on GitHub</a>
-
-        <a class="nav-link pull-right" href="http://translate.yandex.com/">Powered by Yandex.Translate</a>
-      </nav>
-    </div>
-  </footer>
 </div>

@@ -3,11 +3,6 @@
     color: #555;
 }
 
-.book__nav {
-    background-color: #fbea31;
-    margin-bottom: 20px;
-}
-
 .book__header {
     overflow: hidden;
     margin-top: 50px;
@@ -39,9 +34,12 @@
     table-layout: fixed;
 }
 
-.book__footer {
-    margin-top: 50px;
-    margin-bottom: 0;
+.book__word {
+    white-space: nowrap;
+}
+
+.book__context {
+    font-size: 14px;
 }
 
 .book__speak {

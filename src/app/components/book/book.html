@@ -1,13 +1,7 @@
 <div class="book">
-  <div class="navbar navbar-light navbar-full book__nav">
-    <div class="container">
-      <nav class="nav nav-inline">
-        <span class="navbar-brand"><img src="./logo.svg" alt="▯▯▯" height="16" /></span>
-        <a class="nav-link" [routerLink]="[ '/' ]">Back to books</a>
-        <a class="nav-link pull-right" href="https://github.com/katspaugh/kindle-flashcards-browser/issues">Having an issue?</a>
-      </nav>
-    </div>
-  </div>
+  <header>
+    <a class="nav-link" [routerLink]="[ '/' ]">Back to books</a>
+  </header>
 
   <div class="book__header container">
     <img *ngIf="book.cover" [src]="book.cover"
@@ -78,9 +72,9 @@
       <thead>
         <th style="width: 2em">#</th>
         <th style="width: 4em">Picture</th>
-        <th width="12%">Word</th>
+        <th width="15%">Word</th>
         <th width="12%" *ngIf="isTranslationLoading || book.vocabs[0].translation != null">Translation</th>
-        <th width="70%">Context<span [hidden]="book.vocabs[0].cloze == null"> with cloze deletions</span></th>
+        <th width="70%">Context<span [hidden]="book.vocabs[0].cloze == null"> (with clozes)</span></th>
       </thead>
 
       <tbody>
@@ -97,31 +91,21 @@
             </div>
           </td>
 
-          <td>
+          <td class="book__word">
             {{ vocab[0] }}
             <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab[0])"></i>
           </td>
 
           <td *ngIf="isTranslationLoading || book.vocabs[0].translation != null">
-            <span [hidden]="!vocab.translation">{{ vocab.translation }}</span>
-            <center [hidden]="vocab.translation"><loader [isLoading]="isTranslationLoading"></loader></center>
+            <span [hidden]="vocab.translation == null">{{ vocab.translation }}</span>
+            <center [hidden]="vocab.translation != null"><loader [isLoading]="isTranslationLoading"></loader></center>
           </td>
 
-          <td>{{ vocab.cloze || vocab[2] }}</td>
+          <td class="book__context">{{ vocab.cloze || vocab[2] }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <footer class="navbar navbar-light navbar-full book__nav book__footer">
-    <div class="container">
-      <nav class="nav nav-inline">
-        <span class="nav-link">© 2016 <a href="https://github.com/katspaugh">katspaugh</a></span>
-        <span class="nav-link">UI design by <a href="https://dribbble.com/romasketch">Roma</a></span>
-        <a class="nav-link" href="https://github.com/katspaugh/kindle-flashcards-browser/issues">Source code on GitHub</a>
-
-        <a class="nav-link pull-right" href="http://translate.yandex.com/">Powered by Yandex.Translate</a>
-      </nav>
-    </div>
-  </footer>
+  <footer></footer>
 </div>

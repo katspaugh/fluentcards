@@ -36,7 +36,12 @@ export class TranslationService {
     }
 
     private encodeLine(text: string, word: string): string {
-        return text.replace(new RegExp('\\b' + word + '\\b'), '<b>$&</b>');
+        let replace = text.replace(new RegExp('\\b' + word + '\\b'), '<b>$&</b>');
+        // Languages like Japanese and Chinese don't have written word boundaries.
+        if (replace == text) {
+            replace = text.replace(word, '<b>$&</b>');
+        }
+        return replace;
     }
 
     private decodeLine(text: string): string {

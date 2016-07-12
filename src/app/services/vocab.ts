@@ -5,10 +5,11 @@ export class VocabService {
     private db: any;
     private books: any[];
     private vocabs: any;
+    private storage = window.localStorage;
 
     constructor() {
-        this.books = JSON.parse(sessionStorage.getItem('books'));
-        this.vocabs = JSON.parse(sessionStorage.getItem('vocabs')) || {};
+        this.books = JSON.parse(this.storage.getItem('books'));
+        this.vocabs = JSON.parse(this.storage.getItem('vocabs')) || {};
     }
 
     init(uints: any) {
@@ -19,7 +20,7 @@ export class VocabService {
         this.books = books;
 
         setTimeout(() => {
-            sessionStorage.setItem('books', JSON.stringify(this.books));
+            this.storage.setItem('books', JSON.stringify(this.books));
         }, 100);
     }
 
@@ -27,14 +28,19 @@ export class VocabService {
         this.vocabs[asin] = vocabs;
 
         setTimeout(() => {
-            sessionStorage.setItem('vocabs', JSON.stringify(this.vocabs));
+            this.storage.setItem('vocabs', JSON.stringify(this.vocabs));
         }, 100);
     }
 
     getBooks() {
         if (!this.db) return this.books;
 
-        let booksQuery = this.db.exec('SELECT id, title, authors, lang, asin FROM book_info GROUP BY asin;');
+        let booksQuery;
+        try {
+            booksQuery = this.db.exec('SELECT id, title, authors, lang, asin FROM book_info GROUP BY asin;');
+        } catch (err) {
+            return null;
+        }
 
         let books = booksQuery[0].values.map((book) => {
             let escapedId = book[0].replace(/'/g, "''");
