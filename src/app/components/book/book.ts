@@ -81,8 +81,6 @@ export class Book {
 
             this.book = book;
             this.exportUrl = this.getExportUrl();
-
-            console.log(JSON.stringify(this.book));
         });
     }
 

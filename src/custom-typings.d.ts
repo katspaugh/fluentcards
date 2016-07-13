@@ -52,6 +52,7 @@ declare module 'angular2/http/testing' {
 
 interface Window {
     SQL: any;
+    DEMO_BOOKS: any;
     speechSynthesis: any;
     SpeechSynthesisUtterance: any;
 }

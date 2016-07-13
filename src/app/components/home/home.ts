@@ -21,15 +21,18 @@ const DATA_ERROR = 'No vocabulary found in the file';
 export class Home {
 
     books = null;
-    hasData = false;
     errorMessage = '';
+    dropAreaVisible = true;
 
     constructor(private vocabService: VocabService) {
         window.scrollTo(0, 0);
 
         // Try getting cached books
         this.books = this.vocabService.getBooks();
-        this.hasData = Boolean(this.books);
+
+        if (this.books && !this.books.isDemo) {
+            this.dropAreaVisible = false;
+        }
     }
 
     private preload() {
@@ -44,13 +47,13 @@ export class Home {
 
         this.vocabService.init(event.data);
         this.books = this.vocabService.getBooks();
-        this.hasData = Boolean(this.books);
 
-        if (!this.hasData) {
+        if (!this.books) {
             this.errorMessage = DATA_ERROR;
             return;
         }
 
+        this.dropAreaVisible = false;
         setTimeout(() => this.preload(), 300);
     }
 

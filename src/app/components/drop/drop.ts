@@ -1,38 +1,35 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
-  selector: 'drop',
-  pipes: [],
-  providers: [],
-  directives: [],
-  styleUrls: [ './drop.css' ],
-  templateUrl: './drop.html'
+    selector: 'drop',
+    pipes: [],
+    providers: [],
+    directives: [],
+    styleUrls: [ './drop.css' ],
+    templateUrl: './drop.html'
 })
 export class Drop {
     @Output() uploadData: EventEmitter<{}> = new EventEmitter();
 
-    private db;
+    private timer;
     isDragover = false;
 
     constructor() {}
 
-    private stopEvent(e) {
+    onDragOver(e) {
         e.preventDefault();
-        e.stopPropagation();
-    }
-
-    onDragover(e) {
-        this.stopEvent(e);
         this.isDragover = true;
+        if (this.timer) clearTimeout(this.timer);
     }
 
-    onDragleave(e) {
-        this.stopEvent(e);
-        this.isDragover = false;
+    onDragLeave(e) {
+        if (this.timer) clearTimeout(this.timer);
+        this.timer = setTimeout(() => this.isDragover = false, 1000);
     }
 
     onDrop(e) {
-        this.stopEvent(e);
+        e.stopPropagation();
+        e.preventDefault();
         this.isDragover = false;
 
         Array.prototype.forEach.call(e.dataTransfer.files, (file) => {

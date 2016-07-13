@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "typings-install": "typings install",
-    "postinstall": "npm run typings-install; cp ./node_modules/sql.js/js/sql.js src",
+    "postinstall": "npm run typings-install; cp ./node_modules/sql.js/js/sql.js src; cp -r data src",
     "build": "webpack --inline --colors --progress --display-error-details --display-cached",
     "watch": "npm run build -- --watch",
     "server": "webpack-dev-server --inline --colors --progress --display-error-details --display-cached --port 3000  --content-base src",

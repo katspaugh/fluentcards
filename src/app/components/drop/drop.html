@@ -1,7 +1,8 @@
 <div class="drop"
+     droppable="true"
      [ngClass]="{ 'drop_dragover': isDragover }"
-     (dragover)="onDragover($event)"
-     (dragleave)="onDragleave($event)"
+     (dragleave)="onDragLeave($event)"
+     (dragover)="onDragOver($event)"
      (drop)="onDrop($event)">
   <div class="drop__content">
     <ng-content></ng-content>

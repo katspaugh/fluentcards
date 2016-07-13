@@ -3,13 +3,23 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class VocabService {
     private db: any;
-    private books: any[];
+    private books: any;
     private vocabs: any;
     private storage = window.localStorage;
 
     constructor() {
         this.books = JSON.parse(this.storage.getItem('books'));
         this.vocabs = JSON.parse(this.storage.getItem('vocabs')) || {};
+
+        // Load demo books
+        if (!this.books) {
+            this.books = window.DEMO_BOOKS;
+            this.books.isDemo = true;
+            this.vocabs = {};
+            this.books.forEach((book) => {
+                this.vocabs[book.asin] = book;
+            });
+        }
     }
 
     init(uints: any) {
