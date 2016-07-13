@@ -111,7 +111,6 @@ export class Book {
                         this.book.vocabs[index].translation = word
                     });
 
-                    this.book.language = data.language;
                     this.translationProgress = Math.round(data.translations.length / this.book.vocabs.length * 100);
                     this.exportUrl = this.getExportUrl();
                 },
