@@ -47,6 +47,8 @@
     cursor: pointer;
 }
 
+
+.book__remove-vocab,
 .book__get-image {
     cursor: pointer;
 }

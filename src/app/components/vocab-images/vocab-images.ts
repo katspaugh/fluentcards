@@ -13,6 +13,7 @@ import {Loader} from '../loader/loader';
 })
 export class VocabImages {
     @Input() word: string;
+    @Input() single: boolean;
     @Output() onResult: EventEmitter<{}> = new EventEmitter();
 
     images: any[];
@@ -49,11 +50,31 @@ export class VocabImages {
     ngOnInit() {
         this.isLoading = true;
 
+        if (this.single) {
+            this.imageSearchService.getSingleImage(this.word)
+              .subscribe(
+                  (data) => {
+                      this.selectImage(data);
+                      this.isLoading = false;
+                  },
+                  () => {
+                      this.onResult.next({ image: null });
+                      this.isLoading = false;
+                  }
+              );
+            return;
+        }
+
         this.imageSearchService.getImages(this.word)
             .subscribe(
-                (data) => this.images = data,
-                (errMessage) => this.errorMessage = errMessage,
-                () => this.isLoading = false
+                (data) => {
+                    this.images = data;
+                    this.isLoading = false;
+                },
+                (errMessage) => {
+                    this.errorMessage = errMessage;
+                    this.isLoading = false;
+                }
             );
     }
 

@@ -11,9 +11,10 @@
         <div class="alert alert-danger" role="alert" [hidden]="!errorMessage">{{ errorMessage }}</div>
 
         <ol class="home__steps lead">
-          <li>Plug you Kindle into the computer.</li>
+          <li>Plug you Kindle (2013+) into the computer.</li>
           <li>
-            Locate the vocabulary DB file (on Mac: <code>/Volumes/Kindle/system/vocabulary/vocab.db</code>).
+            Locate the vocabulary DB file.<br />
+            <small class="text-muted">On mac: <code>/Volumes/Kindle/system/vocabulary/vocab.db</code></small>
             <img class="home__screenshot" src="https://cloud.githubusercontent.com/assets/381895/16584780/51a6e630-42c6-11e6-95ce-06f96612ff71.png" />
           </li>
           <li><nobr>Drag & drop</nobr> the file here.</li>
@@ -26,7 +27,7 @@
     <drop (uploadData)="onUpload($event)">
       <div class="home__hero container" [hidden]="books && !books.isDemo">
         <p class="home__lead">
-          This is a list of some of the most popular Kindle books. Drag & drop your <code>vocab.db</code> file to view your own books and vocabulary.
+          This is a list of some of the most popular Kindle books. <nobr>Drag & drop</nobr> your <code>vocab.db</code> file to view your own books and vocabulary.
         </p>
       </div>
 

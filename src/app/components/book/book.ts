@@ -92,7 +92,7 @@ export class Book {
         this.book.vocabs.forEach((vocab) => {
             let word = vocab[1];
             let context = vocab[2];
-            let cloze = context.replace(new RegExp('\\b' + word + '\\b', 'g'), '{{c1::$&}}');
+            let cloze = context.replace(new RegExp(word, 'g'), '{{c1::$&}}');
             vocab.cloze = cloze;
         });
         this.exportUrl = this.getExportUrl();
@@ -135,11 +135,31 @@ export class Book {
     }
 
     addImage(vocab) {
-        vocab.isAddingImages = true;
+        vocab.chooseImage = true;
+    }
+
+    addAllImages() {
+        const throttle = 300;
+
+        let load = (index) => {
+            this.book.vocabs[index].preloadImage = true;
+
+            if (index + 1 < this.book.vocabs.length) {
+                setTimeout(() => load(index + 1), throttle)
+            }
+        };
+
+        load(0);
+    }
+
+    removeVocab(index: number) {
+        this.book.vocabs.splice(index, 1);
+        this.vocabService.cacheVocabs(this.book.asin, this.book);
     }
 
     onImageAdd(data, vocab) {
-        vocab.isAddingImages = false;
+        vocab.chooseImage = false;
+        vocab.preloadImage = false;
 
         if (data.image) {
             vocab.image = data.image;

@@ -20,9 +20,11 @@
 
   <div class="container-fluid">
     <div class="book__controls row">
-      <div class="col-lg-6 col-md-12 book__control">
-        <label>Choose your native language:&nbsp;
-          <select class="c-select" [(ngModel)]="language" (ngModelChange)="onLanguageSelect($event)">
+      <div class="col-lg-4 col-md-12 book__control">
+        <label for="choose-lang">Choose your native language:</label>
+
+        <div>
+          <select id="choose-lang" class="c-select" [(ngModel)]="language" (ngModelChange)="onLanguageSelect($event)">
             <option value="en">English</option>
             <option value="es">Español</option>
             <option value="fr">Français</option>
@@ -31,36 +33,54 @@
           </select>
 
           &nbsp;and&nbsp;
-        </label>
 
-        <button class="btn btn-primary-outline" (click)="addTranslations()" [disabled]="isTranslationLoading">
-          <loader [isLoading]="isTranslationLoading"></loader> add translations
-          <span [hidden]="!isTranslationLoading">&nbsp;({{ translationProgress }}%)</span>
-        </button>
-      </div>
-
-      <div class="col-lg-4 col-md-12 book__control">
-        <label>Optionally,&nbsp;
-          <button class="btn btn-primary-outline" (click)="addCloze()" [disabled]="book.vocabs[0].cloze != null">
-            add cloze test
+          <button class="btn btn-primary-outline" (click)="addTranslations()" [disabled]="isTranslationLoading">
+            <loader [isLoading]="isTranslationLoading"></loader> add translations
+            <span [hidden]="!isTranslationLoading">&nbsp;({{ translationProgress }}%)</span>
           </button>
-        </label>
-
-        <small class="book__help">
-          &nbsp;<i class="fa fa-question-circle"></i>
-          <a class="text-muted" target="_blank" href="http://ankisrs.net/docs/manual.html#cloze-deletion">What is a <u>cloze test</u>?</a>
-        </small>
+        </div>
       </div>
 
       <div class="col-lg-2 col-md-12 book__control">
-        <a class="btn btn-success-outline" download="{{ book.title }}" [href]="exportUrl">
-          Download as CSV
-        </a>
+        <label>Optionally,</label>
+        <div>
+          <button class="btn btn-primary-outline" (click)="addCloze()" [disabled]="book.vocabs[0].cloze != null">
+            add cloze test
+          </button>
 
-        <small class="book__help">
-          &nbsp;<i class="fa fa-question-circle"></i>
-          <a class="text-muted" target="_blank" href="http://ankisrs.net/docs/manual.html#importing-text-files">How to <u>import it into Anki</u>?</a>
-        </small>
+          <small class="book__help">
+            <a class="text-muted" target="_blank" href="http://ankisrs.net/docs/manual.html#cloze-deletion">
+              <i class="fa fa-question-circle"></i>
+              What is a <u>cloze test</u>?
+            </a>
+          </small>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-12 book__control">
+        <label>You can also</label>
+
+        <div>
+          <button class="btn btn-primary-outline" (click)="addAllImages()">
+            add images
+          </button>
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-md-12 book__control">
+        <label>Finally,</label>
+        <div>
+          <a class="btn btn-success-outline" download="{{ book.title }}" [href]="exportUrl">
+            Download as CSV
+          </a>
+
+          <small class="book__help">
+            <a class="text-muted" target="_blank" href="http://ankisrs.net/docs/manual.html#importing-text-files">
+              <i class="fa fa-question-circle"></i>
+              How to <u>import it into Anki</u>?
+            </a>
+          </small>
+        </div>
       </div>
     </div>
 
@@ -75,6 +95,7 @@
         <th width="15%">Word</th>
         <th width="12%" *ngIf="isTranslationLoading || book.vocabs[0].translation != null">Translation</th>
         <th width="70%">Context<span [hidden]="book.vocabs[0].cloze == null"> (with clozes)</span></th>
+        <th style="width: 2em"></th>
       </thead>
 
       <tbody>
@@ -82,13 +103,23 @@
           <td class="text-muted">{{ i + 1 }}</td>
 
           <td align="center">
-            <img *ngIf="vocab.image" class="book__thumb" [src]="vocab.image.thumbnail"  (click)="addImage(vocab)" />
+            <img *ngIf="vocab.image" class="book__thumb" [src]="vocab.image.thumbnail" (click)="addImage(vocab)" />
 
-            <i *ngIf="!vocab.image" class="fa fa-image text-muted book__get-image" (click)="addImage(vocab)"></i>
+            <i *ngIf="!vocab.preloadImage && !vocab.image"
+               class="fa fa-image text-muted book__get-image"
+               title="Set an image"
+               (click)="addImage(vocab)"></i>
 
-            <div class="book__images" *ngIf="vocab.isAddingImages">
+            <loader [isLoading]="vocab.preloadImage"></loader>
+
+            <div class="book__images" *ngIf="vocab.chooseImage">
               <vocab-images [word]="vocab[0]" (onResult)="onImageAdd($event, vocab)"></vocab-images>
             </div>
+
+            <vocab-images *ngIf="vocab.preloadImage"
+                          [word]="vocab[0]" [single]="true"
+                          (onResult)="onImageAdd($event, vocab)">
+            </vocab-images>
           </td>
 
           <td class="book__word">
@@ -102,6 +133,8 @@
           </td>
 
           <td class="book__context">{{ vocab.cloze || vocab[2] }}</td>
+
+          <td><i class="fa fa-remove text-muted book__remove-vocab" (click)="removeVocab(i)" title="Remove"></i></td>
         </tr>
       </tbody>
     </table>

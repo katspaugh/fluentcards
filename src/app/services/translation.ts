@@ -5,8 +5,8 @@ import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/retry';
 
-const apikey = 'trnsl.1.1.20160709T114928Z.d289f2f0447d4972.a9f325d9c4ec15a544fd5a72517cd7ca643aa03d';
-const endpoint = `https://translate.yandex.net/api/v1.5/tr.json/translate?format=html&key=${ apikey }`;
+const apikey = 'dHJuc2wuMS4xLjIwMTYwNzA5VDExNDkyOFouZDI4OWYyZjA0NDdkNDk3Mi5hOWYzMjVkOWM0ZWMxNWE1NDRmZDVhNzI1MTdjZDdjYTY0M2FhMDNk';
+const endpoint = `https://translate.yandex.net/api/v1.5/tr.json/translate?format=html&key=${ atob(apikey) }`;
 
 @Injectable()
 export class TranslationService {
