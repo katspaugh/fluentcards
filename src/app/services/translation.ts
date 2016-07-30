@@ -1,9 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Http, URLSearchParams} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/retry';
 
 const apikey = 'dHJuc2wuMS4xLjIwMTYwNzA5VDExNDkyOFouZDI4OWYyZjA0NDdkNDk3Mi5hOWYzMjVkOWM0ZWMxNWE1NDRmZDVhNzI1MTdjZDdjYTY0M2FhMDNk';
 const endpoint = `https://translate.yandex.net/api/v1.5/tr.json/translate?format=html&key=${ atob(apikey) }`;
@@ -13,26 +10,17 @@ export class TranslationService {
 
     constructor(private http: Http) {}
 
-    private makeRequest(url, body): Promise<any> {
-        return this.http.request(url, {
-            method: 'POST',
-            body: body,
-            headers: new Headers({
-                'Content-Type': 'application/x-www-form-urlencoded'
-            })
-        })
-            .retry(3)
-            .toPromise()
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.code != 200) throw new Error(data.message);
-                return data;
-            })
-            .catch((error) => {
-                let err = error.message ? error :
-                    new Error(error.status ? `${error.status} - ${error.statusText}` : 'Server error');
-                throw err;
-            });
+    private makeRequest(query): Observable<any> {
+        let params: URLSearchParams = new URLSearchParams();
+
+        for (let key in query) {
+            params.set(key, String(query[key]));
+        }
+
+        return this.http.request(endpoint, {
+            method: 'GET',
+            search: params
+        }).map((res) => res.json());
     }
 
     private encodeLine(text: string, word: string): string {
@@ -46,45 +34,17 @@ export class TranslationService {
 
     private decodeLine(text: string): string {
         let match = text.match(/<b>(.+?)<\/b>/);
-        return match ? match[1] : '';
+        let word = match ? match[1] : '';
+        return word.replace(/[,.?!():;]/g, '');
     }
 
-    translate(vocabs: any[], toLanguage: string): Observable<any> {
-        const PER_PAGE = 100;
-
-        let url = endpoint + '&lang=' + toLanguage;
-        let origLines = vocabs.map((vocab) => this.encodeLine(vocab[2], vocab[1]));
-        let translatedWords = [];
-        let resultOberserver = new Subject();
-
-        let request = (skip) => {
-            let lines = origLines.slice(skip, skip + PER_PAGE);
-            let body = lines.map((line) => 'text=' + encodeURIComponent(line)).join('&');
-
-            return this.makeRequest(url, body)
-                .then((data) => {
-                    translatedWords = translatedWords.concat(data.text.map(this.decodeLine));
-
-                    resultOberserver.next({
-                        language: data.lang.split('-')[0],
-                        translations: translatedWords
-                    })
-                });
-        };
-
-        let requests = [];
-        for (let i = 0; i < origLines.length; i += PER_PAGE) {
-            requests.push(() => request(i));
-        }
-
-        requests.slice(1).reduce((acc, next) => acc.then(next), requests[0]())
-            .then(() => {
-                resultOberserver.complete();
-                resultOberserver.unsubscribe();
-            })
-            .catch((err) => resultOberserver.error(err));
-
-        return resultOberserver;
+    translate(word: string, context: string, toLanguage: string): Observable<any> {
+        let text = this.encodeLine(context, word);
+        return this.makeRequest({ text: text, lang: toLanguage })
+            .map((data) => {
+                if (data.code != 200) throw new Error(data.message);
+                return this.decodeLine(data.text[0]);
+            });
     }
 
 };

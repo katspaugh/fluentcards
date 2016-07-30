@@ -4,6 +4,7 @@ import {ROUTER_DIRECTIVES} from '@angular/router';
 import {DomSanitizationService} from '@angular/platform-browser';
 
 import {VocabService} from '../../services/vocab';
+import {DictionaryService} from '../../services/dictionary';
 import {TranslationService} from '../../services/translation';
 import {Loader} from '../loader/loader';
 import {Header} from '../header/header';
@@ -26,7 +27,6 @@ export class Book {
     language: string;
     errorMessage: string;
     isTranslationLoading = false;
-    translationProgress = 0;
     hasSpeechSynthesis = window.speechSynthesis != null;
 
     constructor(
@@ -34,6 +34,7 @@ export class Book {
         private router: Router,
         private sanitizer: DomSanitizationService,
         private vocabService: VocabService,
+        private dictionaryService: DictionaryService,
         private translationService: TranslationService
     ) {
         this.language = localStorage.getItem('language') || window.navigator.language.split('-')[0];
@@ -92,34 +93,53 @@ export class Book {
         this.book.vocabs.forEach((vocab) => {
             let word = vocab[1];
             let context = vocab[2];
-            let cloze = context.replace(new RegExp(word, 'g'), '{{c1::$&}}');
+            let cloze = context.replace(new RegExp('\\b' + word + '\\b', 'g'), '{{c1::$&}}');
+
+            // Languages like Japanese and Chinese don't have written word boundaries.
+            if (cloze == context) {
+                cloze = context.replace(new RegExp(word, 'g'), '{{c1::$&}}');
+            }
+
             vocab.cloze = cloze;
         });
         this.exportUrl = this.getExportUrl();
     }
 
-    addTranslations() {
-        this.isTranslationLoading = true;
+    addDefinitions() {
+        const throttle = 100;
         this.errorMessage = null;
-        this.book.vocabs.forEach((vocab) => delete vocab.translation);
-        this.translationProgress = 0;
 
-        this.translationService.translate(this.book.vocabs, this.language)
-            .subscribe(
-                (data) => {
-                    data.translations.forEach((word, index) => {
-                        this.book.vocabs[index].translation = word
-                    });
+        let load = (index) => {
+            let vocab = this.book.vocabs[index];
 
-                    this.translationProgress = Math.round(data.translations.length / this.book.vocabs.length * 100);
-                    this.exportUrl = this.getExportUrl();
-                },
-                (errMessage) => {
-                    this.isTranslationLoading = false;
-                    this.errorMessage = errMessage;
-                },
-                () => this.isTranslationLoading = false
-            );
+            this.dictionaryService.lookup(vocab[0], this.book.language, this.language)
+                .subscribe(
+                    (data) => {
+                        console.log(data);
+                        let def = data[0];
+                        vocab.definition = def;
+                        vocab.translation = def.tr[0].text;
+                        vocab.gen = def.gen;
+                        vocab.fl = def.fl;
+                    },
+                    (errMessage) => {
+                        this.translationService.translate(vocab[1], vocab[2], this.language)
+                            .subscribe(
+                                (data) => vocab.translation = data,
+                                (errMessage) => this.errorMessage = errMessage
+                            );
+                    }
+                )
+
+            if (index + 1 < this.book.vocabs.length) {
+                setTimeout(() => load(index + 1), throttle)
+            } else {
+                this.isTranslationLoading = false;
+            }
+        };
+
+        this.isTranslationLoading = true;
+        load(0);
     }
 
     onLanguageSelect() {
@@ -153,6 +173,7 @@ export class Book {
     }
 
     removeVocab(index: number) {
+        if (this.book.vocabs.length == 1) return;
         this.book.vocabs.splice(index, 1);
         this.vocabService.cacheVocabs(this.book.asin, this.book);
     }

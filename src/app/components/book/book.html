@@ -34,9 +34,8 @@
 
           &nbsp;and&nbsp;
 
-          <button class="btn btn-primary-outline" (click)="addTranslations()" [disabled]="isTranslationLoading">
-            <loader [isLoading]="isTranslationLoading"></loader> add translations
-            <span [hidden]="!isTranslationLoading">&nbsp;({{ translationProgress }}%)</span>
+          <button class="btn btn-primary-outline" (click)="addDefinitions()" [disabled]="isTranslationLoading">
+            <loader [isLoading]="isTranslationLoading"></loader>&nbsp;add definitions&nbsp;
           </button>
         </div>
       </div>
@@ -123,8 +122,9 @@
           </td>
 
           <td class="book__word">
-            {{ vocab[0] }}
             <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab[0])"></i>
+            {{ vocab[0] }}
+            <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.gen">, {{ vocab.gen }}</b>
           </td>
 
           <td *ngIf="isTranslationLoading || book.vocabs[0].translation != null">

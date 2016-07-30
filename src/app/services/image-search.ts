@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers, URLSearchParams} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 const endpoint = 'https://api.cognitive.microsoft.com/bing/v5.0/images/search';
@@ -27,13 +26,7 @@ export class ImageSearchService {
             headers: new Headers({
                 'Ocp-Apim-Subscription-Key': atob(apiKeys[ ~~(Math.random() * apiKeys.length) ])
             })
-        })
-            .map((res) => res.json())
-            .catch((error) => {
-                let err = error.message ? error :
-                    new Error(error.status ? `${error.status} - ${error.statusText}` : 'Server error');
-                return Observable.throw(err);
-            });
+        }).map((res) => res.json());
     }
 
     getImages(word: string) {
