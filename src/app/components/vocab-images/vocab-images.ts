@@ -13,6 +13,7 @@ import {Loader} from '../loader/loader';
 })
 export class VocabImages {
     @Input() word: string;
+    @Input() language: string;
     @Input() single: boolean;
     @Output() onResult: EventEmitter<{}> = new EventEmitter();
 
@@ -51,7 +52,7 @@ export class VocabImages {
         this.isLoading = true;
 
         if (this.single) {
-            this.imageSearchService.getSingleImage(this.word)
+            this.imageSearchService.getSingleImage(this.word, this.language)
               .subscribe(
                   (data) => {
                       this.selectImage(data);
@@ -65,7 +66,7 @@ export class VocabImages {
             return;
         }
 
-        this.imageSearchService.getImages(this.word)
+        this.imageSearchService.getImages(this.word, this.language)
             .subscribe(
                 (data) => {
                     this.images = data;

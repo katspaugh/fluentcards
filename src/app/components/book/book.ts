@@ -43,13 +43,21 @@ export class Book {
     }
 
     private getExportUrl() {
-        let hasTranslations = this.book.vocabs[0].translation;
+        let hasTranslations = this.book.vocabs[0].translation != null;
         let hasImages = this.book.vocabs.some((vocab) => vocab.image);
 
         let lines = this.book.vocabs.map((vocab) => {
-            let items = [
-                vocab[0]
-            ];
+            let word = vocab[0];
+
+            if (vocab.fl) {
+                word += ', ' + vocab.fl;
+            }
+
+            if (vocab.gender) {
+                word += ', ' + vocab.gender;
+            }
+
+            let items = [ word ];
 
             if (hasTranslations) {
                 items.push(vocab.translation || '');
@@ -119,7 +127,7 @@ export class Book {
                         let def = data[0];
                         vocab.definition = def;
                         vocab.translation = def.tr[0].text;
-                        vocab.gen = def.gen;
+                        vocab.gender = def.gen;
                         vocab.fl = def.fl;
                     },
                     (errMessage) => {
@@ -176,6 +184,7 @@ export class Book {
         if (this.book.vocabs.length == 1) return;
         this.book.vocabs.splice(index, 1);
         this.vocabService.cacheVocabs(this.book.asin, this.book);
+        this.exportUrl = this.getExportUrl();
     }
 
     onImageAdd(data, vocab) {

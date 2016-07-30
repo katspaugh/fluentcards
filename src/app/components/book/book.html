@@ -90,7 +90,7 @@
     <table class="book__table table table-striped">
       <thead>
         <th style="width: 2em">#</th>
-        <th style="width: 4em">Picture</th>
+        <th style="width: 4em">Image</th>
         <th width="15%">Word</th>
         <th width="12%" *ngIf="isTranslationLoading || book.vocabs[0].translation != null">Translation</th>
         <th width="70%">Context<span [hidden]="book.vocabs[0].cloze == null"> (with clozes)</span></th>
@@ -112,11 +112,11 @@
             <loader [isLoading]="vocab.preloadImage"></loader>
 
             <div class="book__images" *ngIf="vocab.chooseImage">
-              <vocab-images [word]="vocab[0]" (onResult)="onImageAdd($event, vocab)"></vocab-images>
+              <vocab-images [word]="vocab[0]" [language]="book.language" (onResult)="onImageAdd($event, vocab)"></vocab-images>
             </div>
 
             <vocab-images *ngIf="vocab.preloadImage"
-                          [word]="vocab[0]" [single]="true"
+                          [word]="vocab[0]" [language]="book.language" [single]="true"
                           (onResult)="onImageAdd($event, vocab)">
             </vocab-images>
           </td>
@@ -124,7 +124,7 @@
           <td class="book__word">
             <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab[0])"></i>
             {{ vocab[0] }}
-            <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.gen">, {{ vocab.gen }}</b>
+            <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.gender">, {{ vocab.gender }}</b>
           </td>
 
           <td *ngIf="isTranslationLoading || book.vocabs[0].translation != null">
