@@ -26,7 +26,8 @@ export class Book {
     exportUrl: any;
     language: string;
     errorMessage: string;
-    isTranslationLoading = false;
+    isLoadingDefinitions = false;
+    isLoadingImages = false;
     hasSpeechSynthesis = window.speechSynthesis != null;
 
     constructor(
@@ -114,19 +115,17 @@ export class Book {
     }
 
     addDefinitions() {
-        const throttle = 100;
-        this.errorMessage = null;
-
-        let load = (index) => {
+        let load = (bookLanguage, index) => {
+            const throttle = 100;
             let vocab = this.book.vocabs[index];
 
-            this.dictionaryService.lookup(vocab[0], this.book.language, this.language)
+            this.dictionaryService.lookup(vocab[0], bookLanguage, this.language)
                 .subscribe(
                     (data) => {
-                        console.log(data);
                         let def = data[0];
                         vocab.definition = def;
                         vocab.translation = def.tr[0].text;
+                        console.log(def);
                         vocab.gender = def.gen;
                         vocab.fl = def.fl;
                     },
@@ -140,14 +139,20 @@ export class Book {
                 )
 
             if (index + 1 < this.book.vocabs.length) {
-                setTimeout(() => load(index + 1), throttle)
+                setTimeout(() => load(bookLanguage, index + 1), throttle)
             } else {
-                this.isTranslationLoading = false;
+                this.isLoadingDefinitions = false;
             }
         };
 
-        this.isTranslationLoading = true;
-        load(0);
+        this.errorMessage = null;
+        this.isLoadingDefinitions = true;
+
+        this.translationService.detectLanguage(this.book.vocabs[0][2], this.book.language)
+            .subscribe(
+                (lang) => load(lang, 0),
+                (err) => load(this.book.language, 0)
+            );
     }
 
     onLanguageSelect() {
@@ -167,16 +172,19 @@ export class Book {
     }
 
     addAllImages() {
-        const throttle = 300;
-
         let load = (index) => {
+            const throttle = 300;
+
             this.book.vocabs[index].preloadImage = true;
 
             if (index + 1 < this.book.vocabs.length) {
                 setTimeout(() => load(index + 1), throttle)
+            } else {
+                this.isLoadingImages = false;
             }
         };
 
+        this.isLoadingImages = true;
         load(0);
     }
 

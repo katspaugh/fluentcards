@@ -2,22 +2,24 @@ import {Injectable} from '@angular/core';
 import {Http, URLSearchParams} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 
-const apikey = 'dHJuc2wuMS4xLjIwMTYwNzA5VDExNDkyOFouZDI4OWYyZjA0NDdkNDk3Mi5hOWYzMjVkOWM0ZWMxNWE1NDRmZDVhNzI1MTdjZDdjYTY0M2FhMDNk';
-const endpoint = `https://translate.yandex.net/api/v1.5/tr.json/translate?format=html&key=${ atob(apikey) }`;
+const apiKey = 'dHJuc2wuMS4xLjIwMTYwNzA5VDExNDkyOFouZDI4OWYyZjA0NDdkNDk3Mi5hOWYzMjVkOWM0ZWMxNWE1NDRmZDVhNzI1MTdjZDdjYTY0M2FhMDNk';
+const translateEndpoint = 'https://translate.yandex.net/api/v1.5/tr.json/translate?format=html';
+const detectEndpoint = 'https://translate.yandex.net/api/v1.5/tr.json/detect';
 
 @Injectable()
 export class TranslationService {
 
     constructor(private http: Http) {}
 
-    private makeRequest(query): Observable<any> {
+    private makeRequest(url: string, query): Observable<any> {
         let params: URLSearchParams = new URLSearchParams();
+        query.key = atob(apiKey);
 
         for (let key in query) {
             params.set(key, String(query[key]));
         }
 
-        return this.http.request(endpoint, {
+        return this.http.request(url, {
             method: 'GET',
             search: params
         }).map((res) => res.json());
@@ -38,9 +40,17 @@ export class TranslationService {
         return word.replace(/[,.?!():;]/g, '');
     }
 
+    detectLanguage(text: string, hint: string) {
+        return this.makeRequest(detectEndpoint, { text: text, hint: hint })
+            .map((data) => {
+                if (data.code != 200) throw new Error(data.message);
+                return data.lang;
+            });
+    }
+
     translate(word: string, context: string, toLanguage: string): Observable<any> {
         let text = this.encodeLine(context, word);
-        return this.makeRequest({ text: text, lang: toLanguage })
+        return this.makeRequest(translateEndpoint, { text: text, lang: toLanguage })
             .map((data) => {
                 if (data.code != 200) throw new Error(data.message);
                 return this.decodeLine(data.text[0]);

@@ -7,7 +7,7 @@ const apiKeys = [
     'ZGljdC4xLjEuMjAxNDA4MTBUMTgwODQyWi40YzA1ZmEyMzkyOWQ4OTFiLjA5Y2QzOTUyZDQ4Njk2YzYzOWIxNjRhNzcxZjY5NDU2N2IwNGJkZWY=',
     'ZGljdC4xLjEuMjAxNDExMjJUMTIwMzA2Wi40ZTQ2NzY1ZGQyMDYwMTBhLjNlNGExYjE4MmRmNWQ4OTJmZDc0ZGQzZTQ0ZjM4OWIwZTVhZWVhMjQ='
 ];
-const endpoint = `https://dictionary.yandex.net/api/v1/dicservice.json/lookup?&flags=4`;
+const endpoint = 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?&flags=4';
 
 @Injectable()
 export class DictionaryService {
