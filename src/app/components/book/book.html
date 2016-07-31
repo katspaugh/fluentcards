@@ -91,9 +91,9 @@
       <thead>
         <th style="width: 2em">#</th>
         <th style="width: 4em">Image</th>
-        <th width="15%">Word</th>
-        <th width="12%" *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">Translation</th>
-        <th width="70%">Context<span [hidden]="book.vocabs[0].cloze == null"> (with clozes)</span></th>
+        <th width="17%">Word</th>
+        <th width="17%" *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">Definition</th>
+        <th width="60%">Context<span [hidden]="book.vocabs[0].cloze == null"> (with clozes)</span></th>
         <th style="width: 2em"></th>
       </thead>
 
@@ -122,13 +122,15 @@
           </td>
 
           <td class="book__word">
+            {{ vocab[0] }} <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.gender">, {{ vocab.gender }}</b>
             <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab[0])"></i>
-            {{ vocab[0] }}
-            <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.gender">, {{ vocab.gender }}</b>
           </td>
 
           <td *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">
-            <span [hidden]="vocab.translation == null">{{ vocab.translation }}</span>
+            <nobr>
+              <span [hidden]="vocab.translation == null">{{ vocab.translation }}</span>
+              <i [hidden]="!vocab.definition || vocab.definition.tr.length <= 1" class="fa fa-repeat text-muted book__change-def" (click)="changeDefinition(vocab)"></i>
+            </nobr>
             <center [hidden]="vocab.translation != null"><loader [isLoading]="isLoadingDefinitions"></loader></center>
           </td>
 

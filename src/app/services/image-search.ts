@@ -3,7 +3,18 @@ import {Http, Headers, URLSearchParams} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 
 const endpoint = 'https://api.cognitive.microsoft.com/bing/v5.0/images/search';
-const apiKeys = [ 'Nzk1YTQyYzM3YTYyNDJkODg2N2YyOTdjZWFjZTI3MGQ=', 'MTFiM2M0MjM2YzI2NDM5NzlkYTM5MzA1MmRjOGExNmM=', 'NmY0MDM3YmNiMjdmNGNiNzg0OThiMGQ5YzllYmFjZTQ=', 'N2I5OWMzNGU1Y2E2NGE4ZDg3YWZiZjEzNDMyMDY0NzM=', 'N2I5OWMzNGU1Y2E2NGE4ZDg3YWZiZjEzNDMyMDY0NzM=', 'OTAyZjUwZjljZTdkNDIzMjg5ZDU2Y2FkODJjNWNlNTA=', 'N2I5OWMzNGU1Y2E2NGE4ZDg3YWZiZjEzNDMyMDY0NzM=', 'ZjRiMTA4Nzg2M2U5NDk2YTk4MGEzOWU0ODc1NGU3MTU=', 'ZWEwYzY5YzRlYWI5NGYwNzkzN2NkNDc0YzlmNWFjN2M=', 'NTI2MDUxZmUyMjYzNDMxNWE1ZTFiODU3NzMxMDRmYmU=' ];
+const apiKeys = [
+    'Nzk1YTQyYzM3YTYyNDJkODg2N2YyOTdjZWFjZTI3MGQ=',
+    'MTFiM2M0MjM2YzI2NDM5NzlkYTM5MzA1MmRjOGExNmM=',
+    'NmY0MDM3YmNiMjdmNGNiNzg0OThiMGQ5YzllYmFjZTQ=',
+    'N2I5OWMzNGU1Y2E2NGE4ZDg3YWZiZjEzNDMyMDY0NzM=',
+    'N2I5OWMzNGU1Y2E2NGE4ZDg3YWZiZjEzNDMyMDY0NzM=',
+    'OTAyZjUwZjljZTdkNDIzMjg5ZDU2Y2FkODJjNWNlNTA=',
+    'N2I5OWMzNGU1Y2E2NGE4ZDg3YWZiZjEzNDMyMDY0NzM=',
+    'ZjRiMTA4Nzg2M2U5NDk2YTk4MGEzOWU0ODc1NGU3MTU=',
+    'ZWEwYzY5YzRlYWI5NGYwNzkzN2NkNDc0YzlmNWFjN2M=',
+    'NTI2MDUxZmUyMjYzNDMxNWE1ZTFiODU3NzMxMDRmYmU='
+];
 
 const notFoundError = 'No images found.'
 
@@ -25,7 +36,8 @@ export class ImageSearchService {
             headers: new Headers({
                 'Ocp-Apim-Subscription-Key': atob(apiKeys[ ~~(Math.random() * apiKeys.length) ])
             })
-        }).map((res) => res.json());
+        })
+            .map((res) => res.json());
     }
 
     getImages(word: string, language: string) {

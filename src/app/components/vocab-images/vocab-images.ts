@@ -20,8 +20,7 @@ export class VocabImages {
     images: any[];
     errorMessage: string;
     isLoading: boolean;
-    private clickListener: any;
-    private keyupListener: any;
+    private retries = 3;
 
     constructor(
         private imageSearchService: ImageSearchService,
@@ -48,23 +47,33 @@ export class VocabImages {
         }
     }
 
-    ngOnInit() {
+    selectImage(item) {
+        this.onResult.next({ image: item });
+    }
+
+    private loadSingleImage() {
         this.isLoading = true;
 
-        if (this.single) {
-            this.imageSearchService.getSingleImage(this.word, this.language)
-              .subscribe(
-                  (data) => {
-                      this.selectImage(data);
-                      this.isLoading = false;
-                  },
-                  () => {
-                      this.onResult.next({ image: null });
-                      this.isLoading = false;
-                  }
-              );
-            return;
-        }
+        this.imageSearchService.getSingleImage(this.word, this.language)
+            .subscribe(
+                (data) => {
+                    this.selectImage(data);
+                    this.isLoading = false;
+                },
+                () => {
+                    if (this.retries > 0) {
+                        this.retries -= 1;
+                        return this.loadSingleImage();
+                    }
+
+                    this.onResult.next({ image: null });
+                    this.isLoading = false;
+                }
+            );
+    }
+
+    private loadImages() {
+        this.isLoading = true;
 
         this.imageSearchService.getImages(this.word, this.language)
             .subscribe(
@@ -73,16 +82,19 @@ export class VocabImages {
                     this.isLoading = false;
                 },
                 (errMessage) => {
+                    if (this.retries > 0) {
+                        this.retries -= 1;
+                        return this.loadImages();
+                    }
+
                     this.errorMessage = errMessage;
                     this.isLoading = false;
                 }
             );
     }
 
-    selectImage(item) {
-        this.onResult.next({
-            image: item
-        });
+    ngOnInit() {
+        this.single ? this.loadSingleImage() : this.loadImages();
     }
 
 }

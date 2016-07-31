@@ -43,8 +43,6 @@ export class Drop {
                 });
             };
             r.onerror = (err) => {
-                console.log(err);
-
                 this.uploadData.next({
                     ok: false
                 });

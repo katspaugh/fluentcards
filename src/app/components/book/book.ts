@@ -125,7 +125,6 @@ export class Book {
                         let def = data[0];
                         vocab.definition = def;
                         vocab.translation = def.tr[0].text;
-                        console.log(def);
                         vocab.gender = def.gen;
                         vocab.fl = def.fl;
                     },
@@ -193,6 +192,17 @@ export class Book {
         this.book.vocabs.splice(index, 1);
         this.vocabService.cacheVocabs(this.book.asin, this.book);
         this.exportUrl = this.getExportUrl();
+    }
+
+    changeDefinition(vocab) {
+        let index = null;
+        vocab.definition.tr.forEach((tr, idx) => {
+            if (tr.text == vocab.translation) {
+                index = idx;
+                return false;
+            }
+        });
+        vocab.translation = vocab.definition.tr[(index + 1) % vocab.definition.tr.length].text;
     }
 
     onImageAdd(data, vocab) {
