@@ -1,4 +1,5 @@
 import {Component, enableProdMode} from '@angular/core';
+import {Location} from '@angular/common';
 import {ROUTER_DIRECTIVES} from '@angular/router';
 
 import {VocabService} from './services/vocab';
@@ -14,8 +15,12 @@ import {ImageSearchService} from './services/image-search';
     templateUrl: './app.html',
 })
 export class App {
-  constructor() {}
-
+    constructor(private location: Location) {
+        let hash = window.location.hash;
+        if (hash) {
+            location.go(hash.substring(1));
+        }
+    }
 }
 
 // Enable production mode
