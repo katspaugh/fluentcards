@@ -17,7 +17,6 @@ var webpackConfig = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.optimize.CommonsChunkPlugin({ name: ['main', 'vendor', 'polyfills'], minChunks: Infinity }),
-    new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
   ],
 
   module: {
@@ -27,12 +26,10 @@ var webpackConfig = {
       { test: /\.css$/, loaders: ['to-string-loader', 'css-loader'] },
       { test: /\.html$/, loader: 'raw-loader' },
       { test: /\.json$/, loader: 'json-loader' },
-
     ]
   }
 
 };
-
 
 // Our Webpack Defaults
 var defaultConfig = {

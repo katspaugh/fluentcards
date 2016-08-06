@@ -1,0 +1,50 @@
+.kindle {
+    width: 44.2vh;
+    height: 61.5vh;
+    border-radius: 4%;
+    position: relative;
+    background: linear-gradient(to bottom, rgb(133, 138, 150) 0%, rgb(32, 33, 35) 100%);
+    overflow: hidden;
+}
+
+.kindle:after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    left: 0.6vh;
+    top: 0.6vh;
+    right: 0.6vh;
+    bottom: 0.6vh;
+    border-radius: 4%;
+    border: 0.2vh solid #333;
+    box-shadow: 0 0 4vh #333;
+    background: linear-gradient(to bottom, rgb(88, 89, 93) 0%, rgb(32, 33, 35) 100%);
+}
+
+.kindle:before {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    left: 5vh;
+    top: 7vh;
+    right: 5vh;
+    bottom: 10vh;
+    border-radius: 1%;
+    background: #fff url('https://cloud.githubusercontent.com/assets/381895/17458491/361dcc34-5c12-11e6-9773-3b55939ef77f.png') center center no-repeat;
+    background-size: contain;
+    overflow: hidden;
+    border: 0.4vh solid #000;
+    border-right-color: rgb(75, 79, 82);
+    box-shadow: inset 0 0 1vh #999;
+}
+
+.kindle__logo {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    color: #000;
+    font-size: 2.8vh;
+    position: absolute;
+    z-index: 3;
+    bottom: 3.3vh;
+    left: 50%;
+    transform: translateX(-50%);
+}

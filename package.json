@@ -8,7 +8,8 @@
     "build": "webpack --inline --colors --progress --display-error-details --display-cached",
     "watch": "npm run build -- --watch",
     "server": "webpack-dev-server --inline --colors --progress --display-error-details --display-cached --port 3000  --content-base src",
-    "start": "npm run server"
+    "start": "npm run server",
+    "prod": "webpack -p"
   },
   "contributors": [
     "Rob Wormald <robwormald@gmail.com>",

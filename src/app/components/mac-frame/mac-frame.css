@@ -1,0 +1,37 @@
+.macbook {
+    background: #082746 url('https://cloud.githubusercontent.com/assets/381895/17458585/ffa75e50-5c15-11e6-9f37-cb47cced55ec.png') 50% -80% no-repeat;
+    background-size: 150em;
+    border-radius: 8em 8em 0 0;
+    box-shadow: inset 0 1em 1em 1em #000,
+                inset 0 0 0 9em #111,
+                0 0 0 1em #ccc;
+    height: 100em;
+    display: block;
+    width: 150em;
+}
+
+.macbook:after {
+    background-color: #ddd;
+    background-image: linear-gradient(90deg, hsla(0,0%,0%,.3), hsla(0,0%,100%,.4) 2%, hsla(0,0%,100%,.1) 5%, hsla(0,0%,0%,.2) 95%, hsla(0,0%,100%,.2) 98%, hsla(0,0%,0%,.4));
+    border-bottom: 3em solid hsla(0,0%,40%,.75);
+    border-radius: 0 0 4em 4em;
+    content: '';
+    height: 7em;
+    left: -10em;
+    position: absolute;
+    right: -10em;
+    top: 100%;
+}
+
+.macbook:before {
+    background-color: #222;
+    border-radius: 100%;
+    content: '';
+    height: 3em;
+    left: 50%;
+    margin-left: -2em;
+    position: absolute;
+    top: 3em;
+    width: 3em;
+    z-index: 1;
+}

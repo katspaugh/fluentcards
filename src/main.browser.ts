@@ -13,6 +13,14 @@ if (/fluentcards\.com/.test(window.location.host)) {
 bootstrap(App, [
     HTTP_PROVIDERS,
     APP_ROUTER_PROVIDERS,
-    { provide: LocationStrategy, useClass: PathLocationStrategy }
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
 ])
 .catch(err => console.error(err));
+
+
+// A workaround for a bug in Safari
+if (/Safari/.test(window.navigator.userAgent) && !/Chrome/.test(window.navigator.userAgent)) {
+    window.addEventListener('popstate', () => {
+        window.location.replace(window.location.href);
+    });
+}

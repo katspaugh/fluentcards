@@ -1,0 +1,25 @@
+<div class="kindle-lp container-fluid">
+  <i class="fa fa-chevron-right kindle-lp__next"
+     [hidden]="step == 3"
+     (click)="nextStep()"></i>
+
+  <div id="step1" [hidden]="step != 1">
+    <div class="kindle-lp__frame">
+      <kindle-frame></kindle-frame>
+    </div>
+
+    <div class="kindle-lp__content">
+      <h2>1. Connect your Kindle to the computer</h2>
+    </div>
+  </div>
+
+  <div id="step2" [hidden]="step != 2">
+    <div class="kindle-lp__frame kindle-lp__frame_mac">
+      <mac-frame></mac-frame>
+    </div>
+
+    <div class="kindle-lp__content kindle-lp__content_mac">
+      <h2>2. Locate the <code>vocab.db</code> file on the Kindle disk.</h2>
+    </div>
+  </div>
+</div>
