@@ -5,69 +5,6 @@
     color: #555;
 }
 
-.home_overlayed {
-    overflow: hidden;
-}
-
-.home_overlayed:after {
-    content: '';
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(100, 100, 100, 0.7);
-    z-index: 1;
-}
-
-.home__hint {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    border-radius: 6px;
-    border: 3px dashed #e5e5e5;
-    box-shadow: 0 0 100px #333;
-    background: #fff;
-}
-
-.home__hint .jumbotron {
-    position: relative;
-    z-index: 2;
-    background-color: transparent;
-    margin: 0;
-    padding: 2em;
-}
-
-.home__close {
-    font-size: 30px;
-    cursor: pointer;
-    position: absolute;
-    z-index: 2;
-    right: 20px;
-    top: 15px;
-    color: #999;
-}
-
-.home__close:hover {
-    color: #333;
-}
-
-.home__steps {
-    text-align: left;
-}
-
-.home__steps li {
-    margin: 0.5em;
-}
-
-.home__screenshot {
-    display: block;
-    max-width: 600px;
-}
-
 .home__hero {
     margin-top: 64px;
     margin-bottom: 40px;

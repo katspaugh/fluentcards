@@ -1,5 +1,40 @@
+html,
 body {
+    width: 100%;
+    height: 100%;
+}
+
+.kindle-lp {
+    width: 100%;
+    overflow: hidden;
+}
+
+.kindle-lp__slider,
+.kindle-lp {
+    height: 100%;
+}
+
+.kindle-lp__slider {
+    transition: transform 600ms ease-in;
+}
+
+.kindle-lp__step {
     background-color: #fbea31;
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.kindle-lp__step:nth-child(2) {
+    transform: translateX(100%);
+}
+
+.kindle-lp__step:nth-child(3) {
+    transform: translateX(200%);
 }
 
 .kindle-lp__frame {
@@ -11,13 +46,6 @@ body {
     font-size: 10px;
 }
 
-.kindle-lp__frame_mac {
-    font-size: 0.5vh;
-    left: 50%;
-    top: 10%;
-    transform: translateX(-50%);
-}
-
 .kindle-lp__content {
     position: absolute;
     z-index: 1;
@@ -27,25 +55,78 @@ body {
     transform: translateY(-50%);
 }
 
-.kindle-lp__content_mac {
-    left: 0;
-    right: 0;
-    top: 75%;
-    text-align: center;
+.kindle-lp__content h2 b {
+    color: #fff;
+    font-size: 2em;
 }
 
+.kindle-lp__content small {
+    margin-left: 5.6em;
+}
+
+.kindle-lp__content small a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.kindle-lp__content small code {
+    background: none;
+    color: inherit;
+}
+
+.kindle-lp__frame_center {
+    font-size: 0.6vh;
+    left: 50%;
+    top: 30%;
+    transform: translateX(-50%);
+}
+
+.kindle-lp__content_center {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10%;
+    white-space: nowrap;
+}
+
+.kindle-lp__prev,
 .kindle-lp__next {
     color: #fff;
     font-size: 80px;
-    position: absolute;
-    z-index: 3;
+    position: fixed;
+    z-index: 20;
     cursor: pointer;
-    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     opacity: 0.7;
 }
 
+.kindle-lp__next {
+    right: 20px;
+}
+
+.kindle-lp__prev {
+    left: 20px;
+}
+
+.kindle-lp__prev:hover,
 .kindle-lp__next:hover {
     opacity: 1;
+}
+
+.kindle-lp__upload {
+    position: relative;
+    background-color: #fff;
+    border: 3px dashed #999;
+    border-radius: 3%;
+    height: 300px;
+    width: 500px;
+}
+
+.kindle-lp__upload .fa {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    font-size: 100px;
+    color: #ddd;
 }

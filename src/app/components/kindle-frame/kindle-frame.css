@@ -48,3 +48,108 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+
+/**
+ * USB cable animation based on http://codepen.io/jgx/pen/mJAar
+ */
+.usb-cable {
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -142px;
+    transition: transform 600ms ease-in;
+    transform: translateY(80%);
+    animation: extend 600ms 1s;
+}
+
+.kindle-frame:hover .usb-cable {
+    transform: translateY(70%);
+}
+
+@keyframes extend {
+    from { transform: translateY(80%); }
+    to { transform: translateY(70%); }
+}
+
+.usb-cable .container {
+    width: 284px;
+    height: 344px;
+    transform: scale(0.15);
+}
+
+.usb-cable .usb {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background:  linear-gradient(to bottom, rgba(241,241,241,0.8) 0%,rgba(255,255,255,1) 80%,rgba(255,255,255,1) 100%) no-repeat  50% 5%,
+    linear-gradient(0deg, #ffffff 0%, #ffffff 100%) no-repeat  0 0;
+    background-size: 70% 23,100% 100%;
+    border-bottom-left-radius: 24%;
+    border-bottom-right-radius: 24%;
+    box-shadow:  0 0 0.625em 0.125em #ababab inset,0 -0.438em 0.250em 0.500em #8b8b8b inset,0 -0.625em 2.188em 0.938em #8b8b8b inset;
+}
+
+.usb-cable .usb:after {
+    z-index: -1;
+    content: '';
+    width: 80%;
+    height: 72%;
+    top: -65%;
+    left: 50%;
+    margin-left: -40%;
+    position: absolute;
+    border-top-left-radius: 2%;
+    border-top-right-radius: 2%;
+    background:
+    /* Square details */
+    linear-gradient(0deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.4) 100%) no-repeat  18% 55.6%,
+    linear-gradient(0deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.4) 100%) no-repeat  82.5% 55.6%,
+    linear-gradient(0deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.4) 100%) no-repeat  18% 38%,
+    linear-gradient(0deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.4) 100%) no-repeat  82.5% 38%,
+    /* Square basis */
+    linear-gradient(to bottom, rgba(32,32,32,1) 0%,rgba(152,152,152,1) 100%) no-repeat  15.5% 46.5%,
+    linear-gradient(to bottom, rgba(61,61,61,1) 0%,rgba(222,222,222,1) 100%) no-repeat  28.5% 46.5%,
+    linear-gradient(to bottom, rgba(61,61,61,1) 0%,rgba(222,222,222,1) 100%) no-repeat  72% 46.5%,
+    linear-gradient(to bottom, rgba(32,32,32,1) 0%,rgba(152,152,152,1) 100%) no-repeat  84.5% 46.5%,
+    linear-gradient(0deg, #c1c1c1 0%, #c1c1c1 100%) no-repeat  0 0;
+
+    background-size:
+    22% 2%,
+    22% 2%,
+    22% 2%,
+    22% 2%,
+    11% 19%,
+    11% 19%,
+    11% 19%,
+    11% 19%,
+    100% 100%;
+    box-shadow:  0 -0.125em 0.625em 0.313em #515151 inset,0 -0.188em 0 0.563em #FFFFFF inset,0 -0.313em 1.250em 0.875em #FFFFFF inset;
+}
+
+.usb-cable .usb:before {
+    content: '';
+    z-index: 2;
+    width: 32%;
+    height: 32%;
+    border-bottom-left-radius: 7%;
+    border-bottom-right-radius: 7%;
+    position: absolute;
+    background:  linear-gradient(to right, rgba(155,150,150,1) 0%,rgba(234,234,234,1) 35%,rgba(234,234,234,1) 70%,rgba(155,150,150,1) 100%);
+    top: 100%;
+    left: 50%;
+    margin-left: -16%;
+    box-shadow:  0 0 0.125em 0.313em #898989 inset;
+}
+
+.usb-cable .wire {
+    width: 22%;
+    height: 300%;
+    position: absolute;
+    background: linear-gradient(to right, rgba(155,150,150,1) 0%,rgba(234,234,234,1) 40%,rgba(234,234,234,1) 65%,rgba(155,150,150,1) 100%);
+    top: 130%;
+    left: 50%;
+    margin-left: -11%;
+    box-shadow:  0 0 0.125em 0.313em #898989 inset;
+}

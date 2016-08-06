@@ -85,7 +85,7 @@ export class Book {
             let book = this.vocabService.getVocabs(id);
 
             if (!book) {
-                this.router.navigate([ '/' ]);
+                this.router.navigate([ '/books' ]);
                 return;
             }
 
