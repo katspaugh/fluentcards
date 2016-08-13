@@ -24,7 +24,10 @@
         <label for="choose-lang">Choose your native language:</label>
 
         <div>
-          <select id="choose-lang" class="c-select" [(ngModel)]="language" (ngModelChange)="onLanguageSelect($event)">
+          <input id="choose-lang" type="text" list="langs"
+                 length="2" max-length="2" min-length="2"
+                 [(ngModel)]="language" (ngModelChange)="onLanguageSelect($event)" />
+          <datalist id="langs">
             <option value="en">English</option>
             <option value="fr">Français</option>
             <option value="de">Deutsch</option>
@@ -33,7 +36,8 @@
             <option value="it">Italiano</option>
             <option value="pl">Polski</option>
             <option value="ru">Русский</option>
-          </select>
+            <option value="zh">中文</option>
+          </datalist>
 
           &nbsp;and&nbsp;
 

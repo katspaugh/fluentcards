@@ -1,3 +1,5 @@
+// Polyfills
+
 // import 'core-js/es6';
 // Added parts of es6 which are necessary for your project or your browser support requirements.
 import 'core-js/es6/symbol';

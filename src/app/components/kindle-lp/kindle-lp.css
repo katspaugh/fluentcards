@@ -5,8 +5,35 @@ body {
 }
 
 .kindle-lp {
+    background-color: #fbea31;
     width: 100%;
     overflow: hidden;
+}
+
+.kindle-lp__prev,
+.kindle-lp__next {
+    color: #fff;
+    font-size: 80px;
+    position: fixed;
+    z-index: 20;
+    cursor: pointer;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.7;
+    text-shadow: 0 0 #333;
+}
+
+.kindle-lp__next {
+    right: 20px;
+}
+
+.kindle-lp__prev {
+    left: 20px;
+}
+
+.kindle-lp__prev:hover,
+.kindle-lp__next:hover {
+    opacity: 1;
 }
 
 .kindle-lp__slider,
@@ -19,7 +46,6 @@ body {
 }
 
 .kindle-lp__step {
-    background-color: #fbea31;
     position: absolute;
     z-index: 10;
     left: 0;
@@ -86,31 +112,6 @@ body {
     transform: translateX(-50%);
     top: 10%;
     white-space: nowrap;
-}
-
-.kindle-lp__prev,
-.kindle-lp__next {
-    color: #fff;
-    font-size: 80px;
-    position: fixed;
-    z-index: 20;
-    cursor: pointer;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.7;
-}
-
-.kindle-lp__next {
-    right: 20px;
-}
-
-.kindle-lp__prev {
-    left: 20px;
-}
-
-.kindle-lp__prev:hover,
-.kindle-lp__next:hover {
-    opacity: 1;
 }
 
 .kindle-lp__upload {
