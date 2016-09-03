@@ -1,6 +1,13 @@
 .book {
-    font-family: HelveticaNeue, Helvetica, Arial, sans-serif;
-    color: #555;
+    background: #fff;
+    margin: 0 -78px;
+}
+
+.book__container {
+    margin: 24px;
+    padding: 50px;
+    border-left: 4px solid #000;
+    border-right: 4px solid #000;
 }
 
 .book__header {
@@ -19,6 +26,7 @@
 
 .book__cover {
     margin-right: 20px;
+    max-width: 120px;
 }
 
 .book__title {
@@ -26,11 +34,23 @@
 }
 
 .book__count {
-    margin-top: 2em;
+    display: inline-block;
+    text-align: center;
+    font-weight: bold;
+    margin-left: 1em;
+}
+
+.book__count-number {
+    font-size: 100px;
+    display: block;
+    line-height: 1;
+}
+
+.book__table-wrapper {
+    margin: 50px -50px;
 }
 
 .book__table {
-    margin: 20px 0;
     table-layout: fixed;
 }
 

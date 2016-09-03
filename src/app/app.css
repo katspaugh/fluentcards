@@ -1,0 +1,97 @@
+html {
+    height: 100%;
+}
+
+html, body {
+    background: #fff656;
+    min-height: 100%;
+}
+
+body {
+    color: #000;
+    height: 100%;
+    padding: 24px;
+}
+
+a,
+a:hover,
+a:focus,
+a:active,
+a:visited {
+    color: #000;
+    text-decoration: none;
+    display: inline-block;
+    border-bottom: 3px solid #000;
+}
+
+a:hover,
+a:active,
+a:visited {
+    border-bottom-color: transparent;
+}
+
+code {
+    color: #333;
+    background: none;
+}
+
+.btn,
+.btn:active,
+.btn:visited,
+.btn:hover {
+    background-color: #000;
+    color: #fff656 !important;
+    border-radius: 0;
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+    padding-left: 2em;
+    padding-right: 2em;
+    border-bottom: none;
+}
+
+.btn:hover {
+    background-color: #222;
+}
+
+.btn:active {
+    background-color: #000;
+}
+
+
+.btn-default,
+.btn-default:active,
+.btn-default:visited,
+.btn-default:hover {
+    padding-left: 1em;
+    padding-right: 1em;
+    color: #fff !important;
+}
+
+.alert {
+    position: fixed;
+    max-width: 600px;
+    right: 70px;
+    top: 70px;
+    z-index: 100;
+}
+
+.app {
+    min-height: 100%;
+    margin-bottom: 24px;
+    position: relative;
+    border: 4px solid #000;
+    padding-bottom: 80px;
+}
+
+body.dashed .app {
+    border: 4px dashed #000;
+    height: 100%;
+}
+
+body.dashed .app footer {
+    display: none;
+}
+
+.app__container {
+    padding: 50px;
+}

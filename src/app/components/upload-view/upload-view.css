@@ -1,0 +1,41 @@
+.upload-view {
+}
+
+.upload-view__container {
+    margin-left: 20%;
+}
+
+@media (max-width: 1024px) {
+    .upload-view__container {
+        margin-left: 10%;
+    }
+}
+
+.upload-view p {
+    margin-top: 32px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.upload-view__content {
+    display: inline-block;
+    width: 70%;
+    max-width: 640px;
+}
+
+.upload-view__headline {
+    font-size: 70px;
+    font-weight: bold;
+    line-height: 1.1;
+}
+
+.upload-view__call-to-action {
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+.upload-view__note {
+    position: absolute;
+    bottom: 50px;
+    color: #555;
+}

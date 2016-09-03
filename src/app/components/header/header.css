@@ -1,6 +1,12 @@
-.header {
-    background-color: #fbea31;
-    margin-bottom: 20px;
+.header__logo {
+    display: block;
+    height: 28px;
+    margin-bottom: 5px;
+}
+
+.header__title {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .header__facebook {

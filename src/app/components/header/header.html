@@ -1,12 +1,14 @@
 <div class="navbar navbar-light navbar-full header">
-  <div class="container">
-    <nav class="nav nav-inline">
-      <a href="/" class="navbar-brand"><img src="./logo.svg" alt="▯▯▯" height="16" /></a>
-      <ng-content></ng-content>
+  <nav class="nav nav-inline">
+    <a href="/" class="navbar-brand header__link">
+      <img class="header__logo" src="./logo.svg" alt="▯▯▯" />
+      <span class="header__title">fluentcards</span>
+    </a>
 
-      <span class="nav-link pull-right header__facebook">
-        <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Ffluentcards.com&width=106&layout=button_count&action=like&size=small&show_faces=false&share=true&height=24&appId=389203171203464" width="106" height="24" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-      </span>
-    </nav>
-  </div>
+    <ng-content></ng-content>
+
+    <span class="nav-link pull-right header__facebook">
+      <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Ffluentcards.com&width=106&layout=button_count&action=like&size=small&show_faces=false&share=true&height=24&appId=389203171203464" width="106" height="24" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+    </span>
+  </nav>
 </div>

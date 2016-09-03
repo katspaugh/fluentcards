@@ -1,0 +1,41 @@
+.start-view {
+}
+
+.start-view__container {
+    margin-left: 20%;
+}
+
+@media (max-width: 1024px) {
+    .start-view__container {
+        margin-left: 10%;
+    }
+}
+
+.start-view p {
+    margin-top: 32px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.start-view__content {
+    display: inline-block;
+    width: 70%;
+    max-width: 640px;
+}
+
+.start-view__headline {
+    font-size: 70px;
+    font-weight: bold;
+    line-height: 1.1;
+}
+
+.start-view__sidebar {
+    display: inline-block;
+    vertical-align: bottom;
+    margin-left: 30px;
+}
+
+.start-view__call-to-action {
+    margin-top: 30px;
+    font-size: 20px;
+}

@@ -1,1 +1,11 @@
-<router-outlet></router-outlet>
+<div class="app">
+  <div class="alert alert-danger" role="alert" [hidden]="!errorMessage">{{ errorMessage }}</div>
+
+  <drop (uploadData)="onUpload($event)">
+    <div class="app__container">
+      <header></header>
+      <router-outlet></router-outlet>
+      <footer></footer>
+    </div>
+  </drop>
+</div>

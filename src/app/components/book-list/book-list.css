@@ -1,27 +1,9 @@
-.home {
-    height: 100%;
-    min-height: 100%;
-    font-family: HelveticaNeue, Helvetica, Arial, sans-serif;
-    color: #555;
-}
-
-.home__hero {
-    margin-top: 64px;
-    margin-bottom: 40px;
-}
-
-.home__lead {
-    font-size: 36px;
-    font-weight: bold;
-    line-height: 1.39;
-}
-
-.home__books {
+.book-list {
     display: flex;
     flex-wrap: wrap;
 }
 
-.home__book {
+.book-list__book {
     flex-grow: 1;
     width: 33%;
     max-width: 33%;
@@ -30,66 +12,76 @@
 }
 
 @media (max-width: 1024px) {
-    .home__book {
+    .book-list__book {
         width: 50%;
         max-width: 50%;
     }
 }
 
 @media (max-width: 768px) {
-    .home__book {
+    .book-list__book {
         width: 100%;
         max-width: 100%;
     }
 }
 
-.home__book-link {
+.book-list__book-link {
     color: #555;
     min-height: 200px;
     display: block;
     text-decoration: none;
+    border-bottom: none;
 }
 
-.home__book-link:hover {
+.book-list__book-link:hover {
     background-color: rgba(251, 234, 49, 0.2);
 }
 
-.home__card {
+.book-list__card {
     border: none;
     border-radius: 0;
 }
 
-.home__card-container {
+.book-list__card-container {
     overflow: hidden;
     position: relative;
 }
 
-.home__card-cover {
+.book-list__card-cover {
     float: left;
     min-width: 107px;
     margin-right: 20px;
 }
 
-.home__card-content {
+.book-list__pseudo-cover {
+    width: 107px;
+    height: 160px;
+    background: #999;
+}
+
+.book-list__card-content {
     overflow: hidden;
-    padding-bottom: 20px;
+    padding-bottom: 25px;
 }
 
-.home__card-content .card-title {
-    font-size: 18px;
+.book-list__card-content .card-title {
+    font-size: 16px;
     font-weight: bold;
-    line-height: 1.33;
+    line-height: 1.3;
 }
 
-.home__card-content .card-text {
+.book-list__card-content .card-text {
     font-size: 14px;
 }
 
-.home__word-count {
+.book-list__word-count {
     font-size: 11px;
     padding: 0.4em 0.6em;
-    background-color: #428bca;
+    background-color: #000;
+    border-radius: 0;
     position: absolute;
     z-index: 1;
-    bottom: 0;
+    bottom: 20px;
+    left: 127px;
+    margin-left: 1.25rem;
 }

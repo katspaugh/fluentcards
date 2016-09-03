@@ -1,24 +1,25 @@
 <div class="book">
-  <header>
-    <a class="nav-link" [routerLink]="[ '/books' ]">Back to books</a>
-  </header>
+  <div class="alert alert-danger" role="alert" [hidden]="!errorMessage">{{ errorMessage }}</div>
 
-  <div class="book__header container">
-    <img *ngIf="book.cover" [src]="book.cover"
-         class="book__cover pull-left"
-         alt="{{ book.title }} cover" />
+  <div class="book__container">
+    <div class="book__header">
+      <div class="book__count pull-right">
+        <span class="book__count-number">{{ book.count }}</span>
+        <span class="book__count-label">{{ book.count == 1 ? 'word' : 'words' }}</span>
+      </div>
 
-    <h4 class="book__title">
-      {{ book.title }}<br />
-      <small>by <em>{{ book.authors }}</em></small>
-    </h4>
+      <img *ngIf="book.cover"
+           [src]="book.cover"
+           (error)="book.cover = null"
+           class="book__cover pull-left"
+           alt="{{ book.title }} cover" />
 
-    <p class="book__count">
-      {{ book.count }}&nbsp;{{ book.count == 1 ? 'word' : 'words' }}
-    </p>
-  </div>
+      <h4 class="book__title">
+        {{ book.title }}<br />
+        <small>by <em>{{ book.authors }}</em></small>
+      </h4>
+    </div>
 
-  <div class="container-fluid">
     <div class="book__controls row">
       <div class="col-lg-4 col-md-12 book__control">
         <label for="choose-lang">Choose your native language:</label>
@@ -41,7 +42,7 @@
 
           &nbsp;and&nbsp;
 
-          <button class="btn btn-primary-outline" (click)="addDefinitions()" [disabled]="isLoadingDefinitions">
+          <button class="btn btn-default" (click)="addDefinitions()" [disabled]="isLoadingDefinitions">
             <loader [isLoading]="isLoadingDefinitions"></loader>&nbsp;add definitions&nbsp;
           </button>
         </div>
@@ -50,14 +51,14 @@
       <div class="col-lg-2 col-md-12 book__control">
         <label>Optionally,</label>
         <div>
-          <button class="btn btn-primary-outline" (click)="addCloze()" [disabled]="book.vocabs[0].cloze != null">
+          <button class="btn btn-default" (click)="addCloze()" [disabled]="book.vocabs[0].cloze != null">
             add cloze test
           </button>
 
           <small class="book__help">
             <a class="text-muted" target="_blank" href="http://ankisrs.net/docs/manual.html#cloze-deletion">
               <i class="fa fa-question-circle"></i>
-              What is a <u>cloze test</u>?
+              What is a cloze test?
             </a>
           </small>
         </div>
@@ -67,7 +68,7 @@
         <label>You can also</label>
 
         <div>
-          <button class="btn btn-primary-outline" (click)="addAllImages()" [disabled]="isLoadingImages">
+          <button class="btn btn-default" (click)="addAllImages()" [disabled]="isLoadingImages">
             <loader [isLoading]="isLoadingImages"></loader>&nbsp;add images&nbsp;
           </button>
         </div>
@@ -76,78 +77,74 @@
       <div class="col-lg-2 col-md-12 book__control">
         <label>Finally,</label>
         <div>
-          <a class="btn btn-success-outline" download="{{ book.title }}" [href]="exportUrl">
+          <a class="btn btn-default" download="{{ book.title }}" [href]="exportUrl">
             Download as CSV
           </a>
 
           <small class="book__help">
             <a class="text-muted" target="_blank" href="http://ankisrs.net/docs/manual.html#importing-text-files">
               <i class="fa fa-question-circle"></i>
-              How to <u>import it into Anki</u>?
+              How to import it into Anki?
             </a>
           </small>
         </div>
       </div>
     </div>
 
-    <div class="container">
-      <div class="alert alert-danger" role="alert" [hidden]="!errorMessage">{{ errorMessage }}</div>
+    <div class="book__table-wrapper">
+      <table class="book__table table table-striped">
+        <thead>
+          <th style="width: 2em">#</th>
+          <th style="width: 4em">Image</th>
+          <th width="17%">Word</th>
+          <th width="17%" *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">Definition</th>
+          <th width="60%">Context<span [hidden]="book.vocabs[0].cloze == null"> (with clozes)</span></th>
+          <th style="width: 2em"></th>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let vocab of book.vocabs; let i = index">
+            <td class="text-muted">{{ i + 1 }}</td>
+
+            <td align="center">
+              <img *ngIf="vocab.image" class="book__thumb" [src]="vocab.image.thumbnail" (click)="addImage(vocab)" />
+
+              <i *ngIf="!vocab.preloadImage && !vocab.image"
+                 class="fa fa-image text-muted book__get-image"
+                 title="Set an image"
+                 (click)="addImage(vocab)"></i>
+
+              <loader [isLoading]="vocab.preloadImage"></loader>
+
+              <div class="book__images" *ngIf="vocab.chooseImage">
+                <vocab-images [word]="vocab[0]" [language]="book.language" (onResult)="onImageAdd($event, vocab)"></vocab-images>
+              </div>
+
+              <vocab-images *ngIf="vocab.preloadImage"
+                            [word]="vocab[0]" [language]="book.language" [single]="true"
+                            (onResult)="onImageAdd($event, vocab)">
+              </vocab-images>
+            </td>
+
+            <td class="book__word">
+              {{ vocab[0] }} <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.gender">, {{ vocab.gender }}</b>
+              <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab[0])"></i>
+            </td>
+
+            <td *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">
+              <nobr>
+                <span [hidden]="vocab.translation == null">{{ vocab.translation }}</span>
+                <i [hidden]="!vocab.definition || vocab.definition.tr.length <= 1" class="fa fa-repeat text-muted book__change-def" (click)="changeDefinition(vocab)"></i>
+              </nobr>
+              <center [hidden]="vocab.translation != null"><loader [isLoading]="isLoadingDefinitions"></loader></center>
+            </td>
+
+            <td class="book__context">{{ vocab.cloze || vocab[2] }}</td>
+
+            <td><i class="fa fa-remove text-muted book__remove-vocab" (click)="removeVocab(i)" title="Remove"></i></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    <table class="book__table table table-striped">
-      <thead>
-        <th style="width: 2em">#</th>
-        <th style="width: 4em">Image</th>
-        <th width="17%">Word</th>
-        <th width="17%" *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">Definition</th>
-        <th width="60%">Context<span [hidden]="book.vocabs[0].cloze == null"> (with clozes)</span></th>
-        <th style="width: 2em"></th>
-      </thead>
-
-      <tbody>
-        <tr *ngFor="let vocab of book.vocabs; let i = index">
-          <td class="text-muted">{{ i + 1 }}</td>
-
-          <td align="center">
-            <img *ngIf="vocab.image" class="book__thumb" [src]="vocab.image.thumbnail" (click)="addImage(vocab)" />
-
-            <i *ngIf="!vocab.preloadImage && !vocab.image"
-               class="fa fa-image text-muted book__get-image"
-               title="Set an image"
-               (click)="addImage(vocab)"></i>
-
-            <loader [isLoading]="vocab.preloadImage"></loader>
-
-            <div class="book__images" *ngIf="vocab.chooseImage">
-              <vocab-images [word]="vocab[0]" [language]="book.language" (onResult)="onImageAdd($event, vocab)"></vocab-images>
-            </div>
-
-            <vocab-images *ngIf="vocab.preloadImage"
-                          [word]="vocab[0]" [language]="book.language" [single]="true"
-                          (onResult)="onImageAdd($event, vocab)">
-            </vocab-images>
-          </td>
-
-          <td class="book__word">
-            {{ vocab[0] }} <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.gender">, {{ vocab.gender }}</b>
-            <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab[0])"></i>
-          </td>
-
-          <td *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">
-            <nobr>
-              <span [hidden]="vocab.translation == null">{{ vocab.translation }}</span>
-              <i [hidden]="!vocab.definition || vocab.definition.tr.length <= 1" class="fa fa-repeat text-muted book__change-def" (click)="changeDefinition(vocab)"></i>
-            </nobr>
-            <center [hidden]="vocab.translation != null"><loader [isLoading]="isLoadingDefinitions"></loader></center>
-          </td>
-
-          <td class="book__context">{{ vocab.cloze || vocab[2] }}</td>
-
-          <td><i class="fa fa-remove text-muted book__remove-vocab" (click)="removeVocab(i)" title="Remove"></i></td>
-        </tr>
-      </tbody>
-    </table>
   </div>
-
-  <footer></footer>
 </div>

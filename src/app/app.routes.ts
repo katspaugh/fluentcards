@@ -1,15 +1,19 @@
 import {provideRouter, RouterConfig, Routes} from '@angular/router';
 
-import {Home} from './components/home/home';
+import {StartView} from './components/start-view/start-view';
+import {ExportView} from './components/export-view/export-view';
+import {UploadView} from './components/upload-view/upload-view';
+import {BooksView} from './components/books-view/books-view';
 import {Book} from './components/book/book';
-import {KindleLp} from './components/kindle-lp/kindle-lp';
 
 export const rootRouterConfig: Routes = [
-    { path: '', redirectTo: 'kindle', terminal: true },
-    { path: 'kindle', component: KindleLp },
+    { path: '', component: StartView },
+    { path: 'demo', redirectTo: 'books' },
+    { path: 'export', component: ExportView },
+    { path: 'upload', component: UploadView },
     { path: 'books',
       children: [
-          { path: '', component: Home },
+          { path: '', component: BooksView },
           { path: ':id', component: Book }
       ]
     }
