@@ -32,6 +32,11 @@
     position: relative;
 }
 
+.book__control label {
+    font-weight: bold;
+    padding-left: 0.25em;
+}
+
 .book__control input[type=checkbox]:after {
     content: '';
     display: block;

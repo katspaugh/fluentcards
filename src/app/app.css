@@ -85,13 +85,17 @@ code {
 .app {
     border: 4px solid #000;
     position: relative;
-    padding: 50px 50px 130px;
     margin-bottom: 24px;
     min-height: 100%;
 }
 
+.app__container {
+    padding: 50px 50px 130px;
+}
+
 body.upload-page .app {
     border: 4px dashed #000;
+    height: 100%;
 }
 
 body.upload-page footer {

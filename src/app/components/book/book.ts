@@ -232,6 +232,8 @@ export class Book {
 
     onLanguageSelect() {
         localStorage.setItem('language', this.language);
+
+        this.definitionsEnabled && this.addDefinitions();
     }
 
     onToggleDefinitions() {
