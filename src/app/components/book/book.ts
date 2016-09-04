@@ -1,19 +1,13 @@
 import {Component} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {ROUTER_DIRECTIVES} from '@angular/router';
-import {DomSanitizationService} from '@angular/platform-browser';
+import {DomSanitizer} from '@angular/platform-browser';
 
 import {VocabService} from '../../services/vocab';
 import {DictionaryService} from '../../services/dictionary';
 import {TranslationService} from '../../services/translation';
-import {Loader} from '../loader/loader';
-import {VocabImages} from '../vocab-images/vocab-images';
 
 @Component({
     selector: 'book',
-    pipes: [],
-    providers: [],
-    directives: [ ROUTER_DIRECTIVES, Loader, VocabImages ],
     styleUrls: [ './book.css' ],
     templateUrl: './book.html'
 })
@@ -27,11 +21,14 @@ export class Book {
     isLoadingDefinitions = false;
     isLoadingImages = false;
     hasSpeechSynthesis = window.speechSynthesis != null;
+    definitionsEnabled = false;
+    imagesEnabled = false;
+    clozeEnabled = false;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private sanitizer: DomSanitizationService,
+        private sanitizer: DomSanitizer,
         private vocabService: VocabService,
         private dictionaryService: DictionaryService,
         private translationService: TranslationService
@@ -90,10 +87,14 @@ export class Book {
             this.book = book;
             this.exportUrl = this.getExportUrl();
         });
+
+        document.body.classList.add('book-page');
     }
 
     ngOnDestroy() {
         this.sub.unsubscribe();
+
+        document.body.classList.remove('book-page');
     }
 
     addCloze() {
@@ -107,8 +108,18 @@ export class Book {
                 cloze = context.replace(new RegExp(word, 'g'), '{{c1::$&}}');
             }
 
+            // Try the root form
+            if (cloze == context) {
+                cloze = context.replace(new RegExp(vocab[0], 'g'), '{{c1::$&}}');
+            }
+
             vocab.cloze = cloze;
         });
+        this.exportUrl = this.getExportUrl();
+    }
+
+    removeCloze() {
+        this.book.vocabs.forEach((vocab) => delete vocab.cloze);
         this.exportUrl = this.getExportUrl();
     }
 
@@ -152,8 +163,9 @@ export class Book {
             );
     }
 
-    onLanguageSelect() {
-        localStorage.setItem('language', this.language);
+    removeDefinitions() {
+        this.book.vocabs.forEach((vocab) => delete vocab.translation);
+        this.exportUrl = this.getExportUrl();
     }
 
     speakWord(word) {
@@ -185,6 +197,11 @@ export class Book {
         load(0);
     }
 
+    removeImages() {
+        this.book.vocabs.forEach((vocab) => delete vocab.image);
+        this.exportUrl = this.getExportUrl();
+    }
+
     removeVocab(index: number) {
         if (this.book.vocabs.length == 1) return;
         this.book.vocabs.splice(index, 1);
@@ -211,6 +228,22 @@ export class Book {
             vocab.image = data.image;
             this.exportUrl = this.getExportUrl();
         }
+    }
+
+    onLanguageSelect() {
+        localStorage.setItem('language', this.language);
+    }
+
+    onToggleDefinitions() {
+        this.definitionsEnabled ? this.addDefinitions() : this.removeDefinitions();
+    }
+
+    onToggleImages() {
+        this.imagesEnabled ? this.addAllImages() : this.removeImages();
+    }
+
+    onToggleCloze() {
+        this.clozeEnabled ? this.addCloze() : this.removeCloze();
     }
 
 }

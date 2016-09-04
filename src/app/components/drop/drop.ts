@@ -2,9 +2,6 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
     selector: 'drop',
-    pipes: [],
-    providers: [],
-    directives: [],
     styleUrls: [ './drop.css' ],
     templateUrl: './drop.html'
 })

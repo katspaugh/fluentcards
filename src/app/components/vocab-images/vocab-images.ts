@@ -1,13 +1,9 @@
 import {Component, Input, Output, EventEmitter, ElementRef, HostListener} from '@angular/core';
 
 import {ImageSearchService} from '../../services/image-search';
-import {Loader} from '../loader/loader';
 
 @Component({
   selector: 'vocab-images',
-  pipes: [],
-  providers: [],
-  directives: [ Loader ],
   styleUrls: [ './vocab-images.css' ],
   templateUrl: './vocab-images.html'
 })

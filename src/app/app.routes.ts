@@ -1,4 +1,4 @@
-import {provideRouter, RouterConfig, Routes} from '@angular/router';
+import {Routes} from '@angular/router';
 
 import {StartView} from './components/start-view/start-view';
 import {ExportView} from './components/export-view/export-view';

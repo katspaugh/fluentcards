@@ -1,15 +1,10 @@
 import {Component} from '@angular/core';
-import {DomSanitizationService} from '@angular/platform-browser';
-import {ROUTER_DIRECTIVES} from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
 
 import {VocabService} from '../../services/vocab';
 
-
 @Component({
     selector: 'book-list',
-    pipes: [],
-    providers: [],
-    directives: [ ROUTER_DIRECTIVES ],
     styleUrls: [ './book-list.css' ],
     templateUrl: './book-list.html'
 })
@@ -17,13 +12,13 @@ export class BookList {
     books: any[];
 
     private randomGradient() {
-        return this.sanitization.bypassSecurityTrustStyle(
+        return this.sanitizer.bypassSecurityTrustStyle(
             'linear-gradient(to bottom, hsl(' + Math.random() * 360 +
                 ', 80%, 80%) 0%, hsl(' + Math.random() * 360 + ', 80%, 80%) 100%)'
         );
     }
 
-    constructor(private sanitization: DomSanitizationService, private vocabService: VocabService) {
+    constructor(private sanitizer: DomSanitizer, private vocabService: VocabService) {
         this.books = this.vocabService.getBooks();
 
         this.books.forEach((book) => book.gradient = this.randomGradient());

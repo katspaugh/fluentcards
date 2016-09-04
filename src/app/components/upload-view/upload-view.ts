@@ -11,11 +11,11 @@ export class UploadView {
     }
 
     ngOnInit() {
-        document.body.classList.add('dashed');
+        document.body.classList.add('upload-page');
     }
 
     ngOnDestroy() {
-        document.body.classList.remove('dashed');
+        document.body.classList.remove('upload-page');
     }
 
 }

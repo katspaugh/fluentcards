@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers, URLSearchParams} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 const endpoint = 'https://api.cognitive.microsoft.com/bing/v5.0/images/search';
 const apiKeys = [

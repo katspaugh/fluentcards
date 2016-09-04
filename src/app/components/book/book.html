@@ -1,6 +1,60 @@
 <div class="book">
   <div class="alert alert-danger" role="alert" [hidden]="!errorMessage">{{ errorMessage }}</div>
 
+  <a class="book__close" [routerLink]="[ '/books' ]">&times;</a>
+
+  <div class="book__controls">
+    <div class="book__control">
+      <input id="definitions" type="checkbox"
+             [disabled]="isLoadingDefinitions"
+             [(ngModel)]="definitionsEnabled"
+             (ngModelChange)="onToggleDefinitions($event)" />
+
+      <label for="definitions">Add definitions in</label>
+
+      <select [(ngModel)]="language" (ngModelChange)="onLanguageSelect($event)">
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="es">Español</option>
+        <option value="pt">Português</option>
+        <option value="it">Italiano</option>
+        <option value="pl">Polski</option>
+        <option value="ru">Русский</option>
+        <option value="zh">中文</option>
+      </select>
+
+      <div class="book__loader">
+        <loader [isLoading]="isLoadingDefinitions"></loader>
+      </div>
+    </div>
+
+    <div class="book__control">
+      <input id="pictures" type="checkbox"
+             [disabled]="isLoadingImages"
+             [(ngModel)]="imagesEnabled"
+             (ngModelChange)="onToggleImages($event)" />
+
+      <label for="pictures">Pictures</label>
+
+      <div class="book__loader">
+        <loader [isLoading]="isLoadingImages"></loader>
+      </div>
+    </div>
+
+    <div class="book__control">
+      <input id="cloze" type="checkbox" [(ngModel)]="clozeEnabled" (ngModelChange)="onToggleCloze($event)" />
+
+      <label for="cloze">Cloze deletions</label>
+    </div>
+
+    <div class="book__control">
+      <a class="btn btn-default btn-small" download="{{ book.title }}" [href]="exportUrl">
+        Download as CSV
+      </a>
+    </div>
+  </div>
+
   <div class="book__container">
     <div class="book__header">
       <div class="book__count pull-right">
@@ -18,77 +72,6 @@
         {{ book.title }}<br />
         <small>by <em>{{ book.authors }}</em></small>
       </h4>
-    </div>
-
-    <div class="book__controls row">
-      <div class="col-lg-4 col-md-12 book__control">
-        <label for="choose-lang">Choose your native language:</label>
-
-        <div>
-          <input id="choose-lang" type="text" list="langs"
-                 length="2" max-length="2" min-length="2"
-                 [(ngModel)]="language" (ngModelChange)="onLanguageSelect($event)" />
-          <datalist id="langs">
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-            <option value="de">Deutsch</option>
-            <option value="es">Español</option>
-            <option value="pt">Português</option>
-            <option value="it">Italiano</option>
-            <option value="pl">Polski</option>
-            <option value="ru">Русский</option>
-            <option value="zh">中文</option>
-          </datalist>
-
-          &nbsp;and&nbsp;
-
-          <button class="btn btn-default" (click)="addDefinitions()" [disabled]="isLoadingDefinitions">
-            <loader [isLoading]="isLoadingDefinitions"></loader>&nbsp;add definitions&nbsp;
-          </button>
-        </div>
-      </div>
-
-      <div class="col-lg-2 col-md-12 book__control">
-        <label>Optionally,</label>
-        <div>
-          <button class="btn btn-default" (click)="addCloze()" [disabled]="book.vocabs[0].cloze != null">
-            add cloze test
-          </button>
-
-          <small class="book__help">
-            <a class="text-muted" target="_blank" href="http://ankisrs.net/docs/manual.html#cloze-deletion">
-              <i class="fa fa-question-circle"></i>
-              What is a cloze test?
-            </a>
-          </small>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-12 book__control">
-        <label>You can also</label>
-
-        <div>
-          <button class="btn btn-default" (click)="addAllImages()" [disabled]="isLoadingImages">
-            <loader [isLoading]="isLoadingImages"></loader>&nbsp;add images&nbsp;
-          </button>
-        </div>
-      </div>
-
-      <div class="col-lg-2 col-md-12 book__control">
-        <label>Finally,</label>
-        <div>
-          <a class="btn btn-default" download="{{ book.title }}" [href]="exportUrl">
-            Download as CSV
-          </a>
-
-          <small class="book__help">
-            <a class="text-muted" target="_blank" href="http://ankisrs.net/docs/manual.html#importing-text-files">
-              <i class="fa fa-question-circle"></i>
-              How to import it into Anki?
-            </a>
-          </small>
-        </div>
-      </div>
     </div>
 
     <div class="book__table-wrapper">
@@ -132,11 +115,9 @@
             </td>
 
             <td *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">
-              <nobr>
-                <span [hidden]="vocab.translation == null">{{ vocab.translation }}</span>
-                <i [hidden]="!vocab.definition || vocab.definition.tr.length <= 1" class="fa fa-repeat text-muted book__change-def" (click)="changeDefinition(vocab)"></i>
-              </nobr>
-              <center [hidden]="vocab.translation != null"><loader [isLoading]="isLoadingDefinitions"></loader></center>
+              <span [hidden]="vocab.translation == null">{{ vocab.translation }}</span>
+              <i [hidden]="!vocab.definition || vocab.definition.tr.length <= 1" class="fa fa-repeat text-muted book__change-def" (click)="changeDefinition(vocab)"></i>
+              <span [hidden]="vocab.translation != null"><loader [isLoading]="isLoadingDefinitions"></loader></span>
             </td>
 
             <td class="book__context">{{ vocab.cloze || vocab[2] }}</td>
