@@ -181,9 +181,9 @@ export class Book {
     }
 
     addAllImages() {
-        let load = (index) => {
-            const throttle = 300;
+        const throttle = 300;
 
+        let load = (index) => {
             this.book.vocabs[index].preloadImage = true;
 
             if (index + 1 < this.book.vocabs.length) {

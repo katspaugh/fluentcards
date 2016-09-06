@@ -2,6 +2,7 @@
 }
 
 .start-view__container {
+    min-height: 100%;
     margin-left: 20%;
 }
 
@@ -9,33 +10,4 @@
     .start-view__container {
         margin-left: 10%;
     }
-}
-
-.start-view p {
-    margin-top: 32px;
-    font-size: 16px;
-}
-
-.start-view__content {
-    display: inline-block;
-    width: 70%;
-    max-width: 640px;
-    margin-right: 30px;
-}
-
-.start-view__headline {
-    font-size: 9vh;
-    font-weight: bold;
-    line-height: 1.1;
-    margin-top: 1em;
-}
-
-.start-view__sidebar {
-    display: inline-block;
-    vertical-align: bottom;
-}
-
-.start-view__call-to-action {
-    margin-top: 30px;
-    font-size: 20px;
 }

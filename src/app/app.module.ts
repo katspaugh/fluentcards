@@ -13,6 +13,7 @@ import {TranslationService} from './services/translation';
 import {ImageSearchService} from './services/image-search';
 
 import {StartView} from './components/start-view/start-view';
+import {IntroView} from './components/intro-view/intro-view';
 import {ExportView} from './components/export-view/export-view';
 import {UploadView} from './components/upload-view/upload-view';
 import {BooksView} from './components/books-view/books-view';
@@ -27,7 +28,7 @@ import {VocabImages} from './components/vocab-images/vocab-images';
 
 @NgModule({
     declarations: [
-        AppComponent, StartView, ExportView, UploadView, BooksView, Book,
+        AppComponent, StartView, IntroView, ExportView, UploadView, BooksView, Book,
         BookList, Drop, Footer, Header, Loader, VocabImages
     ],
     imports     : [ BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig) ],

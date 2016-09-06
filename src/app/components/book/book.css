@@ -2,11 +2,14 @@
 }
 
 .book__close {
-    font-size: 70px;
     position: absolute;
     z-index: 1;
     right: 30px;
     top: 7px;
+}
+
+.book__close-icon {
+    font-size: 70px;
     line-height: 1;
 }
 

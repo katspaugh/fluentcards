@@ -109,6 +109,14 @@ body.book-page {
     background: #fff;
 }
 
+body.book-page .header__menu {
+    visibility: hidden;
+}
+
+body.book-page .header__item_logo {
+    visibility: visible;
+}
+
 body.book-page .header__facebook {
     display: none;
 }
