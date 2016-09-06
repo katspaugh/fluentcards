@@ -14,11 +14,9 @@
 .upload-view p {
     margin-top: 32px;
     font-size: 16px;
-    font-weight: bold;
 }
 
 .upload-view__content {
-    display: inline-block;
     width: 70%;
     max-width: 640px;
 }
@@ -27,6 +25,7 @@
     font-size: 70px;
     font-weight: bold;
     line-height: 1.1;
+    margin-top: 1em;
 }
 
 .upload-view__call-to-action {

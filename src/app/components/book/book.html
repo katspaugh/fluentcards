@@ -10,7 +10,7 @@
              [(ngModel)]="definitionsEnabled"
              (ngModelChange)="onToggleDefinitions($event)" />
 
-      <label for="definitions">Add definitions in</label>
+      <label for="definitions">add definitions in&nbsp;</label>
 
       <select [(ngModel)]="language" (ngModelChange)="onLanguageSelect($event)">
         <option value="en">English</option>
@@ -36,7 +36,7 @@
              [(ngModel)]="imagesEnabled"
              (ngModelChange)="onToggleImages($event)" />
 
-      <label for="pictures">Pictures</label>
+      <label for="pictures">pictures</label>
 
       <div class="book__loader">
         <loader [isLoading]="isLoadingImages"></loader>
@@ -46,7 +46,7 @@
     <div class="book__control">
       <input id="cloze" type="checkbox" [(ngModel)]="clozeEnabled" (ngModelChange)="onToggleCloze($event)" />
 
-      <label for="cloze">Cloze deletions</label>
+      <label for="cloze">cloze deletions</label>
     </div>
 
     <div class="book__control">

@@ -14,25 +14,25 @@
 .start-view p {
     margin-top: 32px;
     font-size: 16px;
-    font-weight: bold;
 }
 
 .start-view__content {
     display: inline-block;
     width: 70%;
     max-width: 640px;
+    margin-right: 30px;
 }
 
 .start-view__headline {
     font-size: 70px;
     font-weight: bold;
     line-height: 1.1;
+    margin-top: 1em;
 }
 
 .start-view__sidebar {
     display: inline-block;
     vertical-align: bottom;
-    margin-left: 30px;
 }
 
 .start-view__call-to-action {

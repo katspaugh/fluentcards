@@ -21,7 +21,8 @@ a:visited {
     color: #000;
     text-decoration: none;
     display: inline-block;
-    border-bottom: 3px solid #000;
+    border-bottom: 0.15em solid #000;
+    transition: border-color 100ms ease-in;
 }
 
 a:hover,
@@ -47,6 +48,7 @@ code {
     padding-left: 2em;
     padding-right: 2em;
     border-bottom: none;
+    text-transform: lowercase;
 }
 
 .btn:hover {
