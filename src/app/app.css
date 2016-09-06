@@ -20,8 +20,9 @@ a:active,
 a:visited {
     color: #000;
     text-decoration: none;
-    display: inline-block;
     border-bottom: 0.15em solid #000;
+    padding-bottom: 0.1em;
+    margin-bottom: -0.25em;
     transition: border-color 100ms ease-in;
 }
 

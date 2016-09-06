@@ -1,6 +1,45 @@
-.header__link {
-    font-size: 20px;
+.header {
+    position: relative;
+}
+
+.header__menu {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    margin-left: 20%;
+}
+
+.header__item {
+    flex-grow: 1;
+}
+
+.header__item a {
+    font-size: 1.25em;
     font-weight: bold;
+    text-transform: lowercase;
+}
+
+.header__item i {
+    opacity: 0;
+    transition: opacity 30ms ease-in;
+}
+
+.header__item:hover i {
+    opacity: 1;
+}
+
+.header__item a.header__active {
+    border-color: transparent;
+}
+
+.header__item_placeholder {
+    visibility: hidden;
+}
+
+.header__item_logo {
+    position: absolute;
+    z-index: 1;
+    left: 0;
 }
 
 .header__logo {
@@ -10,7 +49,9 @@
 }
 
 .header__facebook {
+    position: absolute;
+    z-index: 1;
+    right: 0;
     height: 24px;
-    margin-top: 40px;
-    position: relative;
+    bottom: 0;
 }

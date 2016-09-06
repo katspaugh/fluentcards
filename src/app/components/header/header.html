@@ -1,14 +1,34 @@
-<div class="navbar navbar-light navbar-full header">
-  <nav class="nav nav-inline">
-    <a [routerLink]="[ '' ]" class="navbar-brand header__link">
-      <img class="header__logo" src="./logo.svg" alt="▯▯▯" />
-      <span class="header__title">fluentcards</span>
-    </a>
+<nav class="header">
+  <div class="header__menu">
+    <div class="header__item header__item_logo">
+      <a [routerLink]="[ '' ]">
+        <img class="header__logo" src="./logo.svg" alt="▯▯▯" />
+        <span class="header__title">fluentcards</span>
+      </a>
+    </div>
 
-    <span class="nav-link pull-right header__facebook">
-      <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Ffluentcards.com&width=130&layout=button_count&action=like&size=small&show_faces=false&share=true&height=24&locale=en_US&appId=389203171203464" width="130" height="24" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-    </span>
+    <div class="header__item">
+      <a [routerLink]="[ 'export' ]" routerLinkActive="header__active">Plug Kindle</a>
+    </div>
 
-    <ng-content></ng-content>
-  </nav>
-</div>
+    <div class="header__item">
+      <a [routerLink]="[ 'upload' ]" routerLinkActive="header__active">Upload vocab.db</a>
+    </div>
+
+    <div class="header__item">
+      <a target="_blank" href="http://ankisrs.net/docs/manual.html#importing" rel="nofollow">create flashcards</a>
+      <i class="fa fa-external-link"></i>
+    </div>
+
+    <div class="header__item header__item_placeholder">
+      <a>
+        <img class="header__logo" src="./logo.svg" alt="▯▯▯" />
+        <span class="header__title">fluentcards</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="header__facebook">
+    <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Ffluentcards.com&width=130&layout=button_count&action=like&size=small&show_faces=false&share=true&height=24&locale=en_US&appId=389203171203464" width="130" height="24" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+  </div>
+</nav>
