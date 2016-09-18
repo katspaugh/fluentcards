@@ -45,10 +45,11 @@ code {
     color: #fff656 !important;
     border-radius: 0;
     padding-top: 0.6em;
-    padding-bottom: 0.6em;
+    padding-bottom: 0.6em !important;
+    margin-bottom: 0 !important;
     padding-left: 2em;
     padding-right: 2em;
-    border-bottom: none;
+    border-bottom: none !important;
     text-transform: lowercase;
 }
 
@@ -74,7 +75,7 @@ code {
 .btn-small:active,
 .btn-small:visited,
 .btn-small:hover {
-    padding: 0.15em 0.4em;
+    padding: 0.15em 0.4em !important;
 }
 
 .alert {

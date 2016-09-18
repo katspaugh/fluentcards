@@ -21,10 +21,6 @@ export class AppComponent {
         private vocabService: VocabService
     ) {}
 
-    private preload(books) {
-        books.forEach((book) => this.vocabService.getVocabs(book.asin));
-    }
-
     onUpload(event) {
         this.errorMessage = '';
 
@@ -33,15 +29,15 @@ export class AppComponent {
             return;
         }
 
-        this.vocabService.init(event.data);
-        let books = this.vocabService.getBooks();
+        this.vocabService.loadDb(event.data);
+        let books = this.vocabService.loadBooks();
 
-        if (books && !books.isDemo) {
-            setTimeout(() => this.preload(books), 300);
-            this.router.navigate([ REDIRECT_URL, Math.random() ]);
-            return;
+        if (!books) {
+            return this.errorMessage = DATA_ERROR;
         }
 
-        this.errorMessage = DATA_ERROR;
+        if (!books.isDemo) {
+            this.router.navigate([ REDIRECT_URL, Math.random() ]);
+        }
     }
 }

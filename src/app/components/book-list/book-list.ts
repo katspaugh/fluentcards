@@ -13,15 +13,21 @@ export class BookList {
 
     private randomGradient() {
         return this.sanitizer.bypassSecurityTrustStyle(
-            'linear-gradient(to bottom, hsl(' + Math.random() * 360 +
-                ', 80%, 80%) 0%, hsl(' + Math.random() * 360 + ', 80%, 80%) 100%)'
+            `linear-gradient(to bottom,
+hsl(${ Math.random() * 360 }, 80%, 80%) 0%,
+hsl(${ Math.random() * 360 }, 80%, 80%) 100%)`
         );
     }
 
     constructor(private sanitizer: DomSanitizer, private vocabService: VocabService) {
         this.books = this.vocabService.getBooks();
 
-        this.books.forEach((book) => book.gradient = this.randomGradient());
+        // Add gradients for missing covers
+        this.books.forEach((book) => {
+            if (!book.cover) {
+                book.gradient = this.randomGradient();
+            }
+        });
     }
 
     truncateWords(text, wordsCount) {
@@ -29,6 +35,13 @@ export class BookList {
         let words = text.split(delim);
         let ellipsis = words.length > wordsCount ? '…' : '';
         return words.slice(0, wordsCount).join(delim) + ellipsis;
+    }
+
+    removeBook(book) {
+        if (confirm("Don't show this book?")) {
+            this.vocabService.removeBook(book);
+            this.books = this.vocabService.getBooks();
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-<div class="book">
+<div class="book" *ngIf="book">
   <div class="alert alert-danger" role="alert" [hidden]="!errorMessage">{{ errorMessage }}</div>
 
   <a class="book__close" [routerLink]="[ '/books' ]"><span class="book__close-icon">&times;</span></a>
@@ -78,12 +78,12 @@
     <div class="book__table-wrapper">
       <table class="book__table table table-striped">
         <thead>
-          <th style="width: 2em">#</th>
+          <th style="width: 2em"><span class="text-muted">#</span></th>
           <th style="width: 4em">Image</th>
           <th width="17%">Word</th>
           <th width="17%" *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">Definition</th>
           <th width="60%">Context<span [hidden]="book.vocabs[0].cloze == null"> (with clozes)</span></th>
-          <th style="width: 2em"></th>
+          <th style="width: 3em"></th>
         </thead>
 
         <tbody>

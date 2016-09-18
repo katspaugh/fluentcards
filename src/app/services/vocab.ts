@@ -1,49 +1,57 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Inject} from '@angular/core';
 
 @Injectable()
 export class VocabService {
+
     private db: any;
     private books: any;
-    private vocabs: any;
-    private storage = window.localStorage;
+    private storage: any;
 
-    constructor() {
+    constructor(@Inject('Window') private window: Window) {
+        this.storage = window.localStorage;
+
         this.books = JSON.parse(this.storage.getItem('books'));
-        this.vocabs = JSON.parse(this.storage.getItem('vocabs')) || {};
 
         // Load demo books
         if (!this.books) {
             this.books = window.DEMO_BOOKS;
             this.books.isDemo = true;
-            this.vocabs = {};
-            this.books.forEach((book) => {
-                this.vocabs[book.asin] = book;
-            });
+            this.storeBooks();
         }
     }
 
-    init(uints: any) {
-        this.db = new window.SQL.Database(uints);
+    private storeBooks() {
+        this.storage.setItem('books', JSON.stringify(this.books));
     }
 
-    cacheBooks(books) {
-        this.books = books;
+    private preloadVocabs() {
+        if (!this.books.length) return null;
 
-        setTimeout(() => {
-            this.storage.setItem('books', JSON.stringify(this.books));
-        }, 100);
+        // Sequentially load vocabs for each book
+        let preload = (index) => {
+            this.loadVocabs(this.books[index].id);
+
+            if (this.books.length > index + 1) {
+                setTimeout(index + 1, 10);
+            } else {
+                this.storeBooks();
+            }
+        };
+
+        preload(0);
     }
 
-    cacheVocabs(asin, vocabs) {
-        this.vocabs[asin] = vocabs;
-
-        setTimeout(() => {
-            this.storage.setItem('vocabs', JSON.stringify(this.vocabs));
-        }, 100);
+    private findBook(asin: string) {
+        if (!this.books) return null;
+        return this.books.filter((book) => book.asin == asin)[0];
     }
 
-    getBooks() {
-        if (!this.db) return this.books;
+    loadDb(uints: any) {
+        this.db = new this.window.SQL.Database(uints);
+    }
+
+    loadBooks() {
+        if (!this.db) return null;
 
         let booksQuery;
         try {
@@ -74,44 +82,54 @@ export class VocabService {
         books = books.filter((book) => book.count > 0);
         books.sort((a, b) => b.lastLookup - a.lastLookup); // newest first
 
-        this.cacheBooks(books);
+        this.books = books;
+        this.storeBooks();
+        this.preloadVocabs();
 
         return books;
     }
 
-    getVocabs(asin: string) {
-        if (!this.db) return this.vocabs[asin];
+    loadVocabs(id: string) {
+        if (!this.db) return null;
 
-        let book = this.books && this.books.filter((book) => book.asin == asin)[0];
-        if (!book) return;
-
-        let escapedId = book.id.replace(/'/g, "''");
-        let vocabsQuery = this.db.exec(
-`
-        SELECT
-        words.stem, words.word, lookups.usage
-        FROM lookups
-        LEFT OUTER JOIN words
-        ON lookups.word_key=words.id
-        WHERE lookups.book_key='${ escapedId }';
-`
-        );
+        let escapedId = id.replace(/'/g, "''");
+        let vocabsQuery = this.db.exec(`
+          SELECT
+          words.stem, words.word, lookups.usage
+          FROM lookups
+          LEFT OUTER JOIN words
+          ON lookups.word_key=words.id
+          WHERE lookups.book_key='${ escapedId }';
+        `);
 
         if (!vocabsQuery[0]) return;
 
-        let vocabs = {
-            title: book.title,
-            authors: book.authors,
-            language: book.language,
-            asin: book.asin,
-            cover: book.cover,
-            count: book.count,
-            vocabs: vocabsQuery[0].values
-        };
+        return vocabsQuery[0].values;
+    }
 
-        this.cacheVocabs(asin, vocabs);
+    getBooks() {
+        return this.books || this.loadBooks();
+    }
 
-        return vocabs;
+    getBook(asin: string) {
+        let book = this.findBook(asin);
+
+        if (book && !book.vocabs) {
+            book.vocabs = this.loadVocabs(book.id);
+        }
+
+        return book;
+    }
+
+    updateBook(book) {
+        book.count = book.vocabs.length;
+        this.storeBooks();
+    }
+
+    removeBook(book) {
+        let index = this.books.indexOf(book);
+        this.books.splice(index, 1);
+        this.storeBooks();
     }
 
 };

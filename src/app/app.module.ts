@@ -34,7 +34,8 @@ import {VocabImages} from './components/vocab-images/vocab-images';
     imports     : [ BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig) ],
     providers   : [
         VocabService, DictionaryService, TranslationService, ImageSearchService,
-        { provide: LocationStrategy, useClass: HashLocationStrategy }
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        { provide: 'Window',  useValue: window }
     ],
     bootstrap   : [ AppComponent ]
 })

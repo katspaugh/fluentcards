@@ -76,8 +76,8 @@ export class Book {
 
     ngOnInit() {
         this.sub = this.route.params.subscribe((params) => {
-            let id = params['id'];
-            let book = this.vocabService.getVocabs(id);
+            let asin = params['id'];
+            let book = this.vocabService.getBook(asin);
 
             if (!book) {
                 this.router.navigate([ '/books' ]);
@@ -116,11 +116,13 @@ export class Book {
             vocab.cloze = cloze;
         });
         this.exportUrl = this.getExportUrl();
+        this.vocabService.updateBook(this.book);
     }
 
     removeCloze() {
         this.book.vocabs.forEach((vocab) => delete vocab.cloze);
         this.exportUrl = this.getExportUrl();
+        this.vocabService.updateBook(this.book);
     }
 
     addDefinitions() {
@@ -166,6 +168,7 @@ export class Book {
     removeDefinitions() {
         this.book.vocabs.forEach((vocab) => delete vocab.translation);
         this.exportUrl = this.getExportUrl();
+        this.vocabService.updateBook(this.book);
     }
 
     speakWord(word) {
@@ -200,13 +203,14 @@ export class Book {
     removeImages() {
         this.book.vocabs.forEach((vocab) => delete vocab.image);
         this.exportUrl = this.getExportUrl();
+        this.vocabService.updateBook(this.book);
     }
 
     removeVocab(index: number) {
         if (this.book.vocabs.length == 1) return;
         this.book.vocabs.splice(index, 1);
-        this.vocabService.cacheVocabs(this.book.asin, this.book);
         this.exportUrl = this.getExportUrl();
+        this.vocabService.updateBook(this.book);
     }
 
     changeDefinition(vocab) {
@@ -227,6 +231,7 @@ export class Book {
         if (data.image) {
             vocab.image = data.image;
             this.exportUrl = this.getExportUrl();
+            this.vocabService.updateBook(this.book);
         }
     }
 

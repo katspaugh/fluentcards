@@ -85,3 +85,23 @@
     left: 127px;
     margin-left: 1.25rem;
 }
+
+.book-list__delete {
+    display: none;
+    font-size: 11px;
+    position: absolute;
+    z-index: 1;
+    bottom: 20px;
+    right: 1.25rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.book-list__book:hover .book-list__delete {
+    display: block;
+}
+
+.book-list__delete:hover {
+    color: #000;
+    text-decoration: none;
+}
