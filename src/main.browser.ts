@@ -9,10 +9,3 @@ if (/fluentcards\.com/.test(window.location.host)) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
     .catch(err => console.error(err));
-
-// A workaround for a bug in Safari
-if (/Safari/.test(window.navigator.userAgent) && !/Chrome/.test(window.navigator.userAgent)) {
-    window.addEventListener('popstate', () => {
-        window.location.replace(window.location.href);
-    });
-}
