@@ -24,33 +24,12 @@ export class VocabService {
         this.storage.setItem('books', JSON.stringify(this.books));
     }
 
-    private preloadVocabs() {
-        if (!this.books.length) return null;
-
-        // Sequentially load vocabs for each book
-        let preload = (index) => {
-            this.loadVocabs(this.books[index].id);
-
-            if (this.books.length > index + 1) {
-                setTimeout(index + 1, 10);
-            } else {
-                this.storeBooks();
-            }
-        };
-
-        preload(0);
-    }
-
     private findBook(asin: string) {
         if (!this.books) return null;
         return this.books.filter((book) => book.asin == asin)[0];
     }
 
-    loadDb(uints: any) {
-        this.db = new this.window.SQL.Database(uints);
-    }
-
-    loadBooks() {
+    private queryBooks() {
         if (!this.db) return null;
 
         let booksQuery;
@@ -82,14 +61,10 @@ export class VocabService {
         books = books.filter((book) => book.count > 0);
         books.sort((a, b) => b.lastLookup - a.lastLookup); // newest first
 
-        this.books = books;
-        this.storeBooks();
-        this.preloadVocabs();
-
         return books;
     }
 
-    loadVocabs(id: string) {
+    private queryVocabs(id: string) {
         if (!this.db) return null;
 
         let escapedId = id.replace(/'/g, "''");
@@ -107,15 +82,43 @@ export class VocabService {
         return vocabsQuery[0].values;
     }
 
+    private preloadVocabs() {
+        if (!this.books.length) return null;
+
+        // Sequentially load vocabs for each book
+        let preload = (index) => {
+            if (index == this.books.length) {
+                return this.storeBooks();
+            }
+            let book = this.books[index];
+            book.vocabs = this.queryVocabs(book.id);
+            setTimeout(() => preload(index + 1), 10);
+        };
+
+        preload(0);
+    }
+
+    loadBooks(uints: any) {
+        this.db = new this.window.SQL.Database(uints);
+        let books = this.queryBooks();
+
+        if (!books) return null;
+
+        this.books = books;
+        this.preloadVocabs();
+
+        return this.books;
+    }
+
     getBooks() {
-        return this.books || this.loadBooks();
+        return this.books;
     }
 
     getBook(asin: string) {
         let book = this.findBook(asin);
 
         if (book && !book.vocabs) {
-            book.vocabs = this.loadVocabs(book.id);
+            book.vocabs = this.queryVocabs(book.id);
         }
 
         return book;

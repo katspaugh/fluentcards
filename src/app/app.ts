@@ -29,8 +29,7 @@ export class AppComponent {
             return;
         }
 
-        this.vocabService.loadDb(event.data);
-        let books = this.vocabService.loadBooks();
+        let books = this.vocabService.loadBooks(event.data);
 
         if (!books) {
             return this.errorMessage = DATA_ERROR;
