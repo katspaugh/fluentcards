@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation} from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, Event, NavigationEnd} from '@angular/router';
 
 import {VocabService} from './services/vocab';
 
@@ -19,7 +19,16 @@ export class AppComponent {
     constructor(
         private router: Router,
         private vocabService: VocabService
-    ) {}
+    ) {
+        this.router.events.subscribe((event: Event) => {
+            if (!window.ga) return;
+
+            if (event instanceof NavigationEnd) {
+                window.ga('set', 'page', event.urlAfterRedirects);
+                window.ga('send', 'pageview');
+            }
+        });
+    }
 
     onUpload(event) {
         this.errorMessage = '';

@@ -16,7 +16,6 @@ export class VocabService {
         if (!this.books) {
             this.books = window.DEMO_BOOKS;
             this.books.isDemo = true;
-            this.storeBooks();
         }
     }
 

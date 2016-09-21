@@ -32,6 +32,7 @@ import * as _ from 'lodash'
 interface Window {
     SQL: any;
     DEMO_BOOKS: any;
+    ga: any;
     speechSynthesis: any;
     SpeechSynthesisUtterance: any;
 }
