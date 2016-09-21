@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
+import 'rxjs/add/operator/map';
 
 import {VocabService} from '../../services/vocab';
-import {DictionaryService} from '../../services/dictionary';
-import {TranslationService} from '../../services/translation';
+import {DefinitionsService} from '../../services/definitions';
 
 @Component({
     selector: 'book',
@@ -30,8 +30,7 @@ export class Book {
         private router: Router,
         private sanitizer: DomSanitizer,
         private vocabService: VocabService,
-        private dictionaryService: DictionaryService,
-        private translationService: TranslationService
+        private definitionsService: DefinitionsService
     ) {
         this.language = localStorage.getItem('language') || window.navigator.language.split('-')[0];
 
@@ -129,53 +128,27 @@ export class Book {
     }
 
     addDefinitions() {
-        let load = (bookLanguage, index) => {
-            const throttle = 100;
-            let vocab = this.book.vocabs[index];
-
-            this.dictionaryService.lookup(vocab.baseForm, bookLanguage, this.language)
-                .subscribe(
-                    (data) => {
-                        let def = data[0];
-                        vocab.definition = def;
-                        vocab.translation = def.tr[0].text;
-                        vocab.gender = def.gen;
-                        vocab.fl = def.fl;
-                        this.exportUrl = this.getExportUrl();
-                        if (index == this.book.vocabs.length - 1) {
-                            this.vocabService.updateBook(this.book);
-                        }
-                    },
-                    (errMessage) => {
-                        this.translationService.translate(vocab.word, vocab.context, this.language)
-                            .subscribe(
-                                (data) => {
-                                    vocab.translation = data;
-                                    this.exportUrl = this.getExportUrl();
-                                    if (index == this.book.vocabs.length - 1) {
-                                        this.vocabService.updateBook(this.book);
-                                    }
-                                },
-                                (errMessage) => this.errorMessage = errMessage
-                            );
-                    }
-                );
-
-            if (index + 1 < this.book.vocabs.length) {
-                setTimeout(() => load(bookLanguage, index + 1), throttle)
-            } else {
-                this.isLoadingDefinitions = false;
-            }
-        };
-
-        this.errorMessage = null;
         this.isLoadingDefinitions = true;
 
-        this.translationService.detectLanguage(this.book.vocabs[0].context, this.book.language)
-            .subscribe(
-                (lang) => load(lang, 0),
-                (err) => load(this.book.language, 0)
-            );
+        this.definitionsService.load(this.book.vocabs, this.book.language, this.language)
+            .map((data) => {
+                let vocab = data.vocab;
+                vocab.translation = data.translation;
+
+                if (data.definition) {
+                    vocab.definition = data.definition;
+                    vocab.gender = data.gender;
+                    vocab.fl = data.fl;
+                } else {
+                    delete vocab.definition;
+                }
+
+                this.exportUrl = this.getExportUrl();
+            })
+            .subscribe(() => {
+                this.isLoadingDefinitions = false;
+                this.vocabService.updateBook(this.book);
+            });
     }
 
     removeDefinitions() {

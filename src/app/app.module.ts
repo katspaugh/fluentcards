@@ -10,6 +10,7 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {VocabService} from './services/vocab';
 import {DictionaryService} from './services/dictionary';
 import {TranslationService} from './services/translation';
+import {DefinitionsService} from './services/definitions';
 import {ImageSearchService} from './services/image-search';
 
 import {StartView} from './components/start-view/start-view';
@@ -33,7 +34,7 @@ import {VocabImages} from './components/vocab-images/vocab-images';
     ],
     imports     : [ BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig) ],
     providers   : [
-        VocabService, DictionaryService, TranslationService, ImageSearchService,
+        VocabService, DictionaryService, TranslationService, DefinitionsService, ImageSearchService,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         { provide: 'Window',  useValue: window }
     ],

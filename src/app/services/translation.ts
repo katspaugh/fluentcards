@@ -41,11 +41,10 @@ export class TranslationService {
         return word.replace(/[,.?!():;]/g, '');
     }
 
-    detectLanguage(text: string, hint: string) {
-        return this.makeRequest(detectEndpoint, { text: text, hint: hint })
+    detectLanguage(text: string) {
+        return this.makeRequest(detectEndpoint, { text: text })
             .map((data) => {
-                if (data.code != 200) throw new Error(data.message);
-                return data.lang;
+                return data.code == 200 ? data.lang : null;
             });
     }
 
