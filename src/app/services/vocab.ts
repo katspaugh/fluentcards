@@ -78,7 +78,13 @@ export class VocabService {
 
         if (!vocabsQuery[0]) return;
 
-        return vocabsQuery[0].values;
+        return vocabsQuery[0].values.map((row) => {
+            return {
+                baseForm: row[0],
+                word: row[1],
+                context: row[2]
+            };
+        });
     }
 
     private preloadVocabs() {

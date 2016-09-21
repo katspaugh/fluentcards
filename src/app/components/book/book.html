@@ -101,18 +101,18 @@
               <loader [isLoading]="vocab.preloadImage"></loader>
 
               <div class="book__images" *ngIf="vocab.chooseImage">
-                <vocab-images [word]="vocab[0]" [language]="book.language" (onResult)="onImageAdd($event, vocab)"></vocab-images>
+                <vocab-images [word]="vocab.baseForm" [language]="book.language" (onResult)="onImageAdd($event, vocab)"></vocab-images>
               </div>
 
               <vocab-images *ngIf="vocab.preloadImage"
-                            [word]="vocab[0]" [language]="book.language" [single]="true"
+                            [word]="vocab.baseForm" [language]="book.language" [single]="true"
                             (onResult)="onImageAdd($event, vocab)">
               </vocab-images>
             </td>
 
             <td class="book__word">
-              {{ vocab[0] }} <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.gender">, {{ vocab.gender }}</b>
-              <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab[0])"></i>
+              {{ vocab.baseForm }} <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.gender">, {{ vocab.gender }}</b>
+              <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab.baseForm)"></i>
             </td>
 
             <td *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">
@@ -121,7 +121,7 @@
               <span [hidden]="vocab.translation != null"><loader [isLoading]="isLoadingDefinitions"></loader></span>
             </td>
 
-            <td class="book__context">{{ vocab.cloze || vocab[2] }}</td>
+            <td class="book__context">{{ vocab.cloze || vocab.context }}</td>
 
             <td><i class="fa fa-remove text-muted book__remove-vocab" (click)="removeVocab(i)" title="Remove"></i></td>
           </tr>

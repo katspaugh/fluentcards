@@ -21,11 +21,11 @@ export class AppComponent {
         private vocabService: VocabService
     ) {
         this.router.events.subscribe((event: Event) => {
-            if (!window.ga) return;
-
             if (event instanceof NavigationEnd) {
-                window.ga('set', 'page', event.urlAfterRedirects);
-                window.ga('send', 'pageview');
+                try {
+                    window.ga('set', 'page', event.urlAfterRedirects);
+                    window.ga('send', 'pageview');
+                } catch (e) {}
             }
         });
     }

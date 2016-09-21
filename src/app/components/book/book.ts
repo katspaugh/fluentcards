@@ -43,7 +43,7 @@ export class Book {
         let hasImages = this.book.vocabs.some((vocab) => vocab.image);
 
         let lines = this.book.vocabs.map((vocab) => {
-            let word = vocab[0];
+            let word = vocab.word;
 
             if (vocab.fl) {
                 word += ', ' + vocab.fl;
@@ -59,7 +59,7 @@ export class Book {
                 items.push(vocab.translation || '');
             }
 
-            items.push(vocab.cloze || vocab[2]);
+            items.push(vocab.cloze || vocab.context);
 
             if (hasImages) {
                 items.push(vocab.image ? `<img src="${ vocab.image.thumbnail }" />` : '');
@@ -85,6 +85,9 @@ export class Book {
             }
 
             this.book = book;
+            this.definitionsEnabled = book.vocabs[0].translation;
+            this.imagesEnabled = book.vocabs[0].image;
+            this.clozeEnabled = book.vocabs[0].cloze;
             this.exportUrl = this.getExportUrl();
         });
 
@@ -99,8 +102,8 @@ export class Book {
 
     addCloze() {
         this.book.vocabs.forEach((vocab) => {
-            let word = vocab[1];
-            let context = vocab[2];
+            let word = vocab.word;
+            let context = vocab.context;
             let cloze = context.replace(new RegExp('\\b' + word + '\\b', 'g'), '{{c1::$&}}');
 
             // Languages like Japanese and Chinese don't have written word boundaries.
@@ -110,7 +113,7 @@ export class Book {
 
             // Try the root form
             if (cloze == context) {
-                cloze = context.replace(new RegExp(vocab[0], 'g'), '{{c1::$&}}');
+                cloze = context.replace(new RegExp(vocab.baseForm, 'g'), '{{c1::$&}}');
             }
 
             vocab.cloze = cloze;
@@ -130,7 +133,7 @@ export class Book {
             const throttle = 100;
             let vocab = this.book.vocabs[index];
 
-            this.dictionaryService.lookup(vocab[0], bookLanguage, this.language)
+            this.dictionaryService.lookup(vocab.baseForm, bookLanguage, this.language)
                 .subscribe(
                     (data) => {
                         let def = data[0];
@@ -138,15 +141,25 @@ export class Book {
                         vocab.translation = def.tr[0].text;
                         vocab.gender = def.gen;
                         vocab.fl = def.fl;
+                        this.exportUrl = this.getExportUrl();
+                        if (index == this.book.vocabs.length - 1) {
+                            this.vocabService.updateBook(this.book);
+                        }
                     },
                     (errMessage) => {
-                        this.translationService.translate(vocab[1], vocab[2], this.language)
+                        this.translationService.translate(vocab.word, vocab.context, this.language)
                             .subscribe(
-                                (data) => vocab.translation = data,
+                                (data) => {
+                                    vocab.translation = data;
+                                    this.exportUrl = this.getExportUrl();
+                                    if (index == this.book.vocabs.length - 1) {
+                                        this.vocabService.updateBook(this.book);
+                                    }
+                                },
                                 (errMessage) => this.errorMessage = errMessage
                             );
                     }
-                )
+                );
 
             if (index + 1 < this.book.vocabs.length) {
                 setTimeout(() => load(bookLanguage, index + 1), throttle)
@@ -158,7 +171,7 @@ export class Book {
         this.errorMessage = null;
         this.isLoadingDefinitions = true;
 
-        this.translationService.detectLanguage(this.book.vocabs[0][2], this.book.language)
+        this.translationService.detectLanguage(this.book.vocabs[0].context, this.book.language)
             .subscribe(
                 (lang) => load(lang, 0),
                 (err) => load(this.book.language, 0)
