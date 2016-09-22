@@ -84,9 +84,9 @@ export class Book {
             }
 
             this.book = book;
-            this.definitionsEnabled = book.vocabs[0].translation;
-            this.imagesEnabled = book.vocabs[0].image;
-            this.clozeEnabled = book.vocabs[0].cloze;
+            this.definitionsEnabled = book.vocabs.every((vocab) => vocab.translation);
+            this.imagesEnabled = book.vocabs.every((vocab) => vocab.image);
+            this.clozeEnabled = book.vocabs.every((vocab) => vocab.cloze);
             this.exportUrl = this.getExportUrl();
         });
 
@@ -130,7 +130,7 @@ export class Book {
     addDefinitions() {
         this.isLoadingDefinitions = true;
 
-        this.definitionsService.load(this.book.vocabs, this.book.language, this.language)
+        let sub = this.definitionsService.load(this.book.vocabs, this.book.language, this.language)
             .map((data) => {
                 let vocab = data.vocab;
                 vocab.translation = data.translation;
@@ -148,6 +148,7 @@ export class Book {
             .subscribe(() => {
                 this.isLoadingDefinitions = false;
                 this.vocabService.updateBook(this.book);
+                sub.unsubscribe();
             });
     }
 

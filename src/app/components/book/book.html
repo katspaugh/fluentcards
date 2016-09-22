@@ -104,7 +104,7 @@
                 <vocab-images [word]="vocab.baseForm" [language]="book.language" (onResult)="onImageAdd($event, vocab)"></vocab-images>
               </div>
 
-              <vocab-images *ngIf="vocab.preloadImage"
+              <vocab-images *ngIf="vocab.preloadImage && !vocab.image"
                             [word]="vocab.baseForm" [language]="book.language" [single]="true"
                             (onResult)="onImageAdd($event, vocab)">
               </vocab-images>
