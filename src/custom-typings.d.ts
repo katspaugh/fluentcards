@@ -33,6 +33,7 @@ interface Window {
     SQL: any;
     DEMO_BOOKS: any;
     ga: any;
+    contentful: any;
     speechSynthesis: any;
     SpeechSynthesisUtterance: any;
 }

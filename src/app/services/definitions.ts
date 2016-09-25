@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/Rx';
+import {Subject} from 'rxjs/Rx';
 
 import {DictionaryService} from './dictionary';
-import {TranslationService} from './translation';
+import {MassTranslationService} from './mass-translation';
 
 @Injectable()
 export class DefinitionsService {
 
     constructor(
         private dictionaryService: DictionaryService,
-        private translationService: TranslationService
+        private translationService: MassTranslationService
     ) {}
 
     private loadDictionary(vocab, fromLanguage, toLanguage) {
@@ -29,7 +29,7 @@ export class DefinitionsService {
     }
 
     private loadTranslation(vocab, toLanguage) {
-        return this.translationService.translate(vocab.word, vocab.context, toLanguage)
+        return this.translationService.translateWord(vocab.word, vocab.context, toLanguage)
             .map((data) => {
                 return {
                     vocab: vocab,
@@ -41,29 +41,41 @@ export class DefinitionsService {
             });
     }
 
+    private loadDicOrTr(vocab, fromLanguage, toLanguage) {
+        return this.loadDictionary(vocab, fromLanguage, toLanguage)
+            .catch(() => this.loadTranslation(vocab, toLanguage))
+                .toPromise();
+    }
+
     private detectLanguage(vocab) {
         return this.translationService.detectLanguage(vocab.context);
     }
 
+    // Sequentially load definitions to avoid DoSing the service
     load(vocabs, fromLanguage, toLanguage) {
-        const delay = 100; // a delay to avoid DoSing the services
+        let subj = new Subject();
 
-        return this.detectLanguage(vocabs[0])
-            .flatMap((lang) => {
+        let load = (index) => {
+            let vocab = vocabs[index];
+            if (!vocab) {
+                subj.complete();
+                return;
+            }
+
+            return this.loadDicOrTr(vocab, fromLanguage, toLanguage)
+                .then((data) => {
+                    subj.next(data);
+                    load(index + 1);
+                })
+        };
+
+        this.detectLanguage(vocabs[0])
+            .subscribe((lang) => {
                 fromLanguage = lang || fromLanguage;
-
-                return Observable
-                    .from(vocabs)
-                    .flatMap((vocab, index) => {
-                        return Observable
-                            .of(vocab)
-                            .delay(delay * index);
-                    })
-                    .flatMap((vocab) => {
-                        return this.loadDictionary(vocab, fromLanguage, toLanguage)
-                            .catch(() => this.loadTranslation(vocab, toLanguage));
-                    });
+                load(0);
             });
+
+        return subj;
     }
 
 };

@@ -6,6 +6,8 @@ import {ExportView} from './components/export-view/export-view';
 import {UploadView} from './components/upload-view/upload-view';
 import {BooksView} from './components/books-view/books-view';
 import {Book} from './components/book/book';
+import {StoriesView} from './components/stories-view/stories-view';
+import {StoryView} from './components/story-view/story-view';
 
 export const rootRouterConfig: Routes = [
     {
@@ -22,5 +24,12 @@ export const rootRouterConfig: Routes = [
           { path: '', component: BooksView },
           { path: ':id', component: Book }
       ]
+    },
+    { path: 'stories',
+      children: [
+          { path: '', component: StoriesView },
+          { path: ':id', component: StoryView }
+      ]
     }
+
 ];

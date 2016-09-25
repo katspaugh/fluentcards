@@ -1,0 +1,88 @@
+.story-view {
+    background: #fff;
+    margin: 0 -78px;
+    position: relative;
+}
+
+.story-view__container {
+    margin: 50px 24px 24px;
+    padding: 50px;
+    border-left: 4px solid #000;
+    border-right: 4px solid #000;
+}
+
+/* Dictionary */
+.story-view__dict {
+    position: absolute;
+    z-index: 1;
+    right: 74px;
+    top: 50px;
+    width: 30%;
+    padding: 24px;
+    border: 1px solid #000;
+    background: #fff;
+}
+
+.story-view__dict sup {
+    margin-left: 1em;
+}
+
+/* Words */
+.story-view__words {
+    margin-right: 30%;
+    padding-right: 74px;
+    text-align: justify;
+    word-spacing: 0.2em;
+    white-space: pre-line;
+    line-height: 1.5em;
+    color: #333;
+}
+
+.story-view__words div {
+    display: inline;
+}
+
+.story-view__words ruby {
+    cursor: pointer;
+    text-align: center;
+}
+
+.story-view__words ruby:hover {
+    background: #fff656;
+    padding: 3px;
+    margin: -3px;
+}
+
+.story-view__words rtc {
+    display: block;
+    white-space: nowrap;
+    color: #aaa;
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: -0.6em;
+}
+
+.occur_0 rtc {
+    color: #ccc;
+}
+
+.occur_1 rtc {
+    color: #ddd;
+}
+
+.occur_2 rtc {
+    color: #eee;
+}
+
+.occur_3 rtc {
+    color: #efefef;
+}
+
+.occur_4 rtc {
+    color: #fff;
+}
+
+.story-view__words ruby:hover rtc {
+    color: #aaa;
+}
+

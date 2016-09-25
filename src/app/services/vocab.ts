@@ -88,8 +88,6 @@ export class VocabService {
     }
 
     private preloadVocabs() {
-        if (!this.books.length) return null;
-
         // Sequentially load vocabs for each book
         let preload = (index) => {
             if (index == this.books.length) {
@@ -97,7 +95,7 @@ export class VocabService {
             }
             let book = this.books[index];
             book.vocabs = this.queryVocabs(book.id);
-            setTimeout(() => preload(index + 1), 10);
+            setTimeout(() => preload(index + 1), 0);
         };
 
         preload(0);

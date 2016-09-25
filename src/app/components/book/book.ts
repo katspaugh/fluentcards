@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 
 import {VocabService} from '../../services/vocab';
 import {DefinitionsService} from '../../services/definitions';
+import {SpeechService} from '../../services/speech';
 
 @Component({
     selector: 'book',
@@ -30,7 +31,8 @@ export class Book {
         private router: Router,
         private sanitizer: DomSanitizer,
         private vocabService: VocabService,
-        private definitionsService: DefinitionsService
+        private definitionsService: DefinitionsService,
+        private speechService: SpeechService
     ) {
         this.language = localStorage.getItem('language') || window.navigator.language.split('-')[0];
 
@@ -131,25 +133,30 @@ export class Book {
         this.isLoadingDefinitions = true;
 
         let sub = this.definitionsService.load(this.book.vocabs, this.book.language, this.language)
-            .map((data) => {
-                let vocab = data.vocab;
-                vocab.translation = data.translation;
+            .subscribe(
+                (data: any) => {
+                    let vocab = data.vocab;
+                    vocab.translation = data.translation;
 
-                if (data.definition) {
-                    vocab.definition = data.definition;
-                    vocab.gender = data.gender;
-                    vocab.fl = data.fl;
-                } else {
-                    delete vocab.definition;
+                    if (data.definition) {
+                        vocab.definition = data.definition;
+                        vocab.gender = data.gender;
+                        vocab.fl = data.fl;
+                    } else {
+                        delete vocab.definition;
+                    }
+
+                    this.exportUrl = this.getExportUrl();
+                },
+
+                (err) => null,
+
+                () => {
+                    this.isLoadingDefinitions = false;
+                    this.vocabService.updateBook(this.book);
+                    sub.unsubscribe();
                 }
-
-                this.exportUrl = this.getExportUrl();
-            })
-            .subscribe(() => {
-                this.isLoadingDefinitions = false;
-                this.vocabService.updateBook(this.book);
-                sub.unsubscribe();
-            });
+            );
     }
 
     removeDefinitions() {
@@ -159,11 +166,7 @@ export class Book {
     }
 
     speakWord(word) {
-        var speech = new window.SpeechSynthesisUtterance();
-        speech.text = word;
-        speech.lang = this.book.language;
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(speech);
+        this.speechService.speak(word, this.book.language);
     }
 
     addImage(vocab) {
