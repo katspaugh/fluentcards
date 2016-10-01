@@ -5,7 +5,6 @@ import {VocabService} from './services/vocab';
 
 const FILE_ERROR = 'Error reading the file';
 const DATA_ERROR = 'No vocabulary found in the file';
-const REDIRECT_URL = '/books';
 
 @Component({
     selector: 'app',
@@ -45,7 +44,7 @@ export class AppComponent {
         }
 
         if (!books.isDemo) {
-            this.router.navigate([ REDIRECT_URL, Math.random() ]);
+            this.router.navigate([ '/books', Math.random() ]);
         }
     }
 }

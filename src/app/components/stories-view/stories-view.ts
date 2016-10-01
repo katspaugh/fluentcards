@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 
 import {ContentfulService} from '../../services/contentful';
 
@@ -8,16 +9,15 @@ import {ContentfulService} from '../../services/contentful';
     templateUrl: './stories-view.html'
 })
 export class StoriesView {
-    texts: any[];
+    items: Observable<any[]>
 
     constructor(
         private contentfulService: ContentfulService
     ) {
-        this.contentfulService.client.getEntries({
+        this.items = this.contentfulService.getEntries({
             content_type: 'text',
-            limit: 6
-        })
-            .then((data) => this.texts = data.items);
+            limit: 10
+        }).map((data: any) => data.items);
     }
 
 }

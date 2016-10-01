@@ -34,7 +34,7 @@
     text-align: justify;
     word-spacing: 0.2em;
     white-space: pre-line;
-    line-height: 1.5em;
+    line-height: 1.4em;
     color: #333;
 }
 
@@ -63,19 +63,19 @@
 }
 
 .occur_0 rtc {
-    color: #ccc;
+    color: #bbb;
 }
 
 .occur_1 rtc {
-    color: #ddd;
+    color: #ccc;
 }
 
 .occur_2 rtc {
-    color: #eee;
+    color: #ddd;
 }
 
 .occur_3 rtc {
-    color: #efefef;
+    color: #eee;
 }
 
 .occur_4 rtc {

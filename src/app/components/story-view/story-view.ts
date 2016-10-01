@@ -33,21 +33,31 @@ export class StoryView {
     ) {
         this.sub = this.route.params.subscribe((params) => {
             this.id = params['id'];
+            this.data = this.restoreCache();
 
-            this.restoreCache() || this.loadEntry(this.id)
-                .catch(() => this.router.navigate([ '' ]));
+            if (!this.data) {
+                let sub = this.loadEntry(this.id)
+                    .catch(() => this.router.navigate([ '/stories' ]))
+                        .subscribe((fields) => {
+                            this.data = fields;
+                            sub.unsubscribe();
+                        });
+            }
         });
 
     }
     private restoreCache() {
         let cache = localStorage.getItem(this.id);
-        if (!cache) return;
-        this.data = JSON.parse(cache);
-        return this.data;
+        if (!cache) return null;
+        try {
+            return JSON.parse(cache);
+        } catch (e) {
+            return null;
+        }
     }
 
-    private saveCache() {
-        localStorage.setItem(this.id, JSON.stringify(this.data));
+    private saveCache(data) {
+        localStorage.setItem(this.id, JSON.stringify(data));
     }
 
     private cleanupWord(text) {
@@ -88,34 +98,37 @@ export class StoryView {
         return data;
     }
 
-    private loadTranslations(text) {
-        this.data.translations = [];
-        text.split(' ').forEach((word) => {
-            this.data.translations.push(
+    private loadTranslations(data) {
+        data.translations = [];
+
+        data.body.split(' ').forEach((word) => {
+            data.translations.push(
                 { text: word, note: ' ' },
                 { text: ' ' }
             );
         });
 
-        this.translationService.detectLanguage(text.slice(0, 200))
+        this.translationService.detectLanguage(data.body.slice(0, 200))
             .subscribe((lang) => {
-                this.data.lang = lang || TARGET_LANG;
+                data.lang = lang || TARGET_LANG;
             });
 
-        this.translationService.translate(text, TARGET_LANG)
-            .subscribe((data) => {
-                this.data.translations = this.markDupes(data.translations);
-                this.data.lang = data.lang;
+        this.translationService.translate(data.body, TARGET_LANG)
+            .subscribe((translationData) => {
+                data.translations = this.markDupes(translationData.translations);
+                data.lang = translationData.lang;
 
-                this.saveCache();
+                this.saveCache(data);
             });
+
+        return data;
     }
 
     private loadEntry(id: string) {
-        return this.contentfulService.client.getEntry(id)
-            .then((data) => this.data = data.fields)
-            .then((fields) => this.transformNewlines(fields))
-            .then((fields) => this.loadTranslations(fields.body));
+        return this.contentfulService.getEntry(id)
+            .map((data) => data.fields)
+            .map((fields) => this.transformNewlines(fields))
+            .map((fields) => this.loadTranslations(fields));
     }
 
     selectWord(item) {
