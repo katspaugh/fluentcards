@@ -33,8 +33,7 @@ export class AppComponent {
         this.errorMessage = '';
 
         if (!event.ok) {
-            this.errorMessage = FILE_ERROR;
-            return;
+            return this.errorMessage = FILE_ERROR;
         }
 
         let books = this.vocabService.loadBooks(event.data);
