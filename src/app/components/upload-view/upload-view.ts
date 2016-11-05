@@ -1,21 +1,21 @@
 import {Component} from '@angular/core';
 
 @Component({
-    selector: 'upload-view',
-    styleUrls: [ './upload-view.css' ],
-    templateUrl: './upload-view.html'
+  selector: 'upload-view',
+  styleUrls: [ './upload-view.css' ],
+  templateUrl: './upload-view.html'
 })
 export class UploadView {
 
-    constructor() {
-    }
+  constructor() {
+  }
 
-    ngOnInit() {
-        document.body.classList.add('upload-page');
-    }
+  ngOnInit() {
+    document.body.classList.add('upload-page');
+  }
 
-    ngOnDestroy() {
-        document.body.classList.remove('upload-page');
-    }
+  ngOnDestroy() {
+    document.body.classList.remove('upload-page');
+  }
 
 }
