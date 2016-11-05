@@ -1,0 +1,37 @@
+.images {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #eee;
+    box-shadow: 0 0 40px #999;
+    width: 642px;
+    box-sizing: border-box;
+}
+
+.images__loader {
+    font-size: 50px;
+    padding: 20px;
+    margin: auto;
+}
+
+.images__row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.images__thumb {
+    flex-grow: 1;
+    text-align: center;
+    width: 100px;
+    max-width: 100px;
+    margin: 10px;
+}
+
+.images__thumb img {
+    width: 100px;
+    cursor: pointer;
+    transition: transform 100ms ease-in;
+}
+
+.images__thumb img:hover {
+    transform: scale(1.1);
+}

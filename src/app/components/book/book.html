@@ -1,0 +1,132 @@
+<div class="book" *ngIf="book">
+  <div class="alert alert-danger" role="alert" [hidden]="!errorMessage">{{ errorMessage }}</div>
+
+  <a class="book__close" [routerLink]="[ '/books' ]"><span class="book__close-icon">&times;</span></a>
+
+  <div class="book__controls">
+    <div class="book__control">
+      <input id="definitions" type="checkbox"
+             [disabled]="isLoadingDefinitions"
+             [(ngModel)]="definitionsEnabled"
+             (ngModelChange)="onToggleDefinitions($event)" />
+
+      <label for="definitions">add definitions in&nbsp;</label>
+
+      <select [(ngModel)]="language" (ngModelChange)="onLanguageSelect($event)">
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="es">Español</option>
+        <option value="pt">Português</option>
+        <option value="it">Italiano</option>
+        <option value="pl">Polski</option>
+        <option value="ru">Русский</option>
+        <option value="zh">中文</option>
+        <option value="ja">日本語</option>
+      </select>
+
+      <div class="book__loader">
+        <loader [isLoading]="isLoadingDefinitions"></loader>
+      </div>
+    </div>
+
+    <div class="book__control">
+      <input id="pictures" type="checkbox"
+             [disabled]="isLoadingImages"
+             [(ngModel)]="imagesEnabled"
+             (ngModelChange)="onToggleImages($event)" />
+
+      <label for="pictures">pictures</label>
+
+      <div class="book__loader">
+        <loader [isLoading]="isLoadingImages"></loader>
+      </div>
+    </div>
+
+    <div class="book__control">
+      <input id="cloze" type="checkbox" [(ngModel)]="clozeEnabled" (ngModelChange)="onToggleCloze($event)" />
+
+      <label for="cloze">cloze deletions</label>
+    </div>
+
+    <div class="book__control">
+      <a class="btn btn-default btn-small" download="{{ book.title }}" [href]="exportUrl">
+        Download as CSV
+      </a>
+    </div>
+  </div>
+
+  <div class="book__container">
+    <div class="book__header">
+      <div class="book__count pull-right">
+        <span class="book__count-number">{{ book.count }}</span>
+        <span class="book__count-label">{{ book.count == 1 ? 'word' : 'words' }}</span>
+      </div>
+
+      <img *ngIf="book.cover"
+           [src]="book.cover"
+           (error)="book.cover = null"
+           class="book__cover pull-left"
+           alt="{{ book.title }} cover" />
+
+      <h4 class="book__title">
+        {{ book.title }}<br />
+        <small>by <em>{{ book.authors }}</em></small>
+      </h4>
+    </div>
+
+    <div class="book__table-wrapper">
+      <table class="book__table table table-striped">
+        <thead>
+          <th style="width: 2em"><span class="text-muted">#</span></th>
+          <th style="width: 4em">Image</th>
+          <th width="17%">Word</th>
+          <th width="17%" *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">Definition</th>
+          <th width="60%">Context<span [hidden]="book.vocabs[0].cloze == null"> (with clozes)</span></th>
+          <th style="width: 3em"></th>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let vocab of book.vocabs; let i = index">
+            <td class="text-muted">{{ i + 1 }}</td>
+
+            <td align="center">
+              <img *ngIf="vocab.image" class="book__thumb" [src]="vocab.image.thumbnail" (click)="addImage(vocab)" />
+
+              <i *ngIf="!vocab.preloadImage && !vocab.image"
+                 class="fa fa-image text-muted book__get-image"
+                 title="Set an image"
+                 (click)="addImage(vocab)"></i>
+
+              <loader [isLoading]="vocab.preloadImage"></loader>
+
+              <div class="book__images" *ngIf="vocab.chooseImage">
+                <vocab-images [word]="vocab.baseForm" [language]="book.language" (onResult)="onImageAdd($event, vocab)"></vocab-images>
+              </div>
+
+              <vocab-images *ngIf="vocab.preloadImage && !vocab.image"
+                            [word]="vocab.baseForm" [language]="book.language" [single]="true"
+                            (onResult)="onImageAdd($event, vocab)">
+              </vocab-images>
+            </td>
+
+            <td class="book__word">
+              {{ vocab.baseForm }} <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.gender">, {{ vocab.gender }}</b>
+              <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab.baseForm)"></i>
+            </td>
+
+            <td *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">
+              <span [hidden]="vocab.translation == null">{{ vocab.translation }}</span>
+              <i [hidden]="!vocab.definition || vocab.definition.tr.length <= 1" class="fa fa-repeat text-muted book__change-def" (click)="changeDefinition(vocab)"></i>
+              <span [hidden]="vocab.translation != null"><loader [isLoading]="isLoadingDefinitions"></loader></span>
+            </td>
+
+            <td class="book__context">{{ vocab.cloze || vocab.context }}</td>
+
+            <td><i class="fa fa-remove text-muted book__remove-vocab" (click)="removeVocab(i)" title="Remove"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

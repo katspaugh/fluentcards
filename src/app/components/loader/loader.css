@@ -1,0 +1,39 @@
+.spinner {
+    display: inline-block;
+    vertical-align: text-top;
+    width: 0;
+    height: 1em;
+    background-color: #fff;
+    border-radius: 100%;
+    -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+    animation: sk-scaleout 1.0s infinite ease-in-out;
+    transition: width 100ms linear;
+}
+
+.spinner_active {
+    width: 1em;
+    border: 2px solid #0275d8;
+}
+
+.spinner_dark {
+    background-color: #0275d8;
+}
+
+@-webkit-keyframes sk-scaleout {
+    0% { -webkit-transform: scale(0) }
+    100% {
+        -webkit-transform: scale(1.0);
+        opacity: 0;
+    }
+}
+
+@keyframes sk-scaleout {
+    0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    } 100% {
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+        opacity: 0;
+    }
+}

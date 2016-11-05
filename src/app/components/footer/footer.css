@@ -1,0 +1,9 @@
+.footer {
+    position: absolute;
+    z-index: 1;
+    left: 74px;
+    right: 74px;
+    bottom: 50px;
+    border-radius: 0;
+    font-size: 0.9em;
+}

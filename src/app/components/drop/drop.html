@@ -1,0 +1,14 @@
+<div class="drop"
+     droppable="true"
+     [ngClass]="{ 'drop_dragover': isDragover }"
+     (dragleave)="onDragLeave($event)"
+     (dragover)="onDragOver($event)"
+     (drop)="onDrop($event)">
+  <div class="drop__content">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="drop__confirm">
+    <i class="fa fa-check"></i>
+  </div>
+</div>

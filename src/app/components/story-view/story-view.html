@@ -1,0 +1,40 @@
+<div class="story-view" *ngIf="data">
+  <div class="story-view__container">
+    <h1 class="story-view__title">{{ data.title }}</h1>
+    <cite class="story-view__author text-muted">{{ data.author }}</cite>
+
+    <div class="story-view__words">
+
+<div *ngFor="let item of data.translations" (click)="selectWord(item)" class="occur_{{ item.dupe || 0 }}"><!--
+--><ruby *ngIf="item.text != ' ' && item.text != '☙'"><rtc *ngIf="item.note">{{ item.note }}</rtc>{{ item.text }}</ruby><!--
+--><span *ngIf="item.text == ' '">{{ item.text }}</span><!--
+--><div *ngIf="item.text == '☙'"><br /><br /></div><!--
+--></div>
+
+    </div>
+
+    <div class="story-view__dict" sticky>
+      <div *ngIf="!selectedItem && !definitions">
+        <b>Tip:</b> click on words in the text to look them up in the dictionary
+      </div>
+
+      <div *ngIf="!definitions && selectedItem">
+        <span>{{ selectedItem.text }}</span>
+
+        <ul *ngIf="selectedItem.note">
+          <li>{{ selectedItem.note }}</li>
+        </ul>
+      </div>
+
+      <div *ngFor="let def of definitions">
+        <span>{{ def.text }}</span><em *ngIf="def.fl">; {{ def.fl }}</em><span *ngIf="def.gen">, <b>{{ def.gen }}</b></span>
+
+        <sup class="text-muted">{{ def.pos }}</sup>
+
+        <ul>
+          <li *ngFor="let tr of def.tr">{{ tr.text }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

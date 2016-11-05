@@ -1,0 +1,42 @@
+.upload-view p {
+    margin-top: 32px;
+    font-size: 16px;
+}
+
+.upload-view__content {
+    width: 70%;
+    max-width: 640px;
+}
+
+.upload-view__headline {
+    font-size: 9vh;
+    font-weight: bold;
+    line-height: 1.1;
+    margin-top: 1em;
+}
+
+.upload-view__call-to-action {
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+.upload-view__note {
+    position: absolute;
+    z-index: 1;
+    bottom: 50px;
+    color: #555;
+}
+
+.upload-view__screenshot {
+  height: 50vh;
+  position: absolute;
+  z-index: 100;
+  opacity: 0;
+  margin-top: 1em;
+  transform: translateX(-30%);
+  transition: opacity 100ms ease-in;
+}
+
+.upload-view__link:hover + .upload-view__screenshot {
+  opacity: 1;
+}
