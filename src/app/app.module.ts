@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 import {VocabService} from './services/vocab';
 import {SpeechService} from './services/speech';
@@ -42,7 +41,6 @@ import {VocabImages} from './components/vocab-images/vocab-images';
   providers   : [
     VocabService, DictionaryService, DefinitionsService, ImageSearchService,
     SpeechService, MassTranslationService, ContentfulService,
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: 'Window',  useValue: window }
   ],
   bootstrap   : [ AppComponent ]
