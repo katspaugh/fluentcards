@@ -14,7 +14,7 @@ export const rootRouterConfig: Routes = [
     path: '', component: StartView,
     children: [
       { path: '', component: IntroView },
-      { path: 'export', component: ExportView },
+      { path: 'kindle', component: ExportView },
       { path: 'upload', component: UploadView }
     ]
   },
