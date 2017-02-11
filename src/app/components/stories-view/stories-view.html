@@ -1,8 +1,0 @@
-<div class="stories-view">
-  <div class="stories-view__container">
-    <div class="stories-view__item" *ngFor="let text of items | async">
-      <em class="stories-view__author">{{ text.fields.author }}</em>
-      <a class="stories-view__title" [routerLink]="[ '/stories', text.sys.id ]">{{ text.fields.title }}</a>
-    </div>
-  </div>
-</div>

@@ -1,5 +1,10 @@
-.upload-view p {
-    margin-top: 32px;
+.upload-view ol {
+    margin-top: 3em;
+    font-size: 16px;
+}
+
+.upload-view li {
+    margin-top: 1em;
     font-size: 16px;
 }
 
