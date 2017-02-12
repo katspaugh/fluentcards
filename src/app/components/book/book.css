@@ -107,6 +107,11 @@
     color: #555;
 }
 
+.book__ts {
+  font-family: Monaco, monospace;
+  font-size: 0.8em;
+}
+
 .book__context {
     font-size: 14px;
 }

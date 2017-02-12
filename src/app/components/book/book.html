@@ -112,7 +112,12 @@
 
             <td class="book__word">
               {{ vocab.baseForm }} <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.gender">, {{ vocab.gender }}</b>
+
               <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab.baseForm)"></i>
+
+              <div *ngIf="vocab.definition && vocab.definition.ts" class="book__ts text-muted">
+                [{{ vocab.definition.ts }}]
+              </div>
             </td>
 
             <td *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">

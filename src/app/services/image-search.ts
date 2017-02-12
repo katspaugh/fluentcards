@@ -13,6 +13,7 @@ const apiKeys = [
 ];
 
 const notFoundError = 'No images found.'
+const imagesCount = 15;
 
 @Injectable()
 export class ImageSearchService {
@@ -38,7 +39,7 @@ export class ImageSearchService {
 
   getImages(word: string, language: string) {
     let mkt = language + '-' + language.toUpperCase();
-    return this.makeRequest({ q: word, count: 10, mkt: mkt })
+    return this.makeRequest({ q: word, count: imagesCount, mkt: mkt })
       .map((data) => {
         if (!data.value.length) throw new Error(notFoundError);
 
