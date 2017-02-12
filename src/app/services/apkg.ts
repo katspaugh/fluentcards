@@ -7,11 +7,11 @@ export class ApkgService {
 
   private formatCard(item) {
     const img = item.image ? `<p><img src="${ item.image.thumbnail }" /></p>` : '';
-    const ts = item.definition.ts ? `<p style="color: grey">[${ item.definition.ts }]</p>` : '';
+    const ts = item.definition && item.definition.ts ? `<p style="color: grey">[${ item.definition.ts }]</p>` : '';
 
     return {
       front: `<h1>${ item.baseForm }</h1>${ ts }<hr /><p>${ item.context }</p>${ img }`,
-      back: `<h1>${ item.baseForm }</h1><hr /><h2>${ item.translation }</h2>`
+      back: `<h1>${ item.baseForm }</h1><hr /><h2>${ item.translation || '' }</h2>`
     };
   }
 
