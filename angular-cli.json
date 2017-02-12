@@ -1,6 +1,6 @@
 {
   "project": {
-    "version": "1.0.0-beta.19-3",
+    "version": "1.0.0-beta.25",
     "name": "fluentcards"
   },
   "apps": [
@@ -17,6 +17,7 @@
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "mobile": false,
+      "styles": [],
       "scripts": [],
       "environments": {
         "source": "environments/environment.ts",

@@ -17,7 +17,7 @@ export class ApkgService {
 
   createDeck(fileName, deckName, items) {
     const saveAs = require('file-saver').saveAs;
-    const template = require('../../data/sql-template.js').default;
+    const template = require('../../data/sql-template').default;
     const apkg = new Exporter(deckName, template);
 
     items
