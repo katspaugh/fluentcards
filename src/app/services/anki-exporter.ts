@@ -12,7 +12,7 @@ export default class Exporter {
   private css;
 
   constructor(deckName, template: string) {
-    const SQL = require('sql.js');
+    const SQL = require('../../../node_modules/sql.js/js/sql.js');
     this.db = new SQL.Database();
     this.db.run(template);
 
@@ -20,7 +20,7 @@ export default class Exporter {
     const topDeckId = this._getId('cards', 'did', now);
     const topModelId = this._getId('notes', 'mid', now);
 
-    const Zip = require('jszip');
+    const Zip = require('../../../node_modules/jszip/dist/jszip.js');
     this.zip = new Zip();
     this.deckName = deckName;
     this.media = [];
@@ -129,7 +129,7 @@ export default class Exporter {
   }
 
   _checksum(str) {
-    const sha1 = require('sha1');
+    const sha1 = require('../../../node_modules/sha1/sha1.js');
     return parseInt(sha1(str).substr(0, 8), 16);
   }
 

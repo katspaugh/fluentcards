@@ -10,3 +10,13 @@ interface Window {
   speechSynthesis: any;
   SpeechSynthesisUtterance: any;
 }
+
+declare module 'filesaver' {
+    var saveAs: any;
+    export = saveAs;
+}
+
+declare module 'sql.js' {
+    var SQL: any;
+    export = SQL;
+}
