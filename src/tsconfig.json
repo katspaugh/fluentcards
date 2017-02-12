@@ -14,12 +14,5 @@
     "typeRoots": [
       "../node_modules/@types"
     ]
-  },
-  "include": [
-    "src/**/*",
-    "node_modules/sql.js",
-    "node_modules/file-saver/FileSaver.js",
-    "node_modules/jszip/dist/jszip.js",
-    "node_modules/sha1/sha1.js"
-  ]
+  }
 }
