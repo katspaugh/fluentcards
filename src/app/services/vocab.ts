@@ -19,7 +19,7 @@ export class VocabService {
 
     // Load demo books
     if (!this.books) {
-      this.books = window.DEMO_BOOKS;
+      this.books = require('../../data/books').default;
       this.books.isDemo = true;
     }
 
