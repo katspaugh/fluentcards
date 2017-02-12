@@ -150,8 +150,8 @@ WHERE lookups.book_key='${ escapedId }';
       if (this.books.isDemo) {
         this.books.length = 0;
         delete this.books.isDemo;
-        books.forEach(b => this.books.unshift(b));
       }
+      books.forEach(b => this.books.unshift(b));
     }
   }
 
