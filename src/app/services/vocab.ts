@@ -17,6 +17,18 @@ export class VocabService {
       this.books = window.DEMO_BOOKS;
       this.books.isDemo = true;
     }
+
+    let count = 10;
+    const poll = setInterval(() => {
+      count -= 1;
+
+      if (count <= 0) clearInterval(poll);
+
+      if (window.fluentcards) {
+        clearInterval(poll);
+        this.loadExtensionVocab(window.fluentcards);
+      }
+    }, 100);
   }
 
   private storeBooks() {
@@ -99,6 +111,48 @@ WHERE lookups.book_key='${ escapedId }';
     };
 
     preload(0);
+  }
+
+  private transformExtensionVocab(data) {
+    const langGroups = data.reduce((acc, item) => {
+      const lang = item.language;
+
+      const vocab = {
+        baseForm: item.def[0].text,
+        context: item.context,
+        definition: item.def[0],
+        translation: item.def[0].tr[0].text,
+        word: item.selection
+      };
+
+      acc[lang] = acc[lang] || [];
+      acc[lang].push(vocab);
+      return acc;
+    }, {});
+
+    return Object.keys(langGroups)
+      .map((lang) => ({
+        asin: `extension-${ lang }`,
+        id: `extension-${ lang }`,
+        authors: 'Fluentcards Extension',
+        count: langGroups[lang].length,
+        language: lang,
+        lastLookup: Date.now(),
+        title: `Web Vocabulary (${ lang })`,
+        vocabs: langGroups[lang]
+      }));
+  }
+
+  loadExtensionVocab(data) {
+    const books = this.transformExtensionVocab(data);
+
+    if (books.length > 0) {
+      if (this.books.isDemo) {
+        this.books.length = 0;
+        delete this.books.isDemo;
+        books.forEach(b => this.books.unshift(b));
+      }
+    }
   }
 
   loadBooks(uints: any) {

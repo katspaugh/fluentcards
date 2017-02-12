@@ -4,10 +4,11 @@
 declare var System: any;
 
 interface Window {
-    SQL: any;
-    DEMO_BOOKS: any;
-    ga: any;
-    contentful: any;
-    speechSynthesis: any;
-    SpeechSynthesisUtterance: any;
+  SQL: any;
+  DEMO_BOOKS: any;
+  fluentcards: any;
+  ga: any;
+  contentful: any;
+  speechSynthesis: any;
+  SpeechSynthesisUtterance: any;
 }
