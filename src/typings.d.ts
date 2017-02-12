@@ -7,16 +7,11 @@ interface Window {
   DEMO_BOOKS: any;
   fluentcards: any;
   ga: any;
+  JSZip: any;
   speechSynthesis: any;
   SpeechSynthesisUtterance: any;
 }
 
-declare module 'filesaver' {
-    var saveAs: any;
-    export = saveAs;
-}
-
-declare module 'sql.js' {
-    var SQL: any;
-    export = SQL;
-}
+declare var SQL: any;
+declare var sha1: any;
+declare var saveAs: any;

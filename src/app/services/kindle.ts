@@ -6,7 +6,6 @@ export class KindleService {
   private db: any;
 
   initDb(uints) {
-    const SQL = require('../../packages/sql.js');
     this.db = new SQL.Database(uints);
   }
 

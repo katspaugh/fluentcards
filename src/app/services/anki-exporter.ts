@@ -12,7 +12,6 @@ export default class Exporter {
   private css;
 
   constructor(deckName, template: string) {
-    const SQL = require('../../packages/sql.js');
     this.db = new SQL.Database();
     this.db.run(template);
 
@@ -20,8 +19,7 @@ export default class Exporter {
     const topDeckId = this._getId('cards', 'did', now);
     const topModelId = this._getId('notes', 'mid', now);
 
-    const Zip = require('../../packages/jszip.js');
-    this.zip = new Zip();
+    this.zip = new window.JSZip();
     this.deckName = deckName;
     this.media = [];
     this.topDeckId = topDeckId;
@@ -129,8 +127,8 @@ export default class Exporter {
   }
 
   _checksum(str) {
-    const sha1 = require('../../packages/sha1.js');
-    return parseInt(sha1(str).substr(0, 8), 16);
+    const res: string = sha1(str);
+    return parseInt(res.slice(0, 8), 16);
   }
 
   _getFirstVal(query) {
