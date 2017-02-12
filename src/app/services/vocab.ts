@@ -1,14 +1,19 @@
-import {Injectable, Inject} from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { KindleService } from './kindle';
+import { ExtensionService } from './browser-extension';
 
 @Injectable()
 export class VocabService {
 
-  private db: any;
   private books: any;
   private storage: any;
 
-  constructor(@Inject('Window') private window: Window) {
-    this.storage = window.localStorage;
+  constructor(
+    @Inject('Window') private window: Window,
+    private extensionService: ExtensionService,
+    private kindleService: KindleService
+  ) {
+    this.storage = this.window.localStorage;
 
     this.books = JSON.parse(this.storage.getItem('books'));
 
@@ -18,17 +23,18 @@ export class VocabService {
       this.books.isDemo = true;
     }
 
-    let count = 10;
-    const poll = setInterval(() => {
-      count -= 1;
+    // Load browser extension's vocab
+    this.extensionService.getVocab()
+      .then((items: any[]) => {
+        if (!items.length) return;
 
-      if (count <= 0) clearInterval(poll);
+        if (this.books.isDemo) {
+          this.books.length = 0;
+          delete this.books.isDemo;
+        }
 
-      if (window.fluentcards) {
-        clearInterval(poll);
-        this.loadExtensionVocab(window.fluentcards);
-      }
-    }, 100);
+        items.forEach(item => this.books.unshift(item));
+      });
   }
 
   private storeBooks() {
@@ -40,65 +46,6 @@ export class VocabService {
     return this.books.filter((book) => book.asin == asin)[0];
   }
 
-  private queryBooks() {
-    if (!this.db) return null;
-
-    let booksQuery;
-    try {
-      booksQuery = this.db.exec('SELECT id, title, authors, lang, asin FROM book_info GROUP BY asin;');
-    } catch (err) {
-      return null;
-    }
-
-    let books = booksQuery[0].values.map((book) => {
-      let escapedId = book[0].replace(/'/g, "''");
-      let countQuery = this.db.exec(`SELECT COUNT(timestamp) FROM lookups WHERE book_key='${ escapedId }'`);
-      let timestampQuery = this.db.exec(`SELECT timestamp FROM lookups WHERE book_key='${ escapedId }' ORDER BY timestamp DESC LIMIT 1;`);
-      let asin = book[4];
-      let cover = asin.length == 10 ? `http://images.amazon.com/images/P/${ asin }.01.20TRZZZZ.jpg` : '';
-
-      return {
-        id: book[0],
-        title: book[1],
-        authors: book[2],
-        language: book[3].split('-')[0],
-        asin: asin,
-        cover: cover,
-        count: countQuery[0].values[0][0],
-        lastLookup: timestampQuery[0] ? timestampQuery[0].values[0][0] : 0
-      };
-    });
-
-    books = books.filter((book) => book.count > 0);
-    books.sort((a, b) => b.lastLookup - a.lastLookup); // newest first
-
-    return books;
-  }
-
-  private queryVocabs(id: string) {
-    if (!this.db) return null;
-
-    let escapedId = id.replace(/'/g, "''");
-    let vocabsQuery = this.db.exec(`
-SELECT
-words.stem, words.word, lookups.usage
-FROM lookups
-LEFT OUTER JOIN words
-ON lookups.word_key=words.id
-WHERE lookups.book_key='${ escapedId }';
-`);
-
-    if (!vocabsQuery[0]) return;
-
-    return vocabsQuery[0].values.map((row) => {
-      return {
-        baseForm: row[0],
-        word: row[1],
-        context: row[2]
-      };
-    });
-  }
-
   private preloadVocabs() {
     // Sequentially load vocabs for each book
     let preload = (index) => {
@@ -106,58 +53,16 @@ WHERE lookups.book_key='${ escapedId }';
         return this.storeBooks();
       }
       let book = this.books[index];
-      book.vocabs = this.queryVocabs(book.id);
+      book.vocabs = this.kindleService.queryVocabs(book.id);
       setTimeout(() => preload(index + 1), 0);
     };
 
     preload(0);
   }
 
-  private transformExtensionVocab(data) {
-    const langGroups = data.reduce((acc, item) => {
-      const lang = item.language;
-
-      const vocab = {
-        baseForm: item.def[0].text,
-        context: item.context,
-        definition: item.def[0],
-        translation: item.def[0].tr[0].text,
-        word: item.selection
-      };
-
-      acc[lang] = acc[lang] || [];
-      acc[lang].push(vocab);
-      return acc;
-    }, {});
-
-    return Object.keys(langGroups)
-      .map((lang) => ({
-        asin: `extension-${ lang }`,
-        id: `extension-${ lang }`,
-        authors: 'Fluentcards Extension',
-        count: langGroups[lang].length,
-        language: lang,
-        lastLookup: Date.now(),
-        title: `Web Vocabulary (${ lang })`,
-        vocabs: langGroups[lang]
-      }));
-  }
-
-  loadExtensionVocab(data) {
-    const books = this.transformExtensionVocab(data);
-
-    if (books.length > 0) {
-      if (this.books.isDemo) {
-        this.books.length = 0;
-        delete this.books.isDemo;
-      }
-      books.forEach(b => this.books.unshift(b));
-    }
-  }
-
   loadBooks(uints: any) {
-    this.db = new this.window.SQL.Database(uints);
-    let books = this.queryBooks();
+    this.kindleService.initDb(uints)
+    let books = this.kindleService.queryBooks();
 
     if (!books) return null;
 
@@ -175,7 +80,7 @@ WHERE lookups.book_key='${ escapedId }';
     let book = this.findBook(asin);
 
     if (book && !book.vocabs) {
-      book.vocabs = this.queryVocabs(book.id);
+      book.vocabs = this.kindleService.queryVocabs(book.id);
     }
 
     return book;

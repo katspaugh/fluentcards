@@ -36,23 +36,25 @@
              [(ngModel)]="imagesEnabled"
              (ngModelChange)="onToggleImages($event)" />
 
-      <label for="pictures">pictures</label>
+      <label for="pictures">add pictures</label>
 
       <div class="book__loader">
         <loader [isLoading]="isLoadingImages"></loader>
       </div>
     </div>
 
+    <!-- TODO: create Anki model for cloze
     <div class="book__control">
       <input id="cloze" type="checkbox" [(ngModel)]="clozeEnabled" (ngModelChange)="onToggleCloze($event)" />
 
       <label for="cloze">cloze deletions</label>
     </div>
+    -->
 
     <div class="book__control">
-      <a class="btn btn-default btn-small" download="{{ book.title }}" [href]="exportUrl">
-        Download as CSV
-      </a>
+      <button class="btn btn-default btn-small" (click)="onExportClick()">
+        Download Anki deck
+      </button>
     </div>
   </div>
 

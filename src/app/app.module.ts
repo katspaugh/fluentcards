@@ -6,6 +6,9 @@ import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
 
+import {ApkgService} from './services/apkg';
+import {ExtensionService} from './services/browser-extension';
+import {KindleService} from './services/kindle';
 import {VocabService} from './services/vocab';
 import {SpeechService} from './services/speech';
 import {DictionaryService} from './services/dictionary';
@@ -32,7 +35,8 @@ import {VocabImages} from './components/vocab-images/vocab-images';
   ],
   imports     : [ BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig) ],
   providers   : [
-    VocabService, DictionaryService, DefinitionsService, ImageSearchService,
+    ApkgService, ExtensionService, KindleService, VocabService,
+    DictionaryService, DefinitionsService, ImageSearchService,
     SpeechService, MassTranslationService,
     { provide: 'Window',  useValue: window }
   ],
