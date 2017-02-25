@@ -26,6 +26,7 @@ export class ExtensionService {
         asin: `extension-${ lang }`,
         id: `extension-${ lang }`,
         authors: 'Fluentcards Extension',
+        cover: '/assets/extension.png',
         count: langGroups[lang].length,
         language: lang,
         lastLookup: Date.now(),
