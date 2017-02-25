@@ -33,7 +33,15 @@ export class VocabService {
           delete this.books.isDemo;
         }
 
-        items.forEach(item => this.books.unshift(item));
+        items.forEach(item => {
+          const existingItem = this.books.filter(book => book.asin === item.asin)[0];
+
+          if (existingItem) {
+            Object.assign(existingItem, item);
+          } else {
+            this.books.unshift(item);
+          }
+        });
       });
   }
 

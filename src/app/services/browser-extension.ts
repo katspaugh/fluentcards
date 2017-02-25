@@ -30,7 +30,7 @@ export class ExtensionService {
         count: langGroups[lang].length,
         language: lang,
         lastLookup: Date.now(),
-        title: `Web Vocabulary (${ lang })`,
+        title: `Web Vocabulary (${ lang.toUpperCase() })`,
         vocabs: langGroups[lang]
       }));
   }
