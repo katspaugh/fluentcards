@@ -36,7 +36,7 @@ export class ExtensionService {
 
   getVocab() {
     return new Promise((resolve) => {
-      let count = 10;
+      let count = 100;
 
       const poll = setInterval(() => {
         count -= 1;
@@ -48,7 +48,7 @@ export class ExtensionService {
         } else if (count <= 0) {
           clearInterval(poll);
         }
-      }, 100);
+      }, 50);
     });
   }
 };
