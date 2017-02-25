@@ -21,11 +21,18 @@ export class AppComponent {
   ) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        try {
-          window.ga('set', 'page', event.urlAfterRedirects);
-          window.ga('send', 'pageview');
-        } catch (e) {}
+        window.ga('set', 'page', event.urlAfterRedirects);
+        window.ga('send', 'pageview');
       }
+    });
+
+    window.addEventListener('error', (error: ErrorEvent) => {
+      window.ga('send', 'event', {
+        eventCategory: 'Script',
+        eventAction: 'error',
+        eventLabel: error.message,
+        nonInteraction: true
+      });
     });
   }
 

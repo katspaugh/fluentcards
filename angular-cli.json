@@ -9,6 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
+        "packages",
         "favicon.ico",
         "CNAME"
       ],
