@@ -29,8 +29,7 @@ export class VocabService {
         if (!items.length) return;
 
         if (this.books.isDemo) {
-          this.books.length = 0;
-          delete this.books.isDemo;
+          this.books = [];
         }
 
         items.forEach(item => this.books.unshift(item));
