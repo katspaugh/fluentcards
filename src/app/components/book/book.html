@@ -52,8 +52,14 @@
     -->
 
     <div class="book__control">
-      <button class="btn btn-default btn-small" (click)="onExportClick()">
-        Download Anki deck
+      <button class="btn btn-default btn-small" (click)="exportAnki()">
+        Export to Anki
+      </button>
+    </div>
+
+    <div class="book__control">
+      <button class="btn btn-default btn-small" (click)="exportMemrise()">
+        Export to Memrise
       </button>
     </div>
   </div>

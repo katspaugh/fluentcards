@@ -7,6 +7,7 @@ import {VocabService} from '../../services/vocab';
 import {DefinitionsService} from '../../services/definitions';
 import {SpeechService} from '../../services/speech';
 import {ApkgService} from '../../services/apkg';
+import {CsvService} from '../../services/csv';
 
 @Component({
   selector: 'book',
@@ -33,7 +34,8 @@ export class Book {
     private vocabService: VocabService,
     private definitionsService: DefinitionsService,
     private speechService: SpeechService,
-    private apkgService: ApkgService
+    private apkgService: ApkgService,
+    private csvService: CsvService
   ) {
     this.language = localStorage.getItem('language') || window.navigator.language.split('-')[0];
 
@@ -199,8 +201,16 @@ export class Book {
     this.clozeEnabled ? this.addCloze() : this.removeCloze();
   }
 
-  onExportClick() {
+  exportAnki() {
     this.apkgService.createDeck(
+      this.book.asin,
+      this.book.title,
+      this.book.vocabs
+    );
+  }
+
+  exportMemrise() {
+    this.csvService.exportCsv(
       this.book.asin,
       this.book.title,
       this.book.vocabs

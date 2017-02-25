@@ -7,6 +7,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
 
 import {ApkgService} from './services/apkg';
+import {CsvService} from './services/csv';
 import {ExtensionService} from './services/browser-extension';
 import {KindleService} from './services/kindle';
 import {VocabService} from './services/vocab';
@@ -35,7 +36,8 @@ import {VocabImages} from './components/vocab-images/vocab-images';
   ],
   imports     : [ BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig) ],
   providers   : [
-    ApkgService, ExtensionService, KindleService, VocabService,
+    ApkgService, CsvService,
+    ExtensionService, KindleService, VocabService,
     DictionaryService, DefinitionsService, ImageSearchService,
     SpeechService, MassTranslationService,
     { provide: 'Window',  useValue: window }
