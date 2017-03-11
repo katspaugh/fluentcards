@@ -10,8 +10,9 @@ interface Window {
   JSZip: any;
   speechSynthesis: any;
   SpeechSynthesisUtterance: any;
+  saveAs: any;
 }
 
 declare var SQL: any;
-declare var sha1: any;
+declare var sha1: (message: any) => string;
 declare var saveAs: any;

@@ -23,6 +23,7 @@ export class Book {
   isLoadingDefinitions = false;
   isLoadingImages = false;
   hasSpeechSynthesis = window.speechSynthesis != null;
+  hasSaveAs = window.saveAs != null;
   definitionsEnabled = false;
   imagesEnabled = false;
   clozeEnabled = false;
@@ -203,14 +204,14 @@ export class Book {
 
   exportAnki() {
     this.apkgService.createDeck(
-      this.book.asin,
+      `fluentcards-${ this.book.asin }`,
       this.book.title,
       this.book.vocabs,
       this.book.language
     );
   }
 
-  exportMemrise() {
+  exportCsv() {
     this.csvService.exportCsv(
       this.book.asin,
       this.book.title,

@@ -49,15 +49,15 @@
       <label for="cloze">add cloze test</label>
     </div>
 
-    <div class="book__control">
+    <div class="book__control" *ngIf="hasSaveAs">
       <button class="btn btn-default btn-small" (click)="exportAnki()">
         Export to Anki
       </button>
     </div>
 
     <div class="book__control">
-      <button class="btn btn-default btn-small" (click)="exportMemrise()">
-        Export to CSV
+      <button class="btn btn-default btn-small" (click)="exportCsv()" title="TSV can be imported into Memrise or Anki">
+        Export to TSV
       </button>
     </div>
   </div>
