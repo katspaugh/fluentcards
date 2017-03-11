@@ -205,7 +205,8 @@ export class Book {
     this.apkgService.createDeck(
       this.book.asin,
       this.book.title,
-      this.book.vocabs
+      this.book.vocabs,
+      this.book.language
     );
   }
 
