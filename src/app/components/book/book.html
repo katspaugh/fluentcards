@@ -43,13 +43,11 @@
       </div>
     </div>
 
-    <!-- TODO: create Anki model for cloze
     <div class="book__control">
       <input id="cloze" type="checkbox" [(ngModel)]="clozeEnabled" (ngModelChange)="onToggleCloze($event)" />
 
-      <label for="cloze">cloze deletions</label>
+      <label for="cloze">add cloze test</label>
     </div>
-    -->
 
     <div class="book__control">
       <button class="btn btn-default btn-small" (click)="exportAnki()">
@@ -59,7 +57,7 @@
 
     <div class="book__control">
       <button class="btn btn-default btn-small" (click)="exportMemrise()">
-        Export to Memrise
+        Export to CSV
       </button>
     </div>
   </div>
@@ -90,7 +88,7 @@
           <th style="width: 4em">Image</th>
           <th width="17%">Word</th>
           <th width="17%" *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">Definition</th>
-          <th width="60%">Context<span [hidden]="book.vocabs[0].cloze == null"> (with clozes)</span></th>
+          <th width="60%">Context<span [hidden]="book.vocabs[0].cloze == null"> (with cloze test)</span></th>
           <th style="width: 3em"></th>
         </thead>
 

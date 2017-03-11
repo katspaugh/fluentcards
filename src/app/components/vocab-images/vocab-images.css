@@ -29,9 +29,11 @@
 .images__thumb img {
     width: 100px;
     cursor: pointer;
+    border: 2px solid #fff;
+    box-sizing: border-box;
     transition: transform 100ms ease-in;
 }
 
 .images__thumb img:hover {
-    transform: scale(1.1);
+    transform: scale(2);
 }

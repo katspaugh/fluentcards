@@ -11,7 +11,8 @@ export default class Exporter {
   private separator;
   private css;
 
-  constructor(deckName, template: string) {
+  constructor(deckName: string, css: string) {
+    const template = require('../../data/anki-sql-template').default;
     this.db = new SQL.Database();
     this.db.run(template);
 
@@ -25,12 +26,7 @@ export default class Exporter {
     this.topDeckId = topDeckId;
     this.topModelId = topModelId;
     this.separator =  '\u001F';
-    this.css = `.card {
-      font-family: arial;
-      font-size: 20px;
-      text-align: center;
-      color: black;
-    }`;
+    this.css = css;
 
     const decks = this._getInitialRowValue('col', 'decks');
     const deck = getLastItem(decks);
