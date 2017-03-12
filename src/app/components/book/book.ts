@@ -1,13 +1,14 @@
-import {Component} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import {DomSanitizer} from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/map';
 
-import {VocabService} from '../../services/vocab';
-import {DefinitionsService} from '../../services/definitions';
-import {SpeechService} from '../../services/speech';
-import {ApkgService} from '../../services/apkg';
-import {CsvService} from '../../services/csv';
+import { VocabService } from '../../services/vocab';
+import { DefinitionsService } from '../../services/definitions';
+import { SpeechService } from '../../services/speech';
+import { ApkgService } from '../../services/apkg';
+import { CsvService } from '../../services/csv';
+import { getArticle } from '../../services/text-utils';
 
 @Component({
   selector: 'book',
@@ -105,8 +106,10 @@ export class Book {
 
           if (data.definition) {
             vocab.definition = data.definition;
+            vocab.num = data.num;
             vocab.gender = data.gender;
             vocab.fl = data.fl;
+            vocab.article = getArticle(vocab, this.book.language);
           } else {
             delete vocab.definition;
           }

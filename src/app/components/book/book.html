@@ -117,7 +117,7 @@
             </td>
 
             <td class="book__word">
-              {{ vocab.baseForm }} <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.gender">, {{ vocab.gender }}</b>
+              {{ vocab.article ? vocab.article + ' ' : '' }}{{ vocab.baseForm }} <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.num && (vocab.article || !vocab.gender)">, {{ vocab.num || vocab.gender }}</b>
 
               <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab.baseForm)"></i>
 

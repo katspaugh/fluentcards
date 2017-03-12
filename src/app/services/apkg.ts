@@ -8,6 +8,11 @@ const CardCss = `
   text-align: center;
   color: #333;
 }
+.context {
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
 .cloze b {
   display: inline-block;
   color: transparent;
@@ -17,6 +22,9 @@ const CardCss = `
 }
 .ts {
   color: grey;
+}
+h1 {
+  background-color: rgba(251, 234, 49, 0.2);
 }
 b {
   white-space: nowrap;
@@ -35,16 +43,12 @@ export class ApkgService {
   constructor() {}
 
   private formatCard(item, language) {
-    const DE = 'de';
-
     let baseForm = item.baseForm;
-    if (item.gender && language == DE) {
-      const article = { m: 'der', f: 'die', n: 'das' }[item.gender];
-      baseForm = article + ' ' + baseForm;
-    }
+    if (item.article) baseForm = item.article + ' ' + baseForm;
+
     let word = `${ baseForm }`;
     if (item.fl) word += `<br /><u>${ item.fl }</u>`;
-    if (item.gender && language != DE) word += ` <i>(${ item.gender })</i>`;
+    if (item.num || (item.gender && !item.article)) word += ` <i>(${ item.num || item.gender })</i>`;
     word = `<h1>${ word }</h1>`;
 
     let translation = item.translation ? `<hr /><h2>${ item.translation }</h2>` : '';
@@ -53,12 +57,13 @@ export class ApkgService {
 
     const ts = item.definition && item.definition.ts ? `<p class="ts">[${ item.definition.ts }]</p>` : '';
 
-    const cloze = item.cloze ? item.cloze.replace(/\{\{c1::([^}]+)\}\}/g, '<b>$1</b>') : '';
+    let cloze = item.cloze ? item.cloze.replace(/\{\{c1::([^}]+)\}\}/g, '<b>$1</b>') : '';
+    if (cloze) cloze = `<p class="context">${ cloze }</p>`;
 
     let context = item.context.replace(new RegExp('\\b(' + item.word + ')\\b', 'g'), '<b>$1</b>');
     if (context == item.context) context = context.replace(new RegExp(item.word, 'g'), '<b>$&</b>');
     if (context == item.context) context = context.replace(new RegExp(item.baseForm, 'g'), '<b>$&</b>');
-    context = `<p>${ context }</p>`;
+    context = `<p class="context">${ context }</p>`;
 
     const speech = `
 <script>
@@ -70,8 +75,8 @@ export class ApkgService {
 </script>`;
 
     return cloze ? {
-      front: `<p class="cloze">${ cloze }</p>${ img }`,
-      back: `<p>${ cloze }</p><hr />${ word }${ ts }${ translation }${ img }${ speech }`
+      front: `<div class="cloze">${ cloze }</div>${ img }`,
+      back: `${ cloze }<hr />${ word }${ ts }${ translation }${ img }${ speech }`
     } : {
       front: `${ word }${ ts }<hr />${ context }${ img }${ speech }`,
       back: `${ word }${ ts }${ translation }<hr />${ context }${ img }`,
