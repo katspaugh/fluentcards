@@ -1,0 +1,4 @@
+<span contenteditable="true"
+      class="{{ isBlock ? 'block' : '' }}"
+      (blur)="onBlur($event)"
+      (keydown)="onKeyDown($event)">{{ text }}</span>

@@ -95,33 +95,37 @@ export class Book {
     this.vocabService.updateBook(this.book);
   }
 
+  processDefinition(data) {
+    let vocab = data.vocab;
+    vocab.translation = data.translation;
+
+    if (data.definition) {
+      vocab.definition = data.definition;
+      vocab.translation = data.definition.tr.slice(0, 2).map(t => t.text).join('; ') || data.translation;
+      vocab.definition = data.definition;
+      vocab.num = data.num;
+      vocab.gender = data.gender;
+      vocab.fl = data.fl;
+      vocab.article = getArticle(vocab, this.book.language);
+    } else {
+      delete vocab.definition;
+    }
+
+    return vocab;
+  }
+
   addDefinitions() {
     this.isLoadingDefinitions = true;
 
-    let sub = this.definitionsService.load(this.book.vocabs, this.book.language, this.language)
+    this.definitionsService.load(this.book.vocabs, this.book.language, this.language)
       .subscribe(
-        (data: any) => {
-          let vocab = data.vocab;
-          vocab.translation = data.translation;
-
-          if (data.definition) {
-            vocab.translation = data.definition.tr.slice(0, 2).map(t => t.text).join('; ') || data.translation;
-            vocab.definition = data.definition;
-            vocab.num = data.num;
-            vocab.gender = data.gender;
-            vocab.fl = data.fl;
-            vocab.article = getArticle(vocab, this.book.language);
-          } else {
-            delete vocab.definition;
-          }
-        },
+        (data: any) => this.processDefinition(data),
 
         (err) => null,
 
         () => {
           this.isLoadingDefinitions = false;
           this.vocabService.updateBook(this.book);
-          sub.unsubscribe();
         }
       );
   }
@@ -175,6 +179,43 @@ export class Book {
       vocab.image = data.image;
       this.vocabService.updateBook(this.book);
     }
+  }
+
+  onBaseFormChange(vocab, text) {
+    vocab.baseForm = text;
+
+    if (!vocab.translation) {
+      this.vocabService.updateBook(this.book);
+      return;
+    }
+
+    this.definitionsService.load([ vocab ], this.book.language, this.language)
+      .subscribe(
+        (data: any) => this.processDefinition(data),
+
+        (err) => null,
+
+        () => {
+          this.isLoadingDefinitions = false;
+          this.vocabService.updateBook(this.book);
+        }
+      );
+  }
+
+  onTranslationChange(vocab, text) {
+    vocab.translation = text;
+    this.vocabService.updateBook(this.book);
+  }
+
+  onContextChange(vocab, text) {
+    if (vocab.cloze) {
+      vocab.cloze = text;
+      vocab.context = text.replace(/\{\{c1::(.+?)\}\}/g, '$1');
+    } else {
+      vocab.context = text;
+    }
+
+    this.vocabService.updateBook(this.book);
   }
 
   onLanguageSelect() {

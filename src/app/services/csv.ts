@@ -11,12 +11,16 @@ export class CsvService {
     let lines = items.map((vocab) => {
       let word = vocab.baseForm;
 
+      if (vocab.article) {
+        word = vocab.article + ' ' + word;
+      }
+
       if (vocab.fl) {
         word += ', ' + vocab.fl;
       }
 
-      if (vocab.gender) {
-        word += ', ' + vocab.gender;
+      if (vocab.num || (vocab.gender && !vocab.article)) {
+        word += ', ' + vocab.num || vocab.gender;
       }
 
       let items = [ word ];

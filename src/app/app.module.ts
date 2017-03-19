@@ -28,11 +28,12 @@ import {Footer} from './components/footer/footer';
 import {Header} from './components/header/header';
 import {Loader} from './components/loader/loader';
 import {VocabImages} from './components/vocab-images/vocab-images';
+import {Editable} from './components/editable/editable';
 
 @NgModule({
   declarations: [
     AppComponent, StartView, UploadView, BooksView, Book,
-    BookList, Drop, Footer, Header, Loader, VocabImages
+    BookList, Drop, Footer, Header, Loader, VocabImages, Editable
   ],
   imports     : [ BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig) ],
   providers   : [

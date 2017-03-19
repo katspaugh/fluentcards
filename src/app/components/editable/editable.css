@@ -1,0 +1,12 @@
+span:focus {
+  outline: none;
+  background: #eee;
+  padding: 0.25em;
+  margin: -0.25em;
+}
+
+span.block {
+  display: inline-block;
+  padding: 0.25em;
+  margin: -0.25em;
+}

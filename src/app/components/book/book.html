@@ -117,7 +117,11 @@
             </td>
 
             <td class="book__word">
-              {{ vocab.article ? vocab.article + ' ' : '' }}{{ vocab.baseForm }} <span><u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.num && (vocab.article || !vocab.gender)">, {{ vocab.num || vocab.gender }}</b></span>
+              {{ vocab.article || '' }}
+
+              <editable [text]="vocab.baseForm" [noEmpty]="true" (onChange)="onBaseFormChange(vocab, $event)"></editable>
+
+              <span><u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.num && (vocab.article || !vocab.gender)">, {{ vocab.num || vocab.gender }}</b></span>
 
               <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab.baseForm)"></i>
 
@@ -127,11 +131,15 @@
             </td>
 
             <td *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">
-              <span [hidden]="vocab.translation == null">{{ vocab.translation }}</span>
+              <editable *ngIf="vocab.translation != null" [text]="vocab.translation"
+                        (onChange)="onTranslationChange(vocab, $event)"></editable>
+
               <span [hidden]="vocab.translation != null"><loader [isLoading]="isLoadingDefinitions"></loader></span>
             </td>
 
-            <td class="book__context">{{ vocab.cloze || vocab.context }}</td>
+            <td class="book__context">
+              <editable [text]="vocab.cloze || vocab.context" (onChange)="onContextChange(vocab, $event)"></editable>
+            </td>
 
             <td><i class="fa fa-remove text-muted book__remove-vocab" (click)="removeVocab(i)" title="Remove"></i></td>
           </tr>

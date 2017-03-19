@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Rx';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
 
-import {DictionaryService} from './dictionary';
-import {MassTranslationService} from './mass-translation';
+import { DictionaryService } from './dictionary';
+import { MassTranslationService } from './mass-translation';
 
 @Injectable()
 export class DefinitionsService {
@@ -43,8 +43,7 @@ export class DefinitionsService {
 
   private loadDicOrTr(vocab, fromLanguage, toLanguage) {
     return this.loadDictionary(vocab, fromLanguage, toLanguage)
-      .catch(() => this.loadTranslation(vocab, toLanguage))
-        .toPromise();
+      .catch(() => this.loadTranslation(vocab, toLanguage));
   }
 
   private detectLanguage(vocab) {
@@ -53,29 +52,29 @@ export class DefinitionsService {
 
   // Sequentially load definitions to avoid DoSing the service
   load(vocabs, fromLanguage, toLanguage) {
-    let subj = new Subject();
+    return Observable.create(observer => {
+      let load = (index) => {
+        let vocab = vocabs[index];
 
-    let load = (index) => {
-      let vocab = vocabs[index];
-      if (!vocab) {
-        subj.complete();
-        return;
-      }
+        if (!vocab) {
+          observer.complete();
+          return;
+        }
 
-      return this.loadDicOrTr(vocab, fromLanguage, toLanguage)
-        .then((data) => {
-          subj.next(data);
-          load(index + 1);
-        })
-    };
+        this.loadDicOrTr(vocab, fromLanguage, toLanguage)
+          .subscribe(
+            (data) => {
+              observer.next(data);
+              load(index + 1);
+            });
+      };
 
-    this.detectLanguage(vocabs[0])
-      .subscribe((lang) => {
-        fromLanguage = lang || fromLanguage;
-        load(0);
-      });
-
-    return subj;
+      this.detectLanguage(vocabs[0])
+        .subscribe((lang) => {
+          fromLanguage = lang || fromLanguage;
+          load(0);
+        });
+    });
   }
 
 };
