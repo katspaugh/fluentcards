@@ -14,24 +14,16 @@ export class BookList {
   private randomGradient() {
     const hueA = ~~(Math.random() * 360);
     const hueB = ~~(Math.random() * 360);
-    const angleA = ~~(Math.random() * 360);
-    const angleB = angleA - 45;
+    const angle = ~~(Math.random() * 360);
     const size = ~~(Math.random() * 100);
 
     return (
       `repeating-linear-gradient(
-         ${ angleA }deg,
+         ${ angle }deg,
          hsla(${ hueA }, 80%, 40%, 0.7),
          hsla(${ hueA }, 80%, 40%, 0.7) ${ size }px,
          hsla(${ hueB }, 80%, 80%, 0.7) ${ size }px,
          hsla(${ hueB }, 80%, 80%, 0.7) ${ size * 2 }px
-       ),
-       repeating-linear-gradient(
-         ${ angleB }deg,
-         hsla(${ hueB }, 80%, 40%, 0.1),
-         hsla(${ hueB }, 80%, 40%, 0.1) 2px,
-         hsla(${ hueA }, 80%, 80%, 0.1) 2px,
-         hsla(${ hueA }, 80%, 80%, 0.1) 4px
        )`
     );
   }

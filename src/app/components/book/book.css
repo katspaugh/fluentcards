@@ -92,8 +92,39 @@
     margin: 50px -50px;
 }
 
+.book__table-wrapper-no-cover {
+  margin-top: 0;
+}
+
 .book__table {
     table-layout: fixed;
+}
+
+.book__table td {
+  border: none;
+}
+
+.book__table th {
+  border-top-width: 0;
+  border-bottom: 2px solid #333;
+  padding-bottom: 1.5em;
+}
+
+.book__table tr:first-child td {
+  padding-top: 1.5em;
+}
+
+.book__table th:first-child,
+.book__table th:last-child {
+  border-bottom-width: 0;
+}
+
+.book__th-context {
+  text-align: center;
+}
+
+.book__word span {
+  white-space: nowrap;
 }
 
 .book__word b,
@@ -110,8 +141,9 @@
 }
 
 .book__ts {
-  font-family: Monaco, monospace;
-  font-size: 0.8em;
+  font-family: Times New Roman, Times, serif;
+  font-size: 0.9em;
+  font-weight: 100;
 }
 
 .book__context {

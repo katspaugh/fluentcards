@@ -81,14 +81,14 @@
       </h4>
     </div>
 
-    <div class="book__table-wrapper">
-      <table class="book__table table table-striped">
+    <div class="book__table-wrapper book__table-wrapper-{{ book.cover ? 'cover' : 'no-cover' }}">
+      <table class="book__table table">
         <thead>
-          <th style="width: 2em"><span class="text-muted">#</span></th>
+          <th style="width: 2em"></th>
           <th style="width: 4em">Image</th>
           <th width="17%">Word</th>
           <th width="17%" *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">Definition</th>
-          <th width="60%">Context<span [hidden]="book.vocabs[0].cloze == null"> (with cloze test)</span></th>
+          <th width="60%" class="book__th-context">Context<span [hidden]="book.vocabs[0].cloze == null"> (with cloze test)</span></th>
           <th style="width: 3em"></th>
         </thead>
 
@@ -117,7 +117,7 @@
             </td>
 
             <td class="book__word">
-              {{ vocab.article ? vocab.article + ' ' : '' }}{{ vocab.baseForm }} <u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.num && (vocab.article || !vocab.gender)">, {{ vocab.num || vocab.gender }}</b>
+              {{ vocab.article ? vocab.article + ' ' : '' }}{{ vocab.baseForm }} <span><u [hidden]="!vocab.fl">{{ vocab.fl }}</u><b [hidden]="!vocab.num && (vocab.article || !vocab.gender)">, {{ vocab.num || vocab.gender }}</b></span>
 
               <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab.baseForm)"></i>
 
@@ -128,7 +128,6 @@
 
             <td *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">
               <span [hidden]="vocab.translation == null">{{ vocab.translation }}</span>
-              <i [hidden]="!vocab.definition || vocab.definition.tr.length <= 1" class="fa fa-repeat text-muted book__change-def" (click)="changeDefinition(vocab)"></i>
               <span [hidden]="vocab.translation != null"><loader [isLoading]="isLoadingDefinitions"></loader></span>
             </td>
 

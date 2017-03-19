@@ -105,6 +105,7 @@ export class Book {
           vocab.translation = data.translation;
 
           if (data.definition) {
+            vocab.translation = data.definition.tr.slice(0, 2).map(t => t.text).join('; ') || data.translation;
             vocab.definition = data.definition;
             vocab.num = data.num;
             vocab.gender = data.gender;
@@ -164,17 +165,6 @@ export class Book {
     if (this.book.vocabs.length == 1) return;
     this.book.vocabs.splice(index, 1);
     this.vocabService.updateBook(this.book);
-  }
-
-  changeDefinition(vocab) {
-    let index = null;
-    vocab.definition.tr.forEach((tr, idx) => {
-      if (tr.text == vocab.translation) {
-        index = idx;
-        return false;
-      }
-    });
-    vocab.translation = vocab.definition.tr[(index + 1) % vocab.definition.tr.length].text;
   }
 
   onImageAdd(data, vocab) {
