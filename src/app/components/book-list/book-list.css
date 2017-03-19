@@ -51,12 +51,36 @@
     float: left;
     min-width: 107px;
     margin-right: 20px;
+    position: relative;
 }
 
 .book-list__pseudo-cover {
     width: 107px;
     height: 160px;
-    background: #999;
+    background-repeat: repeat;
+    background-color: #fff656;
+    position: relative;
+}
+
+.book-list__card-cover:after,
+.book-list__pseudo-cover:after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.025) 1%,
+    rgba(0, 0, 0, 0) 2%,
+    rgba(0, 0, 0, 0) 92%,
+    rgba(0, 0, 0, 0.025) 94%,
+    rgba(0, 0, 0, 0) 98%,
+    rgba(0, 0, 0, 0.025) 99%
+  );
 }
 
 .book-list__card-content {

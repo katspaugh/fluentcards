@@ -8,7 +8,7 @@
             <div class="book-list__card-cover">
               <img *ngIf="book.cover" [src]="book.cover" (error)="book.cover = null" alt="{{ book.title }} cover" />
 
-              <div *ngIf="!book.cover" class="book-list__pseudo-cover" [style.background]="book.gradient"></div>
+              <div *ngIf="!book.cover" class="book-list__pseudo-cover" [style.backgroundImage]="getGradient(book)"></div>
             </div>
 
             <div class="book-list__card-content">
