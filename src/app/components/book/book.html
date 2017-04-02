@@ -64,21 +64,23 @@
 
   <div class="book__container">
     <div class="book__header">
-      <div class="book__count pull-right">
+      <div class="book__header-item book__header-title">
+        <img *ngIf="book.cover"
+             [src]="book.cover"
+             (error)="book.cover = null"
+             class="book__cover pull-left"
+             alt="{{ book.title }} cover" />
+
+        <h4 class="book__title">
+          {{ book.title }}<br />
+          <small>by <em>{{ book.authors }}</em></small>
+        </h4>
+      </div>
+
+      <div class="book__header-item book__count">
         <span class="book__count-number">{{ book.count }}</span>
         <span class="book__count-label">{{ book.count == 1 ? 'word' : 'words' }}</span>
       </div>
-
-      <img *ngIf="book.cover"
-           [src]="book.cover"
-           (error)="book.cover = null"
-           class="book__cover pull-left"
-           alt="{{ book.title }} cover" />
-
-      <h4 class="book__title">
-        {{ book.title }}<br />
-        <small>by <em>{{ book.authors }}</em></small>
-      </h4>
     </div>
 
     <div class="book__table-wrapper book__table-wrapper-{{ book.cover ? 'cover' : 'no-cover' }}">
@@ -88,7 +90,7 @@
           <th style="width: 4em">Image</th>
           <th width="17%">Word</th>
           <th width="17%" *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">Definition</th>
-          <th width="60%" class="book__th-context">Context<span [hidden]="book.vocabs[0].cloze == null"> (with cloze test)</span><span class="text-muted"> – click on text to edit</span></th>
+          <th width="60%" class="book__th-context">Context<span [hidden]="book.vocabs[0].cloze == null"> (with cloze test)</span></th>
           <th style="width: 3em"></th>
         </thead>
 

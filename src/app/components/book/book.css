@@ -2,94 +2,108 @@
 }
 
 .book__close {
-    position: absolute;
-    z-index: 1;
-    right: 30px;
-    top: 7px;
-    font-size: 20px;
+  position: absolute;
+  z-index: 1;
+  right: 30px;
+  top: 7px;
+  font-size: 20px;
 }
 
 .book__close-icon {
-    font-size: 70px;
-    line-height: 1;
+  font-size: 70px;
+  line-height: 1;
 }
 
 .book__header {
-    overflow: hidden;
-    margin-top: 70px;
-    margin-bottom: 30px;
+  overflow: hidden;
+  margin-top: 70px;
+  margin-bottom: 30px;
+  display: flex;
+  align-content: space-between;
+}
+
+.book__header-title {
+  flex-grow: 2;
 }
 
 .book__controls {
-    margin-left: 200px;
-    margin-right: 100px;
-    margin-top: -40px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  margin-left: 200px;
+  margin-right: 100px;
+  margin-top: -40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+  .book__controls {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+  }
 }
 
 .book__control {
-    flex-grow: 1;
-    white-space: nowrap;
-    -webkit-user-select: none;
-    user-select: none;
-    position: relative;
-    margin: 10px;
+  flex-grow: 1;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+  position: relative;
+  margin: 10px;
 }
 
 .book__control label {
-    font-weight: bold;
-    padding-left: 0.25em;
+  font-weight: bold;
+  padding-left: 0.25em;
 }
 
 .book__control input[type=checkbox]:after {
-    content: '';
-    display: block;
-    width: 130%;
-    height: 130%;
-    margin-top: -15%;
-    margin-left: -15%;
-    background: #fff;
-    border: 3px solid #000;
+  content: '';
+  display: block;
+  width: 130%;
+  height: 130%;
+  margin-top: -15%;
+  margin-left: -15%;
+  background: #fff;
+  border: 3px solid #000;
 }
 
 .book__control input:checked:after {
-    content: '';
-    background: #000;
+  content: '';
+  background: #000;
 }
 
 .book__loader {
-    display: inline-block;
-    position: absolute;
-    vertical-align: middle;
-    margin-left: 10px;
+  display: inline-block;
+  position: absolute;
+  vertical-align: middle;
+  margin-left: 10px;
 }
 
 .book__cover {
-    margin-right: 20px;
-    max-width: 120px;
+  margin-right: 20px;
+  max-width: 120px;
 }
 
 .book__title {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .book__count {
-    display: inline-block;
-    text-align: center;
-    font-weight: bold;
-    margin-left: 3em;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+  margin-left: 3em;
 }
 
 .book__count-number {
-    font-size: 100px;
-    display: block;
-    line-height: 1;
+  font-size: 100px;
+  display: block;
+  line-height: 1;
 }
 
 .book__table-wrapper {
-    margin: 50px -50px;
+  margin: 50px -50px;
 }
 
 .book__table-wrapper-no-cover {
@@ -97,7 +111,7 @@
 }
 
 .book__table {
-    table-layout: fixed;
+  table-layout: fixed;
 }
 
 .book__table td {
@@ -129,15 +143,15 @@
 
 .book__word b,
 .book__word u {
-    color: #999;
-    font-size: 0.8em;
-    font-style: italic;
-    text-decoration: none;
-    font-weight: normal;
+  color: #999;
+  font-size: 0.8em;
+  font-style: italic;
+  text-decoration: none;
+  font-weight: normal;
 }
 
 .book__word b {
-    color: #555;
+  color: #555;
 }
 
 .book__ts {
@@ -147,48 +161,49 @@
 }
 
 .book__context {
-    font-size: 14px;
+  font-size: 1.1vw;
+  vertical-align: middle;
 }
 
 .book__change-def,
 .book__speak {
-    margin-left: 0.5em;
-    cursor: pointer;
+  margin-left: 0.5em;
+  cursor: pointer;
 }
 
 .book__remove-vocab,
 .book__get-image {
-    cursor: pointer;
-    padding: 0.3rem;
+  cursor: pointer;
+  padding: 0.3rem;
 }
 
 .book__remove-vocab:hover {
-    color: #D31619;
+  color: #D31619;
 }
 
 .book__help {
-    cursor: pointer;
-    font-size: 12px;
+  cursor: pointer;
+  font-size: 12px;
 }
 
 @media (min-width: 992px) {
-    .book__help {
-        position: absolute;
-        transform: translate(-100%, 50px);
-    }
+  .book__help {
+    position: absolute;
+    transform: translate(-100%, 50px);
+  }
 }
 
 .book__help a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .book__images {
-    position: absolute;
-    z-index: 2;
+  position: absolute;
+  z-index: 2;
 }
 
 .book__thumb {
-    cursor: pointer;
-    height: 24px;
-    display: block;
+  cursor: pointer;
+  height: 24px;
+  display: block;
 }

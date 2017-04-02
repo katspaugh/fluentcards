@@ -13,6 +13,12 @@ body {
   padding: 24px;
 }
 
+@media (max-width: 1024px) {
+  body {
+    padding: 0;
+  }
+}
+
 a,
 a:hover,
 a:focus,
@@ -96,6 +102,13 @@ code {
 .app__container {
   padding: 50px 50px 130px;
 }
+
+@media (max-width: 1024px) {
+  .app {
+    border-width: 0;
+  }
+}
+
 
 body.upload-page .app {
   border: 4px dashed #000;

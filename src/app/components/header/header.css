@@ -6,11 +6,16 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: baseline;
-    margin-left: 20%;
+    align-content: space-between;
 }
 
 .header__item {
-    flex-grow: 1;
+  flex-grow: 1;
+  margin-right: 2em;
+}
+
+.header__item:last-child {
+  margin-right: 0;
 }
 
 .header__item a {
@@ -32,27 +37,14 @@
     border-color: transparent;
 }
 
-.header__item_placeholder {
-    visibility: hidden;
-}
-
-.header__item_logo {
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-}
-
 .header__logo {
     display: block;
     height: 28px;
     margin-bottom: 5px;
 }
 
-.header__facebook {
-    position: absolute;
-    z-index: 1;
-    right: 0;
+.header__item_facebook {
     height: 24px;
-    bottom: 0;
+    position: relative;
+    top: 9px;
 }
