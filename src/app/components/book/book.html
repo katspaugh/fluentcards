@@ -88,7 +88,7 @@
           <th style="width: 4em">Image</th>
           <th width="17%">Word</th>
           <th width="17%" *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">Definition</th>
-          <th width="60%" class="book__th-context">Context<span [hidden]="book.vocabs[0].cloze == null"> (with cloze test)</span></th>
+          <th width="60%" class="book__th-context">Context<span [hidden]="book.vocabs[0].cloze == null"> (with cloze test)</span><span class="text-muted"> – click on text to edit</span></th>
           <th style="width: 3em"></th>
         </thead>
 
@@ -138,7 +138,7 @@
             </td>
 
             <td class="book__context">
-              <editable [text]="vocab.cloze || vocab.context" (onChange)="onContextChange(vocab, $event)"></editable>
+              <editable [text]="vocab.cloze || vocab.context" [isBlock]="true" (onChange)="onContextChange(vocab, $event)"></editable>
             </td>
 
             <td><i class="fa fa-remove text-muted book__remove-vocab" (click)="removeVocab(i)" title="Remove"></i></td>

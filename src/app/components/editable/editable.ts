@@ -7,14 +7,9 @@ import { Component, Input, Output, EventEmitter, ElementRef, HostListener } from
 })
 export class Editable {
   @Input() text: string;
+  @Input() isBlock: boolean;
   @Input() noEmpty: boolean;
   @Output() onChange: EventEmitter<{}> = new EventEmitter();
-
-  isBlock = false;
-
-  ngOnInit() {
-    this.isBlock = this.text.length > 50;
-  }
 
   onBlur($event) {
     let newText = $event.target.textContent.trim();
