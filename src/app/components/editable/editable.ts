@@ -28,6 +28,9 @@ export class Editable {
     if ($event.key == 'Enter') {
       $event.preventDefault();
       $event.target.blur();
+    } else if ($event.key == 'Escape') {
+      $event.target.textContent = this.text;
+      $event.target.blur();
     }
   }
 }

@@ -1,33 +1,46 @@
 <div class="book-list">
-  <div class="book-list__book" *ngFor="let book of books">
-
-    <div class="book-list__card card">
-      <a class="book-list__book-link" [routerLink]="[ '/books', book.asin ]">
-        <div class="card-block">
-          <div class="book-list__card-container">
-            <div class="book-list__card-cover">
-              <img *ngIf="book.cover" [src]="book.cover" (error)="book.cover = null" alt="{{ book.title }} cover" />
-
-              <div *ngIf="!book.cover" class="book-list__pseudo-cover" [style.backgroundImage]="getGradient(book)"></div>
-            </div>
-
-            <div class="book-list__card-content">
-              <h6 class="card-title">{{ truncateWords(book.title, 12) }}</h6>
-
-              <p class="card-text">by <em>{{ truncateWords(book.authors, 12) }}</em></p>
-            </div>
+  <div class="book-list__layout">
+    <div *ngFor="let group of bookGroups">
+      <div class="book-list__wrapper" *ngIf="group.books.length">
+        <div class="book-list__sidebar">
+          <div class="book-list__count">
+            <span class="book-list__count-number">{{ group.books.length }}</span>
+            <span class="book-list__count-label">{{ group.title }}{{ group.books.length != 1 ? 's' : '' }}</span>
           </div>
         </div>
 
-        <span class="book-list__word-count label">
-          {{ book.count }}&nbsp;{{ book.count == 1 ? 'word' : 'words' }}
-        </span>
-      </a>
+        <div class="book-list__main">
+          <div class="book-list__book" *ngFor="let book of group.books">
+            <div class="book-list__card card">
+              <a class="book-list__book-link" [routerLink]="[ '/books', book.slug ]">
+                <div class="card-block">
+                  <div class="book-list__card-container">
+                    <div class="book-list__card-cover">
+                      <img *ngIf="book.cover" [src]="book.cover" (error)="book.cover = null" alt="{{ book.title }} cover" />
 
-      <span class="book-list__delete" (click)="removeBook(book)">
-        Hide
-      </span>
+                      <div *ngIf="!book.cover" class="book-list__pseudo-cover" [style.backgroundImage]="getGradient(book)"></div>
+                    </div>
+
+                    <div class="book-list__card-content">
+                      <h6 class="card-title">{{ truncateWords(book.title, 12) }}</h6>
+
+                      <p class="card-text">by <em>{{ truncateWords(book.authors, 12) }}</em></p>
+                    </div>
+                  </div>
+                </div>
+
+                <span class="book-list__word-count label">
+                  {{ book.count }}&nbsp;{{ book.count == 1 ? 'word' : 'words' }}
+                </span>
+              </a>
+
+              <span class="book-list__delete" (click)="removeBook(book)">
+                Hide
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
   </div>
 </div>

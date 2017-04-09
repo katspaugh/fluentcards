@@ -102,6 +102,10 @@
   line-height: 1;
 }
 
+.book__share {
+  margin-top: 10px;
+}
+
 .book__table-wrapper {
   margin: 50px -50px;
 }
@@ -126,6 +130,10 @@
 
 .book__table tr:first-child td {
   padding-top: 1.5em;
+}
+
+.book__table tr:nth-child(2n) td {
+  background-color: #fafafa;
 }
 
 .book__table th:first-child,

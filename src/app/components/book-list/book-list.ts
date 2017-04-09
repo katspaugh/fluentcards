@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
-
-import {VocabService} from '../../services/vocab';
+import { Observable } from 'rxjs/Observable';
+import { Component } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { VocabService } from '../../services/vocab';
 
 @Component({
   selector: 'book-list',
@@ -9,7 +9,20 @@ import {VocabService} from '../../services/vocab';
   templateUrl: './book-list.html'
 })
 export class BookList {
-  books: any[];
+  bookGroups = [
+    {
+      title: 'Extension deck',
+      books: []
+    },
+    {
+      title: 'Kindle deck',
+      books: []
+    },
+    {
+      title: 'Community deck',
+      books: []
+    }
+  ];
 
   private randomGradient() {
     const hueA = ~~(Math.random() * 360);
@@ -28,8 +41,23 @@ export class BookList {
     );
   }
 
-  constructor(private sanitizer: DomSanitizer, private vocabService: VocabService) {
-    this.books = this.vocabService.getBooks();
+  constructor(
+    private sanitizer: DomSanitizer,
+    private vocabService: VocabService
+  ) {
+    this.vocabService.getStoredBooks()
+      .subscribe(books => {
+        this.bookGroups[0].books = books.filter(b => this.isExtensionData(b));
+        this.bookGroups[1].books = books.filter(b => !this.isExtensionData(b));
+      });
+
+    this.vocabService.loadApiBooks().subscribe(books => {
+      this.bookGroups[2].books = books;
+    });
+  }
+
+  private isExtensionData(book) {
+    return /extension-/.test(book.id);
   }
 
   getGradient(book) {
@@ -47,7 +75,6 @@ export class BookList {
   removeBook(book) {
     if (confirm("Don't show this book?")) {
       this.vocabService.removeBook(book);
-      this.books = this.vocabService.getBooks();
     }
   }
 

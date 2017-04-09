@@ -2,12 +2,12 @@
 }
 
 .start-view__container {
-    min-height: 100%;
-    margin-left: 20%;
+  min-height: 100%;
+  margin-left: 20%;
 }
 
 @media (max-width: 1024px) {
-    .start-view__container {
-        margin-left: 10%;
-    }
+  .start-view__container {
+    margin-left: 10%;
+  }
 }

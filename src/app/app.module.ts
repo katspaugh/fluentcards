@@ -8,7 +8,7 @@ import {HttpModule} from '@angular/http';
 
 import {ApkgService} from './services/apkg';
 import {CsvService} from './services/csv';
-import {ExtensionService} from './services/browser-extension';
+import {ExtensionService} from './services/extension';
 import {KindleService} from './services/kindle';
 import {VocabService} from './services/vocab';
 import {SpeechService} from './services/speech';
@@ -16,12 +16,11 @@ import {DictionaryService} from './services/dictionary';
 import {DefinitionsService} from './services/definitions';
 import {ImageSearchService} from './services/image-search';
 import {MassTranslationService} from './services/mass-translation';
+import {FluentcardsApiService} from './services/fluentcards-api';
 
 import {StartView} from './components/start-view/start-view';
 import {UploadView} from './components/upload-view/upload-view';
-import {BooksView} from './components/books-view/books-view';
 import {Book} from './components/book/book';
-
 import {BookList} from './components/book-list/book-list';
 import {Drop} from './components/drop/drop';
 import {Footer} from './components/footer/footer';
@@ -32,7 +31,7 @@ import {Editable} from './components/editable/editable';
 
 @NgModule({
   declarations: [
-    AppComponent, StartView, UploadView, BooksView, Book,
+    AppComponent, StartView, UploadView, Book,
     BookList, Drop, Footer, Header, Loader, VocabImages, Editable
   ],
   imports     : [ BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig) ],
@@ -40,7 +39,7 @@ import {Editable} from './components/editable/editable';
     ApkgService, CsvService,
     ExtensionService, KindleService, VocabService,
     DictionaryService, DefinitionsService, ImageSearchService,
-    SpeechService, MassTranslationService,
+    SpeechService, MassTranslationService, FluentcardsApiService,
     { provide: 'Window',  useValue: window }
   ],
   bootstrap   : [ AppComponent ]

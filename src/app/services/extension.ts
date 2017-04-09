@@ -1,3 +1,8 @@
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/timeout';
 import { Injectable, Inject } from '@angular/core';
 
 @Injectable()
@@ -5,6 +10,9 @@ export class ExtensionService {
   constructor(@Inject('Window') private window: Window) {}
 
   private transform(data) {
+    // @FIXME
+    data.slug = Math.random().toString(32).slice(2);
+
     const langGroups = data.reduce((acc, item) => {
       const lang = item.language;
 
@@ -23,8 +31,9 @@ export class ExtensionService {
 
     return Object.keys(langGroups)
       .map((lang) => ({
-        asin: `extension-${ lang }`,
+        slug: `${ data.slug }`,
         id: `extension-${ lang }`,
+        asin: `extension-${ lang }`,
         authors: 'Fluentcards Extension',
         count: langGroups[lang].length,
         language: lang,
@@ -35,20 +44,10 @@ export class ExtensionService {
   }
 
   getVocab() {
-    return new Promise((resolve) => {
-      let count = 100;
-
-      const poll = setInterval(() => {
-        count -= 1;
-
-        if (window.fluentcards) {
-          clearInterval(poll);
-
-          resolve(this.transform(window.fluentcards));
-        } else if (count <= 0) {
-          clearInterval(poll);
-        }
-      }, 50);
-    });
+    return Observable.interval(50)
+      .filter(() => window.fluentcards)
+      .take(1)
+      .map(() => this.transform(window.fluentcards))
+      .timeout(30000);
   }
 };

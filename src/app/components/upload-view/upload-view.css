@@ -1,35 +1,35 @@
 .upload-view ol {
-    margin-top: 3em;
-    font-size: 16px;
+  margin-top: 3em;
+  font-size: 16px;
 }
 
 .upload-view li {
-    margin-top: 1em;
-    font-size: 16px;
+  margin-top: 1em;
+  font-size: 16px;
 }
 
 .upload-view__content {
-    width: 70%;
-    max-width: 640px;
+  width: 70%;
+  max-width: 640px;
 }
 
 .upload-view__headline {
-    font-size: 9vh;
-    font-weight: bold;
-    line-height: 1.1;
-    margin-top: 1em;
+  font-size: 9vh;
+  font-weight: bold;
+  line-height: 1.1;
+  margin-top: 1em;
 }
 
 .upload-view__call-to-action {
-    margin-top: 30px;
-    font-size: 20px;
+  margin-top: 30px;
+  font-size: 20px;
 }
 
 .upload-view__note {
-    position: absolute;
-    z-index: 1;
-    bottom: 50px;
-    color: #555;
+  position: absolute;
+  z-index: 1;
+  bottom: 50px;
+  color: #555;
 }
 
 .upload-view__screenshot {

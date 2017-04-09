@@ -25,8 +25,13 @@ export class KindleService {
       let timestampQuery = this.db.exec(`SELECT timestamp FROM lookups WHERE book_key='${ escapedId }' ORDER BY timestamp DESC LIMIT 1;`);
       let asin = book[4];
       let cover = asin.length == 10 ? `http://images.amazon.com/images/P/${ asin }.01.20TRZZZZ.jpg` : '';
+      let slugQuery = this.db.exec(`SELECT lookups.id FROM lookups WHERE lookups.book_key='${ escapedId }' LIMIT 1`);
+
+      // A book without look-ups
+      if (!slugQuery.length) return null;
 
       return {
+        slug: btoa(slugQuery[0].values[0][0]),
         id: book[0],
         title: book[1],
         authors: book[2],
@@ -38,7 +43,7 @@ export class KindleService {
       };
     });
 
-    books = books.filter((book) => book.count > 0);
+    books = books.filter(Boolean);
     books.sort((a, b) => b.lastLookup - a.lastLookup); // newest first
 
     return books;

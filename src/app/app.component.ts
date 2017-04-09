@@ -43,14 +43,12 @@ export class AppComponent {
       return this.errorMessage = FILE_ERROR;
     }
 
-    let books = this.vocabService.loadBooks(event.data);
+    const books = this.vocabService.loadKindleBooks(event.data);
 
     if (!books) {
       return this.errorMessage = DATA_ERROR;
     }
 
-    if (!books.isDemo) {
-      this.router.navigate([ '/books', Math.random() ]);
-    }
+    this.router.navigate([ '/books' ]);
   }
 }

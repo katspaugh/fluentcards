@@ -80,6 +80,12 @@
       <div class="book__header-item book__count">
         <span class="book__count-number">{{ book.count }}</span>
         <span class="book__count-label">{{ book.count == 1 ? 'word' : 'words' }}</span>
+
+        <div class="book__share" *ngIf="isShareable">
+          <button class="btn btn-default btn-small" (click)="shareVocab()">
+            Share with community
+          </button>
+        </div>
       </div>
     </div>
 

@@ -25,6 +25,7 @@ export class Book {
   isLoadingImages = false;
   hasSpeechSynthesis = window.speechSynthesis != null;
   hasSaveAs = window.saveAs != null;
+  isShareable = false;
   definitionsEnabled = false;
   imagesEnabled = false;
   clozeEnabled = false;
@@ -46,18 +47,19 @@ export class Book {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe((params) => {
-      let asin = params['id'];
-      let book = this.vocabService.getBook(asin);
+      this.vocabService.getBook(params['slug'])
+        .subscribe(book => {
+          if (!book) {
+            this.router.navigate([ '/books' ]);
+            return;
+          }
 
-      if (!book) {
-        this.router.navigate([ '/books' ]);
-        return;
-      }
-
-      this.book = book;
-      this.definitionsEnabled = book.vocabs.every((vocab) => vocab.translation);
-      this.imagesEnabled = book.vocabs.every((vocab) => vocab.image);
-      this.clozeEnabled = book.vocabs.every((vocab) => vocab.cloze);
+          this.book = book;
+          this.definitionsEnabled = book.vocabs.every((vocab) => vocab.translation);
+          this.imagesEnabled = book.vocabs.every((vocab) => vocab.image);
+          this.clozeEnabled = book.vocabs.every((vocab) => vocab.cloze);
+          this.isShareable = !!this.vocabService.findBook(this.book.slug);
+        });
     });
 
     document.body.classList.add('book-page');
@@ -167,8 +169,7 @@ export class Book {
 
   removeVocab(index: number) {
     if (this.book.vocabs.length == 1) return;
-    this.book.vocabs.splice(index, 1);
-    this.vocabService.updateBook(this.book);
+    this.book = this.vocabService.removeVocab(this.book, index);
   }
 
   onImageAdd(data, vocab) {
@@ -251,6 +252,11 @@ export class Book {
       this.book.title,
       this.book.vocabs
     );
+  }
+
+  shareVocab() {
+    this.vocabService.share(this.book)
+      .subscribe(() => null);
   }
 
 }
