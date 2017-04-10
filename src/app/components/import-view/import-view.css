@@ -1,0 +1,39 @@
+.import-view {
+}
+
+.import-view__container {
+  display: flex;
+}
+
+.import-view__main {
+  flex: 2;
+}
+
+.import-view__sidebar {
+  flex: 1;
+  margin-left: 2vw;
+}
+
+.import-view__headline {
+  font-size: 7vh;
+  font-weight: bold;
+  line-height: 1.1;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.import-view__note {
+  position: absolute;
+  z-index: 1;
+  bottom: 50px;
+  color: #555;
+}
+
+.import-view__example {
+  white-space: pre-line;
+  background: #fff;
+  padding: 0.5em;
+  font-size: 0.8em;
+  font-family: Menlo, monospace;
+  line-height: 2;
+}

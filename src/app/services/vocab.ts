@@ -126,6 +126,11 @@ export class VocabService {
       .map(data => data.vocab);
   }
 
+  createBook(book) {
+    this.books.push(book);
+    this.saveBooks();
+  }
+
   updateBook(book) {
     const isStored = this.books.some(b => b.slug === book.slug);
 

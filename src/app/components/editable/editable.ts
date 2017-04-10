@@ -19,7 +19,7 @@ export class Editable {
       $event.target.textContent = newText;
     }
 
-    if (newText !== this.text) {
+    if (newText !== this.text.trim()) {
       this.onChange.next(newText);
     }
   }

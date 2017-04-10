@@ -67,6 +67,9 @@ code {
   background-color: #000;
 }
 
+.btn:focus {
+  outline-color: #fafafa;
+}
 
 .btn-default,
 .btn-default:active,
@@ -133,4 +136,9 @@ body.book-page .header__item_logo {
 
 body.book-page .header__facebook {
   display: none;
+}
+
+::selection {
+  background: #333;
+  color: #fff;
 }

@@ -46,8 +46,11 @@ export class DefinitionsService {
       .catch(() => this.loadTranslation(vocab, toLanguage));
   }
 
-  private detectLanguage(vocab) {
-    return this.translationService.detectLanguage(vocab.context);
+  private detectLanguage(vocabs) {
+    const text = vocabs.slice(0, 20)
+      .map(v => v.context || v.word)
+      .join('\n');
+    return this.translationService.detectLanguage(text);
   }
 
   // Sequentially load definitions to avoid DoSing the service
@@ -69,7 +72,7 @@ export class DefinitionsService {
             });
       };
 
-      this.detectLanguage(vocabs[0])
+      this.detectLanguage(vocabs)
         .subscribe((lang) => {
           fromLanguage = lang || fromLanguage;
           load(0);

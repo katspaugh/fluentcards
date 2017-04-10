@@ -2,6 +2,21 @@ import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { VocabService } from '../../services/vocab';
+import { randomGradient } from '../../services/gradient';
+
+
+function isExtensionData(book) {
+  return /extension-/.test(book.id);
+}
+
+function isPlainTextData(book) {
+  return /plaintext-/.test(book.id);
+}
+
+function isKindleData(book) {
+  return !isExtensionData(book) && !isPlainTextData(book);
+}
+
 
 @Component({
   selector: 'book-list',
@@ -15,6 +30,10 @@ export class BookList {
       books: []
     },
     {
+      title: 'Imported deck',
+      books: []
+    },
+    {
       title: 'Kindle deck',
       books: []
     },
@@ -24,44 +43,24 @@ export class BookList {
     }
   ];
 
-  private randomGradient() {
-    const hueA = ~~(Math.random() * 360);
-    const hueB = ~~(Math.random() * 360);
-    const angle = ~~(Math.random() * 360);
-    const size = ~~(Math.random() * 100);
-
-    return (
-      `repeating-linear-gradient(
-         ${ angle }deg,
-         hsla(${ hueA }, 80%, 40%, 0.7),
-         hsla(${ hueA }, 80%, 40%, 0.7) ${ size }px,
-         hsla(${ hueB }, 80%, 80%, 0.7) ${ size }px,
-         hsla(${ hueB }, 80%, 80%, 0.7) ${ size * 2 }px
-       )`
-    );
-  }
-
   constructor(
     private sanitizer: DomSanitizer,
     private vocabService: VocabService
   ) {
     this.vocabService.getStoredBooks()
       .subscribe(books => {
-        this.bookGroups[0].books = books.filter(b => this.isExtensionData(b));
-        this.bookGroups[1].books = books.filter(b => !this.isExtensionData(b));
+        this.bookGroups[0].books = books.filter(isExtensionData);
+        this.bookGroups[1].books = books.filter(isPlainTextData);
+        this.bookGroups[2].books = books.filter(isKindleData);
       });
 
     this.vocabService.loadApiBooks().subscribe(books => {
-      this.bookGroups[2].books = books;
+      this.bookGroups[this.bookGroups.length - 1].books = books;
     });
   }
 
-  private isExtensionData(book) {
-    return /extension-/.test(book.id);
-  }
-
   getGradient(book) {
-    book.gradient = book.gradient || this.randomGradient();
+    book.gradient = book.gradient || randomGradient();
     return this.sanitizer.bypassSecurityTrustStyle(book.gradient);
   }
 

@@ -1,0 +1,50 @@
+<div class="import-view">
+  <div class="import-view__headline">
+    Import from plain text
+  </div>
+
+  <div class="import-view__container">
+    <div class="import-view__main">
+      <form (submit)="onSubmit($event)" action="#">
+        <div class="form-group">
+          <label for="title">Title (optional):</label>
+          <input id="title" class="form-control" placeholder="{{ titlePlaceholder }}"
+                 autofocus (input)="onTitleInput($event)" />
+        </div>
+
+        <div class="form-group">
+          <label for="words">Vocabulary list:</label>
+          <textarea id="words"
+                    class="form-control"
+                    required
+                    rows="9"
+                    (input)="onInput($event)"
+                    placeholder="{{ placeholder }}"></textarea>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-default pull-right">Generate a deck</button>
+
+          <div class="clearfix"></div>
+        </div>
+      </form>
+    </div>
+
+    <div class="import-view__sidebar">
+      <p>
+        Paste words you want to learn into the text-area on the left. One word per line.
+      </p>
+
+      <p>
+        Each line can optionally contain an example sentence separated from the word with a semicolon or a tab.
+      </p>
+
+      <p>
+        For example:
+      </p>
+
+      <div class="import-view__example">interim;In the interim period.
+molasses;The secret is molasses.</div>
+    </div>
+  </div>
+</div>

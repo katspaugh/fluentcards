@@ -3,11 +3,11 @@
 
 .start-view__container {
   min-height: 100%;
-  margin-left: 20%;
+  margin-left: 14vw;
 }
 
 @media (max-width: 1024px) {
   .start-view__container {
-    margin-left: 10%;
+    margin-left: 2vw;
   }
 }

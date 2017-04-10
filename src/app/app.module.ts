@@ -1,37 +1,38 @@
-import {NgModule} from '@angular/core'
-import {RouterModule} from '@angular/router';
-import {rootRouterConfig} from './app.routes';
-import {AppComponent} from './app.component';
-import {FormsModule} from '@angular/forms';
-import {BrowserModule} from '@angular/platform-browser';
-import {HttpModule} from '@angular/http';
+import { NgModule } from '@angular/core'
+import { RouterModule } from '@angular/router';
+import { rootRouterConfig } from './app.routes';
+import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 
-import {ApkgService} from './services/apkg';
-import {CsvService} from './services/csv';
-import {ExtensionService} from './services/extension';
-import {KindleService} from './services/kindle';
-import {VocabService} from './services/vocab';
-import {SpeechService} from './services/speech';
-import {DictionaryService} from './services/dictionary';
-import {DefinitionsService} from './services/definitions';
-import {ImageSearchService} from './services/image-search';
-import {MassTranslationService} from './services/mass-translation';
-import {FluentcardsApiService} from './services/fluentcards-api';
+import { ApkgService } from './services/apkg';
+import { CsvService } from './services/csv';
+import { ExtensionService } from './services/extension';
+import { KindleService } from './services/kindle';
+import { VocabService } from './services/vocab';
+import { SpeechService } from './services/speech';
+import { DictionaryService } from './services/dictionary';
+import { DefinitionsService } from './services/definitions';
+import { ImageSearchService } from './services/image-search';
+import { MassTranslationService } from './services/mass-translation';
+import { FluentcardsApiService } from './services/fluentcards-api';
 
-import {StartView} from './components/start-view/start-view';
-import {UploadView} from './components/upload-view/upload-view';
-import {Book} from './components/book/book';
-import {BookList} from './components/book-list/book-list';
-import {Drop} from './components/drop/drop';
-import {Footer} from './components/footer/footer';
-import {Header} from './components/header/header';
-import {Loader} from './components/loader/loader';
-import {VocabImages} from './components/vocab-images/vocab-images';
-import {Editable} from './components/editable/editable';
+import { StartView } from './components/start-view/start-view';
+import { UploadView } from './components/upload-view/upload-view';
+import { ImportView } from './components/import-view/import-view';
+import { Book } from './components/book/book';
+import { BookList } from './components/book-list/book-list';
+import { Drop } from './components/drop/drop';
+import { Footer } from './components/footer/footer';
+import { Header } from './components/header/header';
+import { Loader } from './components/loader/loader';
+import { VocabImages } from './components/vocab-images/vocab-images';
+import { Editable } from './components/editable/editable';
 
 @NgModule({
   declarations: [
-    AppComponent, StartView, UploadView, Book,
+    AppComponent, StartView, UploadView, ImportView, Book,
     BookList, Drop, Footer, Header, Loader, VocabImages, Editable
   ],
   imports     : [ BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig) ],
@@ -40,10 +41,8 @@ import {Editable} from './components/editable/editable';
     ExtensionService, KindleService, VocabService,
     DictionaryService, DefinitionsService, ImageSearchService,
     SpeechService, MassTranslationService, FluentcardsApiService,
-    { provide: 'Window',  useValue: window }
+    {  provide: 'Window',  useValue: window  }
   ],
   bootstrap   : [ AppComponent ]
-})
-export class AppModule {
-
-}
+ })
+export class AppModule {}

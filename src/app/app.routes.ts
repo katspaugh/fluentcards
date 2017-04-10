@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { StartView } from './components/start-view/start-view';
 import { UploadView } from './components/upload-view/upload-view';
+import { ImportView } from './components/import-view/import-view';
 import { BookList } from './components/book-list/book-list';
 import { Book } from './components/book/book';
 
@@ -12,6 +13,12 @@ export const rootRouterConfig: Routes = [
   { path: 'kindle', component: StartView,
     children: [
       { path: '', component: UploadView }
+    ]
+  },
+
+  { path: 'import-text', component: StartView,
+    children: [
+      { path: '', component: ImportView }
     ]
   },
 

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CsvService {
-  constructor() {}
 
   exportCsv(fileName, deckName, items) {
     let hasTranslations = items[0].translation != null;
@@ -43,4 +42,5 @@ export class CsvService {
 
     window.open(url, deckName);
   }
+
 };

@@ -1,12 +1,12 @@
 .header {
-    position: relative;
+  position: relative;
 }
 
 .header__menu {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: baseline;
-    align-content: space-between;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  align-content: space-between;
 }
 
 .header__item {
@@ -19,32 +19,37 @@
 }
 
 .header__item a {
-    font-size: 1.25em;
-    font-weight: bold;
-    text-transform: lowercase;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-transform: lowercase;
 }
 
 .header__item i {
-    opacity: 0;
-    transition: opacity 30ms ease-in;
+  text-decoration: none;
+  margin-left: 0.25em;
+  font-size: 0.7em;
+  color: #333;
+  opacity: 0;
+  transition: opacity 30ms ease-in;
+  vertical-align: super;
 }
 
 .header__item:hover i {
-    opacity: 1;
+  opacity: 1;
 }
 
 .header__item a.header__active {
-    border-color: transparent;
+  border-color: transparent;
 }
 
 .header__logo {
-    display: block;
-    height: 28px;
-    margin-bottom: 5px;
+  display: block;
+  height: 28px;
+  margin-bottom: 5px;
 }
 
 .header__item_facebook {
-    height: 24px;
-    position: relative;
-    top: 9px;
+  height: 24px;
+  position: relative;
+  top: 9px;
 }

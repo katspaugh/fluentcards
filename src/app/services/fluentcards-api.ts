@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
-const API_URL = 'https://xrwvbvwq04.execute-api.eu-west-1.amazonaws.com/dev/fluentcards';
+const API_URL = 'https://d2k6yi97s180ty.cloudfront.net';
 
 @Injectable()
 export class FluentcardsApiService {
