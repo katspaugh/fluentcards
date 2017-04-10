@@ -100,14 +100,15 @@ export class Book {
   processDefinition(data) {
     let vocab = data.vocab;
     vocab.translation = data.translation;
+    vocab.reading = data.reading;
 
     if (data.definition) {
       vocab.definition = data.definition;
+      vocab.reading = data.reading || data.definition.ts;
       vocab.translation = data.definition.tr.slice(0, 2).map(t => t.text).join('; ') || data.translation;
       vocab.definition = data.definition;
       vocab.num = data.num;
       vocab.gender = data.gender;
-      vocab.fl = data.fl;
       vocab.article = getArticle(vocab, this.book.language);
     } else {
       delete vocab.definition;

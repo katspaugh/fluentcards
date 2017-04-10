@@ -68,9 +68,9 @@ export class ImportView {
           gradient: randomGradient(),
 
           vocabs: this.lines.map(line => ({
-            baseForm: line[0],
-            word: line[0],
-            context: line[1] || ''
+            baseForm: line[0].trim(),
+            word: line[0].trim(),
+            context: line[1] ? line[1].trim() : ''
           }))
         });
 

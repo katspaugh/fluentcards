@@ -133,8 +133,8 @@
 
               <i *ngIf="hasSpeechSynthesis" class="fa fa-volume-up text-muted book__speak" (click)="speakWord(vocab.baseForm)"></i>
 
-              <div *ngIf="vocab.definition && vocab.definition.ts" class="book__ts text-muted">
-                [{{ vocab.definition.ts }}]
+              <div *ngIf="vocab.reading || (vocab.definition && vocab.definition.ts)" class="book__ts text-muted">
+                [{{ vocab.reading || vocab.definition.ts }}]
               </div>
             </td>
 

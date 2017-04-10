@@ -16,6 +16,7 @@ import { DictionaryService } from './services/dictionary';
 import { DefinitionsService } from './services/definitions';
 import { ImageSearchService } from './services/image-search';
 import { MassTranslationService } from './services/mass-translation';
+import { JishoService } from './services/jisho';
 import { FluentcardsApiService } from './services/fluentcards-api';
 
 import { StartView } from './components/start-view/start-view';
@@ -40,7 +41,7 @@ import { Editable } from './components/editable/editable';
     ApkgService, CsvService,
     ExtensionService, KindleService, VocabService,
     DictionaryService, DefinitionsService, ImageSearchService,
-    SpeechService, MassTranslationService, FluentcardsApiService,
+    SpeechService, MassTranslationService, JishoService, FluentcardsApiService,
     {  provide: 'Window',  useValue: window  }
   ],
   bootstrap   : [ AppComponent ]

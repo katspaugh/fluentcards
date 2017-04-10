@@ -55,7 +55,8 @@ export class ApkgService {
 
     const img = item.image ? `<hr /><img src="${ item.image.thumbnail }" />` : '';
 
-    const ts = item.definition && item.definition.ts ? `<p class="ts">[${ item.definition.ts }]</p>` : '';
+    const reading = item.reading || (item.definition ? item.definition.ts : null);
+    const ts = reading ? `<p class="ts">[${ reading }]</p>` : '';
 
     let cloze = item.cloze ? item.cloze.replace(/\{\{c1::([^}]+)\}\}/g, '<b>$1</b>') : '';
     if (cloze) cloze = `<p class="context">${ cloze }</p>`;
@@ -84,7 +85,7 @@ export class ApkgService {
   }
 
   createDeck(fileName, deckName, items, language) {
-    const apkg = new Exporter(deckName.slice(0, 40), CardCss);
+    const apkg = new Exporter(deckName.slice(0, 50), CardCss);
 
     items
       .map(item => this.formatCard(item, language))

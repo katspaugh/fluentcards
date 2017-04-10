@@ -4,18 +4,20 @@ import 'rxjs/add/operator/catch';
 
 import { DictionaryService } from './dictionary';
 import { MassTranslationService } from './mass-translation';
+import { JishoService } from './jisho';
 
 @Injectable()
 export class DefinitionsService {
 
   constructor(
     private dictionaryService: DictionaryService,
-    private translationService: MassTranslationService
+    private translationService: MassTranslationService,
+    private jishoService: JishoService
   ) {}
 
   private loadDictionary(vocab, fromLanguage, toLanguage) {
     return this.dictionaryService.lookup(vocab.baseForm, fromLanguage, toLanguage)
-      .map((data) => {
+      .map(data => {
         let def = data[0];
         return {
           vocab: vocab,
@@ -30,20 +32,24 @@ export class DefinitionsService {
 
   private loadTranslation(vocab, toLanguage) {
     return this.translationService.translateWord(vocab.word, vocab.context, toLanguage)
-      .map((data) => {
-        return {
-          vocab: vocab,
-          translation: data,
-          definition: null,
-          gender: null,
-          fl: null
-        };
-      });
+      .map(data => ({
+        vocab: vocab,
+        translation: data
+      }));
   }
 
   private loadDicOrTr(vocab, fromLanguage, toLanguage) {
     return this.loadDictionary(vocab, fromLanguage, toLanguage)
       .catch(() => this.loadTranslation(vocab, toLanguage));
+  }
+
+  private loadJapanese(vocab) {
+    return this.jishoService.lookup(vocab.word)
+      .map(data => ({
+        vocab: vocab,
+        translation: data.meaning,
+        reading: data.reading
+      }));
   }
 
   private detectLanguage(vocabs) {
@@ -64,12 +70,14 @@ export class DefinitionsService {
           return;
         }
 
-        this.loadDicOrTr(vocab, fromLanguage, toLanguage)
-          .subscribe(
-            (data) => {
-              observer.next(data);
-              load(index + 1);
-            });
+        const req = (fromLanguage === 'ja' && toLanguage === 'en') ?
+          this.loadJapanese(vocab) :
+          this.loadDicOrTr(vocab, fromLanguage, toLanguage);
+
+        req.subscribe(data => {
+          observer.next(data);
+          load(index + 1);
+        });
       };
 
       this.detectLanguage(vocabs)
