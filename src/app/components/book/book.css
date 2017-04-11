@@ -20,6 +20,9 @@
   margin-bottom: 30px;
   display: flex;
   align-content: space-between;
+  justify-content: flex-start;
+  position: relative;
+  min-height: 160px;
 }
 
 .book__header-title {
@@ -35,6 +38,10 @@
   justify-content: space-between;
 }
 
+.book__share {
+  margin-top: 10px;
+}
+
 @media (max-width: 768px) {
   .book__controls {
     margin-left: 0;
@@ -44,7 +51,6 @@
 }
 
 .book__control {
-  flex-grow: 1;
   white-space: nowrap;
   -webkit-user-select: none;
   user-select: none;
@@ -102,8 +108,13 @@
   line-height: 1;
 }
 
-.book__share {
+.book__block-button {
   margin-top: 10px;
+}
+
+.book__block-button button {
+  display: block;
+  width: 100%;
 }
 
 .book__table-wrapper {
@@ -171,6 +182,8 @@
 .book__context {
   font-size: 1.1vw;
   vertical-align: middle;
+  text-align: justify;
+  hyphens: auto;
 }
 
 .book__change-def,
