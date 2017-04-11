@@ -60,7 +60,7 @@ export class ImportView {
           slug: id,
           id: `plaintext-${ id }`,
           asin: `plaintext-${ id }`,
-          authors: 'Fluentcards',
+          authors: '',
           count: this.lines.length,
           language: lang,
           lastLookup: Date.now(),

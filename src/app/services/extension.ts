@@ -36,7 +36,7 @@ export class ExtensionService {
           slug: `${ slug }`,
           id: `extension-${ lang }`,
           asin: `extension-${ lang }`,
-          authors: 'Fluentcards',
+          authors: '',
           count: langGroups[lang].length,
           language: lang,
           lastLookup: Date.now(),

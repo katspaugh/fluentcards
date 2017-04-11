@@ -24,7 +24,7 @@
                     <div class="book-list__card-content">
                       <h6 class="card-title">{{ truncateWords(book.title, 12) }}</h6>
 
-                      <p class="card-text">by <em>{{ truncateWords(book.authors, 12) }}</em></p>
+                      <p class="card-text" *ngIf="book.authors">by <em>{{ truncateWords(book.authors, 12) }}</em></p>
                     </div>
                   </div>
                 </div>

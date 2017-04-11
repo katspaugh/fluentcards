@@ -73,7 +73,7 @@
 
         <h4 class="book__title">
           {{ book.title }}<br />
-          <small>by <em>{{ book.authors }}</em></small>
+          <small *ngIf="book.authors">by <em>{{ book.authors }}</em></small>
         </h4>
       </div>
 
