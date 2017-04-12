@@ -107,6 +107,10 @@
   margin-right: 20px;
 }
 
+.book-list__card-cover img {
+  max-height: 160px;
+}
+
 .book-list__pseudo-cover {
   width: 107px;
   height: 160px;
