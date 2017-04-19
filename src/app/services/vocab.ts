@@ -28,6 +28,8 @@ export class VocabService {
         this.extendBooks(this.books, items);
 
         this.booksStream.next(this.books);
+
+        this.saveBooks();
       });
   }
 

@@ -15,7 +15,7 @@ export class ExtensionService {
 
       const vocab = {
         baseForm: item.def[0].text,
-        context: `${ item.context }`,
+        context: item.context,
         definition: item.def[0],
         translation: item.def[0].tr[0].text,
         word: item.selection
