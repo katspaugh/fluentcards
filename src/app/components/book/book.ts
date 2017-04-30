@@ -26,6 +26,7 @@ export class Book {
   hasSpeechSynthesis = window.speechSynthesis != null;
   hasSaveAs = window.saveAs != null;
   isShareable = false;
+  isShared = false;
   definitionsEnabled = false;
   imagesEnabled = false;
   clozeEnabled = false;
@@ -257,7 +258,7 @@ export class Book {
 
   shareVocab() {
     this.vocabService.share(this.book)
-      .subscribe(() => null);
+      .subscribe(() => this.isShared = true);
   }
 
 }
