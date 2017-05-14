@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {Http, Headers, RequestOptions} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 const API_KEY = 'dHJuc2wuMS4xLjIwMTYwNzA5VDExNDkyOFouZDI4OWYyZjA0NDdkNDk3Mi5hOWYzMjVkOWM0ZWMxNWE1NDRmZDVhNzI1MTdjZDdjYTY0M2FhMDNk';
@@ -34,6 +34,21 @@ export class MassTranslationService {
 
     return this.http.post(url, body.join('&'), options)
       .map((res) => res.json());
+  }
+
+  private makeGetRequest(url: string, query: any): Observable<any> {
+    const params: URLSearchParams = new URLSearchParams();
+
+    query.key = atob(API_KEY);
+
+    for (let key in query) {
+      params.set(key, String(query[key]));
+    }
+
+    return this.http.request(url, {
+      method: 'GET',
+      search: params
+    }).map((res) => res.json());
   }
 
   private splitChunks(text) {
@@ -111,7 +126,7 @@ export class MassTranslationService {
   }
 
   detectLanguage(text: string) {
-    return this.makeRequest(DETECT_URL, { text: text })
+    return this.makeGetRequest(DETECT_URL, { text: text })
       .map((data) => data.code == 200 ? data.lang : null);
   }
 
@@ -164,11 +179,13 @@ export class MassTranslationService {
   }
 
   translateWord(word: string, context: string, toLanguage: string): Observable<any> {
-    let text = this.encodeLine(context, word);
-    return this.makeRequest(TRANSLATE_URL, { text: text, lang: toLanguage })
+    const text = context ? this.encodeLine(context, word) : word;
+
+    return this.makeRequest(TRANSLATE_URL, { text, lang: toLanguage })
       .map((data) => {
         if (data.code != 200) throw new Error(data.message);
-        return this.decodeLine(data.text[0]);
+        const translation = data.text[0];
+        return context ? this.decodeLine(translation) : translation;
       });
   }
 

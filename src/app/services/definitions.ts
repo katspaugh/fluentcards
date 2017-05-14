@@ -4,6 +4,7 @@ import 'rxjs/add/operator/catch';
 
 import { DictionaryService } from './dictionary';
 import { MassTranslationService } from './mass-translation';
+import { WordsApiService } from './words-api';
 import { JishoService } from './jisho';
 
 @Injectable()
@@ -12,7 +13,8 @@ export class DefinitionsService {
   constructor(
     private dictionaryService: DictionaryService,
     private translationService: MassTranslationService,
-    private jishoService: JishoService
+    private jishoService: JishoService,
+    private wordsApiService: WordsApiService
   ) {}
 
   private loadDictionary(vocab, fromLanguage, toLanguage) {
@@ -27,7 +29,6 @@ export class DefinitionsService {
           fl: def.fl
         };
       });
-
   }
 
   private loadTranslation(vocab, toLanguage) {
@@ -39,8 +40,7 @@ export class DefinitionsService {
   }
 
   private loadDicOrTr(vocab, fromLanguage, toLanguage) {
-    return this.loadDictionary(vocab, fromLanguage, toLanguage)
-      .catch(() => this.loadTranslation(vocab, toLanguage));
+    return this.loadDictionary(vocab, fromLanguage, toLanguage);
   }
 
   private loadJapanese(vocab) {
@@ -50,6 +50,24 @@ export class DefinitionsService {
         translation: data.meaning,
         reading: data.reading
       }));
+  }
+
+  private loadWordsApi(vocab) {
+    return this.wordsApiService.lookup(vocab.baseForm)
+      .map(data => {
+        const result = data.results[0];
+
+        if (!vocab.context && result.examples) {
+          vocab.context = result.examples[0];
+        }
+
+        return {
+          vocab: vocab,
+          translation: data.results[0].definition,
+          reading: data.pronunciation ?
+            data.pronunciation[result.partOfSpeech] || data.pronunciation.all : ''
+        };
+      });
   }
 
   private detectLanguage(vocabs) {
@@ -70,14 +88,24 @@ export class DefinitionsService {
           return;
         }
 
-        const req = (fromLanguage === 'ja' && toLanguage === 'en') ?
-          this.loadJapanese(vocab) :
-          this.loadDicOrTr(vocab, fromLanguage, toLanguage);
+        let req;
 
-        req.subscribe(data => {
-          observer.next(data);
-          load(index + 1);
-        });
+        if (fromLanguage === 'en' && toLanguage === 'en') {
+          req = this.loadWordsApi(vocab);
+        }
+        else if (fromLanguage === 'ja' && toLanguage === 'en') {
+          req = this.loadJapanese(vocab);
+        }
+        else {
+          req = this.loadDicOrTr(vocab, fromLanguage, toLanguage);
+        }
+
+        req
+          .catch(() => this.loadTranslation(vocab, toLanguage))
+          .subscribe(data => {
+            observer.next(data);
+            load(index + 1);
+          });
       };
 
       this.detectLanguage(vocabs)
