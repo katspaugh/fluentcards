@@ -30,6 +30,7 @@
       </div>
     </div>
 
+    <!--
     <div class="book__control">
       <input id="pictures" type="checkbox"
              [disabled]="isLoadingImages"
@@ -42,6 +43,7 @@
         <loader [isLoading]="isLoadingImages"></loader>
       </div>
     </div>
+    -->
 
     <div class="book__control">
       <input id="cloze" type="checkbox" [(ngModel)]="clozeEnabled" (ngModelChange)="onToggleCloze($event)" />
@@ -93,7 +95,7 @@
       <table class="book__table table">
         <thead>
           <th style="width: 2em"></th>
-          <th style="width: 4em">Image</th>
+          <!-- <th style="width: 4em">Image</th> -->
           <th width="17%">Word</th>
           <th width="17%" *ngIf="isLoadingDefinitions || book.vocabs[0].translation != null">Definition</th>
           <th width="60%" class="book__th-context">Context<span [hidden]="book.vocabs[0].cloze == null"> (with cloze test)</span></th>
@@ -104,6 +106,7 @@
           <tr *ngFor="let vocab of book.vocabs; let i = index">
             <td class="text-muted">{{ i + 1 }}</td>
 
+            <!--
             <td align="center">
               <img *ngIf="vocab.image" class="book__thumb" [src]="vocab.image.thumbnail" (click)="addImage(vocab)" />
 
@@ -123,6 +126,7 @@
                             (onResult)="onImageAdd($event, vocab)">
               </vocab-images>
             </td>
+            -->
 
             <td class="book__word">
               {{ vocab.article || '' }}

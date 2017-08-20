@@ -5,11 +5,9 @@ import 'rxjs/add/operator/map';
 
 const endpoint = 'https://api.cognitive.microsoft.com/bing/v5.0/images/search';
 const apiKeys = [
-  'NzkxMWMyMDRhMzg3NDlhY2JhMTlkMjZlNmJiMmU3NjM=',
-  'NTNlMWE4OWVjYTBlNGI3NTkyMTU5Yjg5MzJiZWIyNGQ=',
-  'NDAwNDU3ZDBmMzUzNDc3YWEzNmY4ODJiYjg0NDRjYjU=',
-  'MjQ1NWEzMTQzYmY2NDYwMmFmZDdlNWI2ZmQ2OTdlZDU=',
-  'OWM3ZWFlN2VmNDkwNGEzOWIzNTU4M2QwZjYzNDQ1ZmE='
+  'MzEzMmYyNmU1MWMzNDQwZjk4Mjk3ZWRkMDM1Y2MwZGQ=',
+  'Mzc4NzIyZmRjZjc3NGE2ZGFkNGQ5MTVlMTkyMzIwYTA=',
+  'MTNiMTBiMzY2ZDI3NDNjZGE0ZDgwMGZmMGZkMTAwNzc='
 ];
 
 const notFoundError = 'No images found.'
