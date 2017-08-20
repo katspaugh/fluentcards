@@ -108,6 +108,7 @@ export class VocabService {
       .map(data => {
         return data
           .map(item => item.vocab)
+          .filter(item => item.cover && item.count > 20)
           .filter(item => !this.books.some(b => b.slug === item.slug));
       });
   }
