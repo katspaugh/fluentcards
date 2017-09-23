@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/katspaugh/fluentcards-grammar.git"
+    "url": "git+https://github.com/katspaugh/fluentcards.git"
   },
   "devDependencies": {
     "@types/classnames": "*",
@@ -48,8 +48,6 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "react-router-dom": "^4.1.1",
-    "sbd": "^1.0.12",
-    "sql.js": "^0.4.0",
-    "xerox-nlp-client": "github:katspaugh/xerox-nlp-client"
+    "sql.js": "^0.4.0"
   }
 }
