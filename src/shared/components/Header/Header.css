@@ -1,0 +1,38 @@
+.container {
+  width: 100%;
+  margin: 2em 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .container {
+    margin: 1em 0;
+  }
+}
+
+.container header {
+  margin: auto;
+  padding: 1em;
+}
+
+@media only screen and (min-width: 1024px) {
+  .container header {
+    width: 900px;
+  }
+}
+
+.container h1 {
+  font-size: 2em;
+  flex: 1;
+  align-self: center;
+  margin: 0;
+}
+
+@media only screen and (max-width: 1024px) {
+  .container h1 {
+    font-size: 1.3em;
+  }
+}
+
+.container a {
+  color: #333;
+}

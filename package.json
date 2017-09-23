@@ -1,0 +1,55 @@
+{
+  "name": "fluentcards-grammar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "katspaugh@gmail.com",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "cp node_modules/sql.js/js/sql-memory-growth.js vendor/",
+    "start": "webpack-dev-server --inline --hot --progress --colors",
+    "test": "eslint ./src",
+    "comp": "./bin/create-component.sh",
+    "prod": "npm test && NODE_ENV=production webpack -p",
+    "deploy": "./bin/deploy.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katspaugh/fluentcards-grammar.git"
+  },
+  "devDependencies": {
+    "@types/classnames": "*",
+    "@types/prop-types": "*",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "@types/react-router": "*",
+    "@types/react-router-dom": "*",
+    "@types/rx-lite": "*",
+    "@types/webaudioapi": "*",
+    "@types/webspeechapi": "*",
+    "@types/whatwg-fetch": "*",
+    "babel-core": "*",
+    "babel-eslint": "*",
+    "babel-loader": "*",
+    "babel-plugin-dynamic-import-webpack": "^1.0.1",
+    "babel-preset-es2015": "*",
+    "babel-preset-react": "*",
+    "css-loader": "*",
+    "eslint": "*",
+    "eslint-plugin-react": "*",
+    "react": "*",
+    "react-dom": "*",
+    "style-loader": "*",
+    "typings-for-css-modules-loader": "*",
+    "webpack": "^3.5.5",
+    "webpack-dev-server": "*"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "react-router-dom": "^4.1.1",
+    "sbd": "^1.0.12",
+    "sql.js": "^0.4.0",
+    "xerox-nlp-client": "github:katspaugh/xerox-nlp-client"
+  }
+}

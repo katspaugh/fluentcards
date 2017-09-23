@@ -1,0 +1,86 @@
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.container {
+  position: fixed;
+  z-index: 3;
+  background: #FFF844;
+  padding: 30px 70px;
+  width: 100%;
+  min-height: 550px;
+  top: 34px;
+  bottom: 41px;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  padding: 70px;
+  height: 100%;
+  position: relative;
+  border: 6px dashed #333;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  font-size: 24px;
+}
+
+.draggingOver .wrapper {
+  border-color: #000;
+}
+
+.draggingOver .content {
+  opacity: 0.5;
+}
+
+.draggingOver .wrapper:after {
+  content: '✓';
+  font-size: 200px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  animation: fade-in 200ms ease-in;
+}
+
+@media only screen and (max-width: 1023px) {
+  .container {
+    padding: 30px 30px;
+  }
+
+  .wrapper {
+    padding: 30px;
+  }
+}
+
+.content {
+  margin: -50px auto 0;
+}
+
+.content h1 {
+  margin-top: 0;
+}
+
+.hoverImage {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  width: 600px;
+  margin: 0 0 0 -20px;
+}
+
+.hoverLink:hover + .hoverImage {
+  display: block;
+  animation: fade-in 200ms ease-in;
+}
+
+.note {
+  position: absolute;
+  bottom: 30px;
+  font-size: 0.6em;
+  color: #555;
+}

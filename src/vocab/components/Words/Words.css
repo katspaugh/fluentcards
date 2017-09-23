@@ -1,0 +1,136 @@
+.container {
+  margin: auto;
+  padding: 0 1em;
+}
+
+@media only screen and (min-width: 1024px) {
+  .container {
+    width: 975px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .container {
+    width: 1200px;
+  }
+}
+
+.words {
+  margin: 0 -1em 2em;
+  display: table;
+  width: 100%;
+}
+
+.entry {
+  display: table-row;
+}
+
+.entry:nth-child(even) {
+  background: #FFFEF4;
+}
+
+.col {
+  display: table-cell;
+  padding: 1em;
+  vertical-align: middle;
+}
+
+.count {
+  padding: 0.5em;
+  text-align: center;
+  border-right: 4px solid #FFF844;
+  background: #fff;
+}
+
+.word {
+  min-width: 20vw;
+}
+
+.definition {
+  min-width: 20vw;
+}
+
+.context {
+  font-size: 0.8em;
+  padding: 0.5em;
+}
+
+.remove {
+  padding: 0.5em;
+  background: #fff;
+}
+
+.button {
+  border: none;
+  background: none;
+  font-size: 1.4em;
+  color: #999;
+  cursor: pointer;
+  padding: 0.5em;
+  outline: none;
+}
+
+.remove button:hover {
+  color: #000;
+}
+
+@media only screen and (max-width: 550px) {
+  .contextHeader,
+  .context {
+    display: none;
+  }
+}
+
+.entry.header {
+  display: table-header-group;
+  font-size: 0.8em;
+  color: #999;
+}
+
+.centered {
+  text-align: center;
+}
+
+.exportButton {
+  display: block;
+  box-sizing: border-box;
+  padding: 0.7em 3em;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #333;
+  border: 1px solid #FBEA31;
+  background: #FBEA31;
+  font-size: 14px;
+  font-weight: normal;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.exportButton:hover {
+  border-color: #333;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+}
+
+.controls h4 {
+  font-weight: normal;
+  font-size: 0.9em;
+}
+
+.controls .exportButton,
+.controls h4 {
+  margin: 0 10px 10px;
+}
+
+.controls .spacer {
+  flex: 1;
+}
+
+.bottom {
+  margin: 3em 0;
+}

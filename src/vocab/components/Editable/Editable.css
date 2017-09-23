@@ -1,0 +1,35 @@
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.editable {
+  display: inline-block;
+  padding: 0.25em;
+  margin: -0.25em;
+}
+
+.editable:hover,
+.editable:focus {
+  position: relative;
+  outline: none;
+  background: #eee;
+}
+
+.editable:hover:after,
+.editable:focus:after {
+  content: '✎';
+  transform: rotateY(180deg);
+  transform-origin: center;
+  position: absolute;
+  right: -1em;
+  top: -0.25em;
+  z-index: 1;
+  color: #333;
+  font-size: 1.2em;
+  animation: fade-in 100ms ease-in;
+}
+
+.editable.empty {
+  min-width: 5em;
+}

@@ -1,0 +1,39 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2em 1em;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.col {
+  flex: 1;
+}
+
+.col:first-of-type {
+  margin-right: 2em;
+}
+
+.col img {
+  display: block;
+  width: 100%;
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.download {
+  margin: 1em 1em 3em;
+  text-align: center;
+  font-size: 2em;
+}
+
+.download img {
+  height: 0.85em;
+  width: 0.85em;
+  vertical-align: middle;
+  margin: 0 0.5em;
+}

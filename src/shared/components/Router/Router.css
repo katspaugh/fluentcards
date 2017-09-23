@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+:global(html) {
+  background: #fff;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  min-height: 100vh;
+  position: relative;
+}
+
+:global(body) {
+  margin: 0;
+  padding: 0 0 70px;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+:global(*) {
+  box-sizing: border-box;
+}
+
+:global(a) {
+  color: #333;
+}
+
+:global(a:visited) {
+  color: #555;
+}
+
+:global(a:active),
+:global(a:hover) {
+  color: #000;
+  text-decoration: none;
+}
+
+:global(h1),
+:global(h2),
+:global(h3) {
+  font-weight: normal;
+}

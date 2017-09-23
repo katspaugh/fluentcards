@@ -1,0 +1,44 @@
+.container {
+  display: block;
+  background: #FFF844;
+  min-height: 34px;
+}
+
+.container nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.5em 1em;
+  margin: auto;
+}
+
+@media only screen and (min-width: 1024px) {
+  .container nav {
+    width: 900px;
+  }
+}
+
+.logo {
+  margin-right: 1em;
+  font-weight: bold;
+  text-transform: lowercase;
+}
+
+.logo a {
+  display: block;
+}
+
+.logo svg {
+  display: block;
+  height: 18px;
+  width: auto;
+}
+
+.info {
+  flex: 1;
+}
+
+.login {
+  max-width: 40%;
+  overflow: hidden;
+}

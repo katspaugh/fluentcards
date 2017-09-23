@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "allowSyntheticDefaultImports": true,
+    "disableAutomaticTypingAcquisition": true,
+    "noEmit": true,
+    "checkJs": true,
+    "jsx": "react",
+
+    "lib": [ "dom", "es2017" ]
+  },
+
+  "exclude": [ "node_modules" ]
+}

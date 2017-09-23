@@ -1,0 +1,95 @@
+.container {
+  margin: auto;
+  padding: 0 1em;
+}
+
+@media only screen and (min-width: 1024px) {
+  .container {
+    width: 900px;
+  }
+}
+
+.container h1 {
+  margin-top: 2em;
+}
+
+.decks {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 -1em 2em;
+}
+
+.deck {
+  flex: 1;
+  margin: 1em;
+  border: 2px solid #FFF844;
+  border-radius: 4px;
+  padding: 1em;
+  max-width: 200px;
+}
+
+.heading {
+  text-align: center;
+}
+
+.paragraph {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+
+.paragraph img {
+  max-width: 400px;
+  vertical-align: middle;
+  margin-right: 30px;
+}
+
+.paragraph span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.book {
+  display: block;
+  width: 107px;
+  height: 160px;
+  margin: 1em;
+  border: 2px solid #FFF844;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.book > div {
+  width: 100%;
+  height: 100%;
+  background-color: #FFF999;
+  background-size: cover;
+  position: relative;
+}
+
+.book p {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  text-decoration: none;
+  padding: 1em 0 0.5em;
+  text-align: center;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.book div[style] p {
+  color: #fff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+}
+
+.book h5 {
+  margin: 0;
+  padding: 1em;
+  font-weight: normal;
+}

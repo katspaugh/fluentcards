@@ -1,0 +1,27 @@
+.container {
+  width: 100%;
+  min-height: 70px;
+  background-color: #FFF844;
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+}
+
+.container footer {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  padding: 2em;
+  font-size: 0.8em;
+}
+
+@media only screen and (min-width: 1024px) {
+  .container footer {
+    width: 900px;
+  }
+}
+
+.container footer > div {
+  flex: 1;
+}

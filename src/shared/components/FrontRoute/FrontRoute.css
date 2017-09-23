@@ -1,0 +1,123 @@
+.container {
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.front section {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  padding: 5vh 5vw;
+}
+
+.front section:nth-child(odd) {
+  background: #FFF844;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.links a {
+  flex: 1;
+}
+
+.front section h1 {
+  margin-top: 0;
+  margin-bottom: 2em;
+  text-align: center;
+}
+
+.front p {
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.front p .imageCenter {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto 30px;
+}
+
+.front p .imageLeft {
+  max-width: 50%;
+  float: left;
+  margin-right: 30px;
+}
+
+.front p .imageRight {
+  max-width: 50%;
+  float: right;
+  margin-left: 30px;
+}
+
+.front p .imageTall {
+  width: 200px;
+}
+
+@media only screen and (max-width: 767px) {
+  .front p img {
+    max-width: none;
+    width: 100%;
+    float: none;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 30px;
+  }
+}
+
+.cta {
+  display: block;
+  text-align: center;
+  font-size: 1.2em;
+  margin: 2em 0;
+}
+
+.front section.hero {
+  min-height: 95vh;
+  font-size: 40px;
+  text-align: center;
+  position: relative;
+  display: block;
+}
+
+.hero h1 {
+  margin-bottom: 0 !important;
+}
+
+.hero p {
+  margin-bottom: 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .front section.hero {
+    min-height: 82vh;
+  }
+
+  .hero p {
+    font-size: 0.8em;
+  }
+}
+
+@keyframes point-down {
+  0% {
+    transform: rotateX(45deg) translateX(-50%) translateY(0);
+  }
+  100% {
+    transform: rotateX(45deg) translateX(-50%) translateY(5%);
+  }
+}
+
+.hero:after {
+  content: '⌄';
+  color: #555;
+  font-size: 50px;
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  animation: point-down 300ms ease-in alternate infinite;
+}

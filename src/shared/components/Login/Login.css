@@ -1,0 +1,34 @@
+.container {
+  font-size: 0.8em;
+}
+
+.container button {
+  color: #333;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background: transparent;
+  padding: 0 0.7em;
+  line-height: 1.8;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.container button:hover {
+  color: #000;
+  border-color: #000;
+  background: rgba(0, 0, 0, 0.01);
+}
+
+.container button:active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.container small {
+  font-size: 12px;
+}
+
+@media only screen and (max-width: 767px) {
+  .container small {
+    display: none;
+  }
+}
