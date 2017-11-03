@@ -74,6 +74,6 @@ WHERE lookups.book_key='${ escapedId }';
         selection: row[1],
         context: row[2]
       };
-    });
+    }).filter(item => item.selection);
   }
 };

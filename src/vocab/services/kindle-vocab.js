@@ -52,7 +52,7 @@ class KindleVocab {
       words: book.vocabs
         .filter(item => !item._removed)
         .map(item => ({
-          selection: item.selection,
+          selection: item.selection || '',
           context: item.context,
           def: item.def || [
             { text: item.baseForm }

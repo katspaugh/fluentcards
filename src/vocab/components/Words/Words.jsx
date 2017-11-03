@@ -58,7 +58,7 @@ export default class Words extends PureComponent {
 
   addDefinitions(deck) {
     const words = deck.words.filter(word => {
-      return !word.def || !word.def[0] || !word.def[0].tr || !word.def[0].tr.length;
+      return word.selection && (!word.def || !word.def[0] || !word.def[0].tr || !word.def[0].tr.length);
     });
 
     const updateWord = word => {
