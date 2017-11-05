@@ -20,22 +20,29 @@ function formatDefinition(item, maxDefs = 2) {
   return defintions.slice(0, maxDefs).join('; ');
 }
 
+function formatContext(item) {
+  // Context with the selection highlighted
+  let parts = item.context.split(new RegExp('\\b' + escapeRegexp(item.selection) + '\\b'));
+  if (parts.length === 1) {
+    parts = item.context.split(item.selection);
+  }
+  return parts.join(`<b>${ item.selection }</b>`);
+}
 
 function plain(item) {
   return [ formatWord(item), formatDefinition(item), item.context ];
 }
 
 function basic(item) {
-  const word = formatWord(item);
-  const def = formatDefinition(item);
-
-  let parts = item.context.split(new RegExp('\\b' + escapeRegexp(item.selection) + '\\b'));
-  if (parts.length === 1) {
-    parts = item.context.split(item.selection);
-  }
-  const context = `<p>${ parts.join(`<b>${ item.selection }</b>`) }</p>`;
-
-  return [ word, [ def, context ].join('<br />') ];
+  const word = `<big class="word">${ formatWord(item) }</big>`;
+  const ts = item.def[0].ts ? `<br /><small class="ipa">${ item.def[0].ts }</small>` : '';
+  const context = `<p class="context">${ formatContext(item) }</p>`;
+  return [
+    // front
+    `${ word }${ ts }${ context }`,
+    // back
+    formatDefinition(item)
+  ];
 }
 
 function cloze(item) {
