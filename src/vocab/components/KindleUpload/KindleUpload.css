@@ -65,6 +65,10 @@
   margin-top: 0;
 }
 
+.content li {
+  margin-bottom: 0.5em;
+}
+
 .hoverImage {
   display: none;
   position: absolute;
