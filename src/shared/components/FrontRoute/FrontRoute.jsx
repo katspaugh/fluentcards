@@ -15,14 +15,32 @@ export default () => {
         <Header title="Fluentcards" />
 
         <div className={ styles.container }>
-          <p>Achieve fluency in a language through smart&nbsp;flashcards</p>
+          <p>Create flashcards from dictionary lookups in browser and on Kindle</p>
         </div>
       </section>
 
       <section>
         <div className={ styles.container }>
           <p>
-            <h1>Collect Words</h1>
+            <h1>Export Kindle Vocabulary to Anki</h1>
+
+            <Link to="/kindle">
+              <img src="/images/kindle.jpg" className={ styles.imageCenter } />
+            </Link>
+
+            Every time you look up a word in Kindle's dictionary, it saves the word along with its context into the device's memory. Fluentcards lets you extract all the lookups words to Anki.
+
+            <Link to="/kindle" className={ styles.cta } href="/kindle">
+              Import from your Kindle
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <div className={ styles.container }>
+          <p>
+            <h1>Collect words with our browser extension</h1>
 
             <a target="_blank"
                rel="nofollow"
@@ -46,7 +64,7 @@ export default () => {
       <section>
         <div className={ styles.container }>
           <p>
-            <h1>Organize and Edit</h1>
+            <h1>Organize and edit</h1>
 
             <Link to="/vocab">
               <img src="/images/vocab.png" className={ styles.imageCenter } />
@@ -60,62 +78,30 @@ export default () => {
       <section>
         <div className={ styles.container }>
           <p>
-            <h1>Export and Review</h1>
+            <h1>Export and review</h1>
 
             <img src="/images/anki.jpg" className={ classnames(styles.imageLeft, styles.imageTall) } />
 
-            You can export your entire flashcards collection
-            into <a href="https://apps.ankiweb.net/" target="_blank" rel="nofollow">Anki</a> or <a href="https://www.memrise.com/" target="_blank" rel="nofollow">Memrise</a> for the <b>Spaced Repetition</b> practice.
-            Create beautiful decks and review the flashcards on your phone or computer.
+            You can export your Fluentcards decks
+            to <a href="https://apps.ankiweb.net/" target="_blank" rel="nofollow">Anki</a> or Memrise.
 
             <br />
             <br />
 
-            Anki saves your time by repeatedly showing you flashcards right at the time when you're about to forget them. Take advantage of the scientifically proven SRS method to boost your vocabulary.
+            Anki is a popular Spaced Repetion software that saves your time by showing flashcards with ever-increasing intervals.
+
+            <br />
+            <br />
+
+            Fluentcards generates two alternative types of decks: Basic and Cloze. Basic has a looked-up word on the front of the flashcard, and the word's definiton and context on the back side.
+
+            <br />
+            <br />
+
+            The so-called Cloze flashcards have the context on the front, with the looked-up word replaced with <code>...</code>. The word itself is on the back.
 
             <a className={ styles.cta } href="https://apps.ankiweb.net/docs/manual.html#importing-text-files" target="_blank" rel="nofollow">
               Learn how to import into Anki
-            </a>
-          </p>
-        </div>
-      </section>
-
-      <section>
-        <div className={ styles.container }>
-          <p>
-            <h1>Import the Kindle Vocabulary</h1>
-
-            <Link to="/kindle">
-              <img src="/images/kindle.jpg" className={ styles.imageCenter } />
-            </Link>
-
-            Every time you look up a word in the Kindle's dictionary, it saves the word along with the context into the device's memory. Fluentcards lets you extract all the looked-up words to review conviniently in Anki.
-
-            <Link to="/kindle" className={ styles.cta } href="/kindle">
-              Import from your Kindle
-            </Link>
-          </p>
-        </div>
-      </section>
-
-      <section>
-        <div className={ styles.container }>
-          <p>
-            <h1>Grammar Drills</h1>
-
-            <a href="https://grammar.fluentcards.com">
-              <img src="/images/grammar.png" className={ styles.imageRight } />
-            </a>
-
-            Cement your grammar knowledge with infinite grammar drills.
-
-            <br />
-            <br />
-
-            We dynamically generate grammar exercises from classical, sci-fi and fantasy books and movie subtitles.
-
-            <a href="https://grammar.fluentcards.com" className={ styles.cta }>
-              Start doing exercises
             </a>
           </p>
         </div>

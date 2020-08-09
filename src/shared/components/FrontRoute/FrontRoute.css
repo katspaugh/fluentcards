@@ -1,10 +1,21 @@
+:global(body) {
+  overflow: hidden;
+}
+
+.front {
+  height: 100vh;
+  overflow: auto;
+  scroll-snap-type: y mandatory
+}
+
 .container {
   margin: 0 auto;
   max-width: 900px;
 }
 
 .front section {
-  min-height: 80vh;
+  scroll-snap-align: start;
+  min-height: 100vh;
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -78,7 +89,7 @@
 }
 
 .front section.hero {
-  min-height: 95vh;
+  min-height: 100vh;
   font-size: 40px;
   text-align: center;
   position: relative;
@@ -110,14 +121,4 @@
   100% {
     transform: rotateX(45deg) translateX(-50%) translateY(5%);
   }
-}
-
-.hero:after {
-  content: '⌄';
-  color: #555;
-  font-size: 50px;
-  position: absolute;
-  left: 50%;
-  bottom: 10px;
-  animation: point-down 300ms ease-in alternate infinite;
 }

@@ -96,7 +96,7 @@ export default class KindleUpload extends PureComponent {
         >
         <div className={ styles.wrapper }>
           <div className={ styles.content }>
-            <h1>Drag and drop from the Kindle</h1>
+            <h1>Drag'n'drop from Kindle</h1>
 
             <ol>
               <li>
@@ -105,11 +105,11 @@ export default class KindleUpload extends PureComponent {
 
               <li>
                 Locate the <a className={ styles.hoverLink } target="_blank" href="/images/vocab-db.png">vocab.db</a>
-                <img className={ styles.hoverImage } src="/images/vocab-db.png" /> file on the Kindle disk (use the search).
+                <img className={ styles.hoverImage } src="/images/vocab-db.png" /> file on the Kindle disk (use Search).
               </li>
 
               <li>
-                Drag and drop the file onto this page.
+                Drag and drop the file on this page.
               </li>
             </ol>
           </div>
