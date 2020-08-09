@@ -20,7 +20,7 @@ export default () => {
         <Header title="Fluentcards" />
 
         <div className={ styles.container }>
-          <p>Create flashcards from dictionary lookups in browser and on Kindle</p>
+          <p>Create flashcards from dictionary lookups on the web and on Kindle</p>
         </div>
       </section>
 
