@@ -7,7 +7,7 @@ export default class Footer extends React.PureComponent {
     return (
       <div className={ styles.container }>
         <footer>
-          <div />Fluentcards, 2017
+          katspaugh, 2017
         </footer>
       </div>
     );

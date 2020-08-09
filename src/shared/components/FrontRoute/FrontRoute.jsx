@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import Header from '../Header/Header.jsx';
@@ -9,6 +9,11 @@ import styles from './FrontRoute.css';
  * FrontRoute component
  */
 export default () => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => document.body.style.overflow = '';
+  }, []);
+
   return (
     <div className={ styles.front }>
       <section className={ styles.hero }>
