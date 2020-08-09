@@ -8,16 +8,20 @@ const helpTexts = {
     content: (
       <div>
         <p>
-          Use the Bulk Add feature in Memrise. Copy the contents of the downloaded file and insert it into a Memrise course.
-        </p>
-        <p>
-          <a target="_blank" href="http://feedback.memrise.com/knowledgebase/articles/525095-add-words-to-my-course">
-            http://feedback.memrise.com/knowledgebase/articles/525095-add-words-to-my-course
-          </a>
+          <ul>
+            <li>Open Anki</li>
+            <li>Choose an existing deck or create a new deck</li>
+            <li>Click the File menu and then "Import"</li>
+            <li>Find the file that you downloaded from this page</li>
+            <li>Choose the "Basic" type (it's the default)</li>
+            <li>Column 1 is a looked-up word, column 2 is context, column 3 is an optional dictionary definition.</li>
+            <li>Click on the "Import" button</li>
+          </ul>
+          See the <a target="_blank" href="https://docs.ankiweb.net/#/importing">Anki manual</a> for more details.
         </p>
       </div>
     ),
-    image: (<img src="/images/memrise.png" width="390" />)
+    image: (<img src="/images/anki-basic.png" width="582" />)
   },
 
   basic: {
@@ -33,7 +37,7 @@ const helpTexts = {
             <li>Check the "Allow HTML" checkbox</li>
             <li>Click on the "Import" button</li>
           </ul>
-          See the <a target="_blank" href="https://apps.ankiweb.net/docs/manual.html#importing-text-files">Anki manual</a> for more details.
+          See the <a target="_blank" href="https://docs.ankiweb.net/#/importing">Anki manual</a> for more details.
         </p>
       </div>
     ),
@@ -50,10 +54,9 @@ const helpTexts = {
             <li>Click the File menu and then "Import"</li>
             <li>Find the file that you downloaded from this page</li>
             <li>Choose the "Cloze" type</li>
-            <li>Check the "Allow HTML" checkbox</li>
             <li>Click on the "Import" button</li>
           </ul>
-          See the <a target="_blank" href="https://apps.ankiweb.net/docs/manual.html#importing-text-files">Anki manual</a> for more details.
+          See the <a target="_blank" href="https://docs.ankiweb.net/#/importing">Anki manual</a> for more details.
         </p>
       </div>
     ),

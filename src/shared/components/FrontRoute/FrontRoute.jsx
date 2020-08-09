@@ -105,7 +105,7 @@ export default () => {
 
             The so-called Cloze flashcards have the context on the front, with the looked-up word replaced with <code>...</code>. The word itself is on the back.
 
-            <a className={ styles.cta } href="https://apps.ankiweb.net/docs/manual.html#importing-text-files" target="_blank" rel="nofollow">
+            <a className={ styles.cta } href="https://docs.ankiweb.net/#/importing" target="_blank" rel="nofollow">
               Learn how to import into Anki
             </a>
           </p>
