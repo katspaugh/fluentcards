@@ -7,7 +7,6 @@
   "author": "katspaugh@gmail.com",
   "license": "MIT",
   "scripts": {
-    "postinstall": "cp node_modules/sql.js/js/sql-memory-growth.js vendor/",
     "start": "webpack-dev-server --inline --hot --progress --colors",
     "test": "eslint ./src",
     "comp": "./bin/create-component.sh",
@@ -19,6 +18,8 @@
     "url": "git+https://github.com/katspaugh/fluentcards.git"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/preset-react": "^7.10.4",
     "@types/classnames": "*",
     "@types/prop-types": "*",
     "@types/react": "*",
@@ -29,25 +30,24 @@
     "@types/webaudioapi": "*",
     "@types/webspeechapi": "*",
     "@types/whatwg-fetch": "*",
+    "babel": "^6.23.0",
     "babel-core": "*",
     "babel-eslint": "*",
     "babel-loader": "*",
-    "babel-plugin-dynamic-import-webpack": "^1.0.1",
-    "babel-preset-es2015": "*",
-    "babel-preset-react": "*",
     "css-loader": "*",
     "eslint": "*",
     "eslint-plugin-react": "*",
-    "react": "*",
-    "react-dom": "*",
     "style-loader": "*",
     "typings-for-css-modules-loader": "*",
-    "webpack": "^3.5.5",
+    "webpack": "*",
+    "webpack-cli": "*",
     "webpack-dev-server": "*"
   },
   "dependencies": {
-    "classnames": "^2.2.5",
-    "react-router-dom": "^4.1.1",
-    "sql.js": "^0.4.0"
+    "classnames": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-router-dom": "*",
+    "rx-lite": "^4.0.8"
   }
 }

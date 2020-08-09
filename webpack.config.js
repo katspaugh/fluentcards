@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: process.env.NODE_ENV === 'production' ? false : 'source-map',
   cache: true,
 
   entry: path.resolve(__dirname, 'src/index.js'),
@@ -14,36 +14,23 @@ module.exports = {
     publicPath: '/'
   },
 
-  devServer: {
-    historyApiFallback: true,
-    host: '0.0.0.0',
-    disableHostCheck: true
-  },
-
-  node: { fs: 'empty' },
-
   module: {
     rules: [
       {
         test: /.jsx?$/,
-        loader: 'babel-loader?cacheDirectory',
+        use: 'babel-loader',
         include: [
           path.resolve(__dirname, 'src')
         ]
       },
-
       {
         test: /\.css$/,
-        loader: 'style-loader!typings-for-css-modules-loader?modules&namedExport&camelCase&localIdentName=[name]__[local]'
+        loader: 'style-loader'
+      }, {
+        test: /\.css$/,
+        loader: 'css-loader',
+        options: { modules: true }
       }
     ]
-  },
-
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
-    })
-  ]
+  }
 };

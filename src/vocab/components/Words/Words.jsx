@@ -28,15 +28,14 @@ export default class Words extends PureComponent {
     this._toggleReverse = () => this.setState({ isReversed: !this.state.isReversed });
   }
 
-  exportDeck(exportType) {
-    this.setState({ exportType });
+  fetchDefinitions() {
+    if (this.state.deck) {
+      this.addDefinitions(this.state.deck);
+    }
   }
 
-  changeWord(item, value) {
-    lookup(value, this.state.deck.lang)
-      .then(data => {
-        VocabStore.updateItem(this.props.id, item, { selection: value, def: data.def });
-      });
+  exportDeck(exportType) {
+    this.setState({ exportType });
   }
 
   changeDef(item, value) {
@@ -87,10 +86,6 @@ export default class Words extends PureComponent {
       const deck = VocabStore.getDeck(this.props.id);
 
       this.setState({ deck });
-
-      if (!this.state.deck) {
-        this.addDefinitions(deck);
-      }
     });
   }
 
@@ -124,6 +119,10 @@ export default class Words extends PureComponent {
 
     const controls = (
       <div className={ styles.controls }>
+        <button className={ styles.exportButton } onClick={ () => this.fetchDefinitions() }>
+          Fetch definitions
+        </button>
+
         <div className={ styles.spacer } />
 
         <h4>Download the deck as:</h4>
@@ -137,7 +136,7 @@ export default class Words extends PureComponent {
         </button>
 
         <button className={ styles.exportButton } onClick={ () => this.exportDeck('plain') }>
-          Memrise
+          Plain CSV
         </button>
       </div>
     );
@@ -153,7 +152,7 @@ export default class Words extends PureComponent {
             <HeadWord
               lang={ deck.lang }
               def={ item.def }
-              onChange={ val => this.changeWord(item, val) } />
+            />
           </div>
 
           <div className={ classnames(styles.col, styles.definition) }>

@@ -15,6 +15,7 @@ function formatWord(item) {
 }
 
 function formatDefinition(item, maxDefs = 2) {
+  if (!item.defintions) { return ''; }
   const defintions = [];
   item.def.forEach(item => item.tr.forEach(tr => defintions.push(tr.text)));
   return defintions.slice(0, maxDefs).join('; ');

@@ -1,9 +1,3 @@
 {
-  "presets": [
-    "es2015",
-    "react"
-  ],
-  "plugins": [
-    "dynamic-import-webpack"
-  ]
+  "presets": [ "@babel/react" ]
 }
