@@ -180,7 +180,7 @@ export default class Words extends PureComponent {
     return (
       <div>
         <Header title={ deck.title || `${ deck.language }` }>
-          <Link to="/vocab">{ deck.title ? 'Books' : 'Decks' }</Link>
+          <Link to="/vocab">Decks</Link>
           { ' › ' }
         </Header>
 
