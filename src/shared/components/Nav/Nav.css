@@ -12,6 +12,10 @@
   margin: auto;
 }
 
+.container nav .spacer {
+  flex: 1;
+}
+
 @media only screen and (min-width: 1024px) {
   .container nav {
     width: 900px;
@@ -21,24 +25,22 @@
 .logo {
   margin-right: 1em;
   font-weight: bold;
-  text-transform: lowercase;
 }
 
 .logo a {
-  display: block;
+  display: flex;
+  flex-flow: row nowrap;
+  text-decoration: none;
+  align-items: center;
 }
 
 .logo svg {
   display: block;
   height: 18px;
   width: auto;
+  margin-right: 5px;
 }
 
-.info {
-  flex: 1;
-}
-
-.login {
-  max-width: 40%;
-  overflow: hidden;
+.link {
+  margin-left: 15px;
 }

@@ -96,7 +96,7 @@ export default class Decks extends PureComponent {
       <div className={ styles.container }>
         { deckItems.length ? (
           <div>
-            <p>Your Fluentcards extension vocabulary:</p>
+            <p>Your web vocabulary:</p>
 
             <div className={ styles.decks }>
               { deckItems }
@@ -106,7 +106,7 @@ export default class Decks extends PureComponent {
 
         { bookItems.length ? (
           <div>
-            <p>Your <Link to="/kindle">Kindle</Link> vocabulary:</p>
+            <p>Your Kindle vocabulary:</p>
 
             <div className={ styles.decks }>
               { bookItems }

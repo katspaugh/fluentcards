@@ -16,13 +16,19 @@ export default class Nav extends React.PureComponent {
                   <rect x="48" y="0" width="20" height="28" rx="4" ry="4" />
                 </g>
               </svg>
+
+              <span>Fluentcards</span>
             </Link>
           </div>
 
-          <div className={ styles.info }>
+          <div className={ styles.spacer }/>
+
+          <div className={ styles.link }>
+            <Link to="/vocab">Decks</Link>
           </div>
 
-          <div className={ styles.login }>
+          <div className={ styles.link }>
+            <Link to="/kindle">Kindle</Link>
           </div>
         </nav>
       </div>

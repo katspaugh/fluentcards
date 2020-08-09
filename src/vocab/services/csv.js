@@ -31,7 +31,7 @@ function formatContext(item) {
 }
 
 function plain(item) {
-  return [ formatWord(item), formatDefinition(item), item.context ];
+  return [ formatWord(item), item.context, formatDefinition(item) ];
 }
 
 function basic(item) {
@@ -56,7 +56,7 @@ function cloze(item) {
   }
   const cloze = parts.join(`{{c1::${ item.selection }}}`);
 
-  return [ cloze, def, word ];
+  return [ cloze, word, def ];
 }
 
 /**
