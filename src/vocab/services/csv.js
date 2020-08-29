@@ -28,15 +28,15 @@ function formatContext(item) {
   if (parts.length === 1) {
     parts = item.context.split(item.selection);
   }
-  return parts.join(`<b>${ item.selection }</b>`);
+  return parts.join(`<b>${ item.selection }</b>`).replace(/\n/g, ' ');
 }
 
 function plain(item) {
-  return [ formatWord(item), item.context, formatDefinition(item) ];
+  return [ formatWord(item), item.context.replace(/\n/g, ' '), formatDefinition(item) ];
 }
 
 function basic(item) {
-  const word = `<big class="word">${ formatWord(item) }</big>`;
+  const word = formatWord(item);
   const ts = item.def[0].ts ? `<br /><small class="ipa">${ item.def[0].ts }</small>` : '';
   const context = `<p class="context">${ formatContext(item) }</p>`;
   return [
@@ -55,7 +55,7 @@ function cloze(item) {
   if (parts.length === 1) {
     parts = item.context.split(item.selection);
   }
-  const cloze = parts.join(`{{c1::${ item.selection }}}`);
+  const cloze = parts.join(`{{c1::${ item.selection }}}`).replace(/\n/g, ' ');;
 
   return [ cloze, word, def ];
 }
