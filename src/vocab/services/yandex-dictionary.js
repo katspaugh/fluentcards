@@ -46,6 +46,14 @@ export default function yandexDefine(text, lang, targetLang) {
     .then(data => {
       if (data && data.def && data.def.length) return data;
 
-      throw new Error('No data');
+      return {
+        def: [
+          {
+            text: text, pos: "verb", ts: "-", tr: [
+              {text: "?", pos: "verb"}
+            ]
+          }
+        ]
+      }  
     });
 }
