@@ -2,8 +2,8 @@
   width: 100%;
   min-height: 70px;
   background-color: #FFF844;
-  position: absolute;
-  z-index: 1;
+  position: fixed;
+  z-index: 100;
   bottom: 0;
   left: 0;
 }

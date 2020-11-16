@@ -1,17 +1,18 @@
 .front {
-  height: 100vh;
+  height: calc(100vh - 107px);
   overflow: auto;
   scroll-snap-type: y mandatory
 }
 
 .container {
   margin: 0 auto;
+  padding: 0 20px;
   max-width: 900px;
 }
 
 .front section {
   scroll-snap-align: start;
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -101,10 +102,6 @@
 }
 
 @media only screen and (max-width: 767px) {
-  .front section.hero {
-    min-height: 82vh;
-  }
-
   .hero p {
     font-size: 0.8em;
   }
