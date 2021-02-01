@@ -61,7 +61,9 @@ export default class Words extends PureComponent {
     });
 
     const updateWord = word => {
-      return lookup(word.selection, deck.lang)
+      const text = word.def && word.def[0] ? word.def[0].text : word.selection;
+
+      return lookup(text, deck.lang)
         .then(data => {
           VocabStore.updateItem(this.props.id, word, { def: data.def });
         });
