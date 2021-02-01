@@ -6,7 +6,7 @@ export default class Footer extends React.PureComponent {
     return (
       <div className={ styles.container }>
         <footer>
-          <a href="https://www.lingoda.com/en/referral/hwnm43">Get 50$ to learn a language!</a>
+          <a href="https://app.chatterbug.com/r/DerIvan-66">Get a 25% discount for private German, French or Spanish lessons from Chatterbug!</a>
         </footer>
       </div>
     );

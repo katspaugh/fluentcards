@@ -9,19 +9,8 @@
 }
 
 .container footer {
-  display: flex;
-  flex-direction: row;
   margin: auto;
-  padding: 2em 30px;
-  font-size: 0.8em;
-}
-
-@media only screen and (min-width: 1024px) {
-  .container footer {
-    width: 900px;
-  }
-}
-
-.container footer > div {
-  flex: 1;
+  padding: 1em 30px;
+  text-align: center;
+  font-size: 20px;
 }

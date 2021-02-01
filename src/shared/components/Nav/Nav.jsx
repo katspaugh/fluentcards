@@ -24,7 +24,7 @@ export default class Nav extends React.PureComponent {
           <div className={ styles.spacer }/>
 
           <div className={ styles.link }>
-            <Link to="/vocab">Decks</Link>
+            <Link to="/vocab">Flashcards</Link>
           </div>
 
           <div className={ styles.link }>

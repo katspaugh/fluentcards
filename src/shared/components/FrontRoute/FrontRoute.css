@@ -1,117 +1,49 @@
 .front {
-  height: calc(100vh - 107px);
-  overflow: auto;
-  scroll-snap-type: y mandatory
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
 }
 
-.container {
-  margin: 0 auto;
-  padding: 0 20px;
-  max-width: 900px;
+.grid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 
 .front section {
-  scroll-snap-align: start;
   min-height: 100%;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  align-items: center;
-  padding: 5vh 5vw;
-}
-
-.front section:nth-child(odd) {
-  background: #FFF844;
-}
-
-.links {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.links a {
-  flex: 1;
-}
-
-.front section h1 {
-  margin-top: 0;
-  margin-bottom: 2em;
+  width: 50%;
   text-align: center;
+  padding: 40px;
+}
+
+@media only screen and (max-width: 767px) {
+  .front section {
+    width: auto;
+  }
+}
+
+.front section > a:first-child {
+  font-size: 30px;
+}
+
+.front section img {
+  height: auto;
+  width: 55vh;
+  max-width: 90%;
+  margin: 20px auto 10px;
+  display: block;
+}
+
+.browser img {
+  width: 44vh !important;
+  padding: 40px 0;
 }
 
 .front p {
-  overflow: hidden;
-  margin-bottom: 0;
-}
-
-.front p .imageCenter {
-  display: block;
-  max-width: 100%;
-  margin: 0 auto 30px;
-}
-
-.front p .imageLeft {
-  max-width: 50%;
-  float: left;
-  margin-right: 30px;
-}
-
-.front p .imageRight {
-  max-width: 50%;
-  float: right;
-  margin-left: 30px;
-}
-
-.front p .imageTall {
-  width: 200px;
-}
-
-@media only screen and (max-width: 767px) {
-  .front p img {
-    max-width: none;
-    width: 100%;
-    float: none;
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 30px;
-  }
-}
-
-.cta {
-  display: block;
-  text-align: center;
-  font-size: 1.2em;
-  margin: 2em 0;
-}
-
-.front section.hero {
-  min-height: 100vh;
-  font-size: 40px;
-  text-align: center;
-  position: relative;
-  display: block;
-}
-
-.hero h1 {
-  margin-bottom: 0 !important;
-}
-
-.hero p {
-  margin-bottom: 0;
-}
-
-@media only screen and (max-width: 767px) {
-  .hero p {
-    font-size: 0.8em;
-  }
-}
-
-@keyframes point-down {
-  0% {
-    transform: rotateX(45deg) translateX(-50%) translateY(0);
-  }
-  100% {
-    transform: rotateX(45deg) translateX(-50%) translateY(5%);
-  }
+  font-size: 20px;
+  max-width: 70%;
+  margin: 20px auto;
+  line-height: 1.5;
 }
