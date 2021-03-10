@@ -167,7 +167,7 @@ export default class Words extends PureComponent {
             <HeadWord
               lang={ deck.lang }
               def={ item.def }
-	      onChange={ val => this.changeHeadWord(item, val) }
+              onChange={ val => this.changeHeadWord(item, val) }
             />
           </div>
 
