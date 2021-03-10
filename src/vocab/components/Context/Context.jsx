@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { escapeRegexp } from '../../../shared/services/utils';
+import { escapeRegexp } from '../../../shared/services/Utils';
 import Editable from '../Editable/Editable.jsx';
 
 
