@@ -13,6 +13,14 @@ import styles from './Words.css';
 
 
 /**
+ * In order not to unnecessarily spam the API or potentially risk having any API
+ * keys locked, we limit the number of consecutive failures allowed on word
+ * lookups. After this many failures, we assume there is something wrong with
+ * the user's dictionary or language config.
+ */
+const MAX_CONSECUTIVE_LOOKUP_FAILURES = 10;
+
+/**
  * Words component
  */
 export default class Words extends PureComponent {
@@ -22,16 +30,27 @@ export default class Words extends PureComponent {
     this.state = {
       deck: null,
       exportType: null,
-      isReversed: false
+      isReversed: false,
+      isFetchingDefinitions: false,
     };
 
     this._toggleReverse = () => this.setState({ isReversed: !this.state.isReversed });
   }
 
   fetchDefinitions() {
-    if (this.state.deck) {
-      this.addDefinitions(this.state.deck);
+    if (!this.state.deck || this.state.isFetchingDefinitions) {
+      return;
     }
+    // Reset the lookup failure counter for each attempt of retrieving
+    // definitions, in case the underlying data has been fixed since a past
+    // failure.
+    this.setState(state => ({
+      isFetchingDefinitions: true,
+    }));
+
+    this.addDefinitions(this.state.deck, () => {
+      this.setState({isFetchingDefinitions: false});
+    });
   }
 
   exportDeck(exportType) {
@@ -55,23 +74,38 @@ export default class Words extends PureComponent {
     VocabStore.removeItem(this.props.id, item);
   }
 
-  addDefinitions(deck) {
+  addDefinitions(deck, setIsFinishedFetching) {
     const words = deck.words.filter(word => {
       return word.selection && (!word.def || !word.def[0] || !word.def[0].tr || !word.def[0].tr.length);
     });
+    let lookupFailureStreak = 0;
 
     const updateWord = word => {
       const text = word.def && word.def[0] ? word.def[0].text : word.selection;
 
       return lookup(text, deck.lang)
         .then(data => {
+          // No definition was found.
+          if (!data) {
+            lookupFailureStreak++;
+            return;
+          }
           VocabStore.updateItem(this.props.id, word, { def: data.def });
+          lookupFailureStreak = 0;
         });
     };
 
+    // Loop using a setTimeout to prevent overly high API hit rates.
     const loop = index => {
       const word = words[index];
-      if (!word) return;
+      if (!word) {
+        setIsFinishedFetching();
+        return;
+      }
+      if (lookupFailureStreak > MAX_CONSECUTIVE_LOOKUP_FAILURES) {
+        setIsFinishedFetching();
+        return;
+      }
 
       updateWord(word).then(() => {
         setTimeout(() => {
@@ -121,8 +155,8 @@ export default class Words extends PureComponent {
 
     const controls = (
       <div className={ styles.controls }>
-        <button className={ styles.exportButton } onClick={ () => this.fetchDefinitions() }>
-          Fetch definitions
+        <button className={ styles.exportButton } onClick={ () => this.fetchDefinitions() } disabled={this.state.isFetchingDefinitions}>
+          {!this.state.isFetchingDefinitions ? 'Fetch definitions' : 'Fetching...'}
         </button>
 
         <div className={ styles.spacer } />
