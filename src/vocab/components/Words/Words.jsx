@@ -57,6 +57,19 @@ export default class Words extends PureComponent {
     this.setState({ exportType });
   }
 
+  changeHeadWord(item, value) {
+    VocabStore.updateItem(this.props.id, item, {
+      selection: value,
+      def: item.def.map(defSubitem => {
+        return {
+          ...defSubitem,
+          // Rewrite def with new selection value.
+          text: value,
+        };
+      })
+    });
+  }
+
   changeDef(item, value) {
     VocabStore.updateItem(this.props.id, item, { def: [
       {
@@ -188,6 +201,7 @@ export default class Words extends PureComponent {
             <HeadWord
               lang={ deck.lang }
               def={ item.def }
+              onChange={ val => this.changeHeadWord(item, val) }
             />
           </div>
 
