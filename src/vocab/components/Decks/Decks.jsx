@@ -83,7 +83,7 @@ export default class Decks extends PureComponent {
 
     const bookItems = books.map(book => {
       return (
-        <Link to={ `/vocab/${ book.id }` } className={ styles.book }>
+        <Link to={ `/vocab/${ book.id }` } className={ styles.book } key={ book.id }>
           <div style={ book.cover ? { backgroundImage: `url(${ book.cover })` } : null }>
             { book.cover ? '' : <h5>{ book.title }</h5> }
             <p>{ book.count } words</p>
