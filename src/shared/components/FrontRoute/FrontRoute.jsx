@@ -14,11 +14,11 @@ export default () => {
       <div className={ styles.grid }>
         <section className={ styles.kindle }>
           <Link to="/kindle">
-            <a>Kindle to Anki</a>
+            Kindle to Anki
           </Link>
 
           <Link to="/kindle">
-            <a><img src="/images/kindle.svg" alt="Kindle" /></a>
+            <img src="/images/kindle.svg" alt="Kindle" />
           </Link>
 
           <p>Export your Kindle dictionary look-ups as Anki flashcards.</p>
