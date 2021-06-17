@@ -1,4 +1,4 @@
-import { escapeRegexp } from '../../shared/services/utils';
+import { escapeRegexp } from '../../shared/services/Utils';
 import { getArticle } from './formating';
 
 function formatWord(item) {
