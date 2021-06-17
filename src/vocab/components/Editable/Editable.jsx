@@ -59,6 +59,7 @@ export default class Editable extends PureComponent {
       <span
         ref={ el => this.input = el }
         contentEditable
+        suppressContentEditableWarning
         className={ classes }
         onBlur={ this._onBlur }
         onKeyDown={ this._onKeyDown }
