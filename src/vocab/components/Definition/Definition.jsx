@@ -12,12 +12,12 @@ export default class Definition extends PureComponent {
     const maxDefs = 2;
     const { def } = this.props;
 
-    const defintions = [];
-    def.forEach(item => item.tr ? item.tr.forEach(tr => defintions.push(tr.text)) : '');
+    const definitions = [];
+    def.forEach(item => item.tr ? item.tr.forEach(tr => definitions.push(tr.text)) : '');
 
     return (
       <Editable
-        text={ defintions.slice(0, maxDefs).join('; ') }
+        text={ definitions.slice(0, maxDefs).join('; ') }
         onChange={ this.props.onChange }
       />
     );

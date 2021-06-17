@@ -108,6 +108,11 @@
 .exportButton:hover {
   border-color: #333;
 }
+.exportButton:disabled,
+.exportButton[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 
 .controls {
   display: flex;
