@@ -1,9 +1,8 @@
 .container {
   width: 100%;
-  min-height: 70px;
   background-color: #FFF844;
-  position: fixed;
-  z-index: 100;
+  position: absolute;
+  z-index: 1;
   bottom: 0;
   left: 0;
 }
@@ -12,5 +11,5 @@
   margin: auto;
   padding: 1em 30px;
   text-align: center;
-  font-size: 20px;
+  font-size: 12px;
 }
