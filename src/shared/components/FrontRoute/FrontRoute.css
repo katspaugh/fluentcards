@@ -47,3 +47,17 @@
   margin: 20px auto;
   line-height: 1.5;
 }
+
+.promotion {
+  font-size: 60px;
+  text-align: center;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.promotion a {
+  font-size: 30px;
+  margin: 0 1em;
+}

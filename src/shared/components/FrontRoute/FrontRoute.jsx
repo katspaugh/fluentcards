@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import classnames from 'classnames';
-import Header from '../Header/Header.jsx';
 import styles from './FrontRoute.css';
-
 
 /**
  * FrontRoute component
@@ -11,6 +8,15 @@ import styles from './FrontRoute.css';
 export default () => {
   return (
     <div className={ styles.front }>
+      <div className={ styles.promotion }>
+        🔥
+        <a href="https://learn.lingoda.com/en/referral/9p7wer" target="_blank">
+          Get 3 classes with a native on Lingoda for FREE!<br />
+          Plus a 50$ discount for further classes.
+        </a>
+        🔥
+      </div>
+
       <div className={ styles.grid }>
         <section className={ styles.kindle }>
           <Link to="/kindle">
