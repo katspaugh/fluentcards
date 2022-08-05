@@ -5,23 +5,10 @@
   justify-content: center;
 }
 
-.grid {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-}
-
 .front section {
   min-height: 100%;
-  width: 50%;
   text-align: center;
   padding: 40px;
-}
-
-@media only screen and (max-width: 767px) {
-  .front section {
-    width: auto;
-  }
 }
 
 .front section > a:first-child {
@@ -36,28 +23,9 @@
   display: block;
 }
 
-.browser img {
-  width: 44vh !important;
-  padding: 40px 0;
-}
-
 .front p {
   font-size: 20px;
   max-width: 70%;
   margin: 20px auto;
   line-height: 1.5;
-}
-
-.promotion {
-  font-size: 60px;
-  text-align: center;
-  padding: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.promotion a {
-  font-size: 30px;
-  margin: 0 1em;
 }
