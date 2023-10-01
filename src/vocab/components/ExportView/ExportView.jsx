@@ -66,6 +66,13 @@ const helpTexts = {
 
 /**
  * ExportView component
+ *
+ * @typedef {object} Props
+ * @prop {string[]} words
+ * @prop {string} name File name
+ * @prop {keyof typeof helpTexts} type Export type
+ *
+ * @extends {PureComponent<Props>}
  */
 export default class ExportView extends PureComponent {
   componentWillMount() {
