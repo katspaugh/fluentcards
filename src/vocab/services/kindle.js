@@ -1,3 +1,15 @@
+/**
+ * @typedef {Object} DbBook
+ * @property {string} id
+ * @property {string} title
+ * @property {string} authors
+ * @property {string} language
+ * @property {string} asin
+ * @property {string} cover
+ * @property {number} count
+ * @property {number} lastLookup
+ */
+
 export default class KindleService {
   constructor() {
     this.SQL = null;
@@ -18,6 +30,9 @@ export default class KindleService {
     this.db = new this.SQL.Database(uints);
   }
 
+  /**
+   * Fetches books from the database, sorted by the last lookup in descending order
+   */
   queryBooks() {
     let booksQuery;
     try {
