@@ -2,6 +2,9 @@ import React, { PureComponent } from 'react';
 import exportCsv from '../../services/csv';
 import styles from './ExportView.css';
 
+/**
+ * @typedef {import('./vocab-store').VocabItem} VocabItem
+ */
 
 const helpTexts = {
   plain: {
@@ -66,6 +69,13 @@ const helpTexts = {
 
 /**
  * ExportView component
+ *
+ * @typedef {object} Props
+ * @prop {VocabItem[]} words
+ * @prop {string} name File name
+ * @prop {keyof typeof helpTexts} type Export type
+ *
+ * @extends {PureComponent<Props>}
  */
 export default class ExportView extends PureComponent {
   componentWillMount() {

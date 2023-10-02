@@ -14,10 +14,21 @@ const storageKey = 'fluentcards.extensionWords';
  * @property {boolean} _removed
  */
 
+/**
+ * Deck item type
+ * @typedef {Object} DeckItem
+ * @property {string} lang
+ * @property {string} language
+ * @property {VocabItem[]} words
+ */
+
 class ExtensionVocab extends ReplaySubject {
   constructor() {
     super(1);
 
+    /**
+     * @type {VocabItem[]}
+     */
     this.words = [];
 
     this.restoreSavedWords();
@@ -81,7 +92,7 @@ class ExtensionVocab extends ReplaySubject {
    * Get a list of words by language
    *
    * @param {string} lang
-   * @returns {any}
+   * @returns {DeckItem}
    */
   getDeck(lang) {
     return {
@@ -94,7 +105,7 @@ class ExtensionVocab extends ReplaySubject {
   /**
    * Get a list of lists of words
    *
-   * @returns {array}
+   * @returns {DeckItem[]}
    */
   getDecks() {
     const words = this.words.filter(item => !item._removed);

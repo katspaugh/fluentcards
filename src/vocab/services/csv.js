@@ -1,6 +1,13 @@
 import { escapeRegexp } from '../../shared/services/Utils';
 import { getArticle } from './formating';
 
+/**
+ * @typedef {import('./vocab-store').VocabItem} VocabItem
+ */
+
+/**
+ * @param {VocabItem} item
+ */
 function formatWord(item) {
   const data = item.def[0];
   const article = getArticle(data, item.language);
@@ -14,6 +21,10 @@ function formatWord(item) {
   return word;
 }
 
+/**
+ * @param {VocabItem} item
+ * @param {number} maxDefs
+ */
 function formatDefinition(item, maxDefs = 2) {
   const defintions = [];
   if (item.def && item.def[0] && item.def[0].tr) {
@@ -22,6 +33,9 @@ function formatDefinition(item, maxDefs = 2) {
   return defintions.slice(0, maxDefs).join('; ');
 }
 
+/**
+ * @param {VocabItem} item
+ */
 function formatContext(item) {
   // Context with the selection highlighted
   let parts = item.context.split(new RegExp('\\b' + escapeRegexp(item.selection) + '\\b'));
@@ -31,10 +45,19 @@ function formatContext(item) {
   return parts.join(`<b>${ item.selection }</b>`).replace(/\n/g, ' ');
 }
 
+/**
+ * @param {VocabItem} item
+ */
 function plain(item) {
   return [ formatWord(item), item.context.replace(/\n/g, ' '), formatDefinition(item) ];
 }
 
+/**
+ * Formats vocabulary as an Anki basic card
+ *
+ * @param {VocabItem} item
+ * @returns {[string, string]} a CSV entry where the first element is the front and the second is the back
+ */
 function basic(item) {
   const word = formatWord(item);
   const ts = item.def[0].ts ? `<br /><small class="ipa">${ item.def[0].ts }</small>` : '';
@@ -47,6 +70,12 @@ function basic(item) {
   ];
 }
 
+/**
+ * Formats vocabulary as a cloze card
+ *
+ * @param {VocabItem} item
+ * @returns {[string, string, string]} a CSV entry where the first element is the front and the second is the back
+ */
 function cloze(item) {
   const word = formatWord(item);
   const def = formatDefinition(item);
@@ -61,7 +90,7 @@ function cloze(item) {
 }
 
 /**
- * @param {any[]} items
+ * @param {VocabItem[]} items
  * @param {string} type
  * @returns {string}
  */

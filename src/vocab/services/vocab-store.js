@@ -9,6 +9,7 @@ import config from '../../config';
  * @property {string} selection
  * @property {string} context
  * @property {string} language
+ * @property {string} baseForm
  * @property {any[]} def
  * @property {boolean} _removed
  */
@@ -49,8 +50,9 @@ class VocabStore extends ReplaySubject {
   /**
    * Update a vocabulary item
    *
+   * @param {string} id
    * @param {VocabItem} item
-   * @param {any} newFields
+   * @param {Partial<VocabItem>} newFields
    */
   updateItem(id, item, newFields) {
     id in config.languages ?
@@ -63,6 +65,7 @@ class VocabStore extends ReplaySubject {
   /**
    * Remove a vocabulary item
    *
+   * @param {string} id
    * @param {VocabItem} item
    */
   removeItem(id, item) {

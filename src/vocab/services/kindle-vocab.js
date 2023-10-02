@@ -3,9 +3,34 @@ import config from '../../config';
 const localStorage = window.localStorage;
 const storageKey = 'fluentcards.kindleBooks';
 
+/**
+ * @typedef {import('./vocab-store').VocabItem} VocabItem
+ *
+ * @typedef {Object} Book
+ * @property {string} id
+ * @property {string} title
+ * @property {string} authors
+ * @property {string} language
+ * @property {string} asin
+ * @property {string} cover
+ * @property {number} count
+ * @property {number} lastLookup
+ * @property {Array<VocabItem>} vocabs
+ *
+ * @typedef {Object} GetBook
+ * @property {string} title
+ * @property {string} authors
+ * @property {string} lang
+ * @property {string} language
+ * @property {string} cover
+ * @property {Array<Pick<VocabItem, 'selection' | 'context' | 'def'>>} words
+ */
 
 class KindleVocab {
   constructor() {
+    /**
+     * @type {Array<Book>} books
+     */
     this.books = [];
 
     this.restoreSavedBooks();
@@ -27,6 +52,8 @@ class KindleVocab {
 
   /**
    * Update books  and save into the storage
+   *
+   * @param {Array<Book>} books
    */
   setBooks(books) {
     this.books = books;
@@ -37,7 +64,7 @@ class KindleVocab {
    * Get a book by id
    *
    * @param {string} id
-   * @returns {any}
+   * @returns {GetBook}
    */
   getBook(id) {
     const book = this.books.find(item => item.id === id);
@@ -64,7 +91,7 @@ class KindleVocab {
   /**
    * Get a list of books
    *
-   * @returns {array}
+   * @returns {Book[]}
    */
   getBooks() {
     return this.books;
@@ -73,8 +100,9 @@ class KindleVocab {
   /**
    * Update a vocabulary item
    *
-   * @param {any} item
-   * @param {any} newFields
+   * @param {string} id
+   * @param {import('./vocab-store').VocabItem} item
+   * @param {Partial<VocabItem>} newFields
    */
   updateItem(id, item, newFields) {
     const book = this.books.find(book => book.id === id);
