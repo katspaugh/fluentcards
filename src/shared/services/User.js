@@ -8,6 +8,9 @@ const subject = new ReplaySubject(1);
 let userData = null;
 
 export default class User {
+  /**
+   * @type {ReplaySubject}
+   */
   static subject;
 
   static get() {
