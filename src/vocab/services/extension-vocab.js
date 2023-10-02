@@ -12,7 +12,9 @@ const storageKey = 'fluentcards.extensionWords';
  * @property {string} language
  * @property {any[]} def
  * @property {boolean} _removed
- *
+ */
+
+/**
  * Deck item type
  * @typedef {Object} DeckItem
  * @property {string} lang
