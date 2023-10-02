@@ -4,6 +4,8 @@ const localStorage = window.localStorage;
 const storageKey = 'fluentcards.kindleBooks';
 
 /**
+ * @typedef {import('./vocab-store').VocabItem} VocabItem
+ *
  * @typedef {Object} Book
  * @property {string} id
  * @property {string} title
@@ -13,7 +15,7 @@ const storageKey = 'fluentcards.kindleBooks';
  * @property {string} cover
  * @property {number} count
  * @property {number} lastLookup
- * @property {Array<import('./vocab-store').VocabItem>} vocabs
+ * @property {Array<VocabItem>} vocabs
  *
  * @typedef {Object} GetBook
  * @property {string} title
@@ -21,7 +23,7 @@ const storageKey = 'fluentcards.kindleBooks';
  * @property {string} lang
  * @property {string} language
  * @property {string} cover
- * @property {Array<Pick<import('./vocab-store').VocabItem, 'selection' | 'context' | 'def'>>} words
+ * @property {Array<Pick<VocabItem, 'selection' | 'context' | 'def'>>} words
  */
 
 class KindleVocab {
@@ -100,7 +102,7 @@ class KindleVocab {
    *
    * @param {string} id
    * @param {import('./vocab-store').VocabItem} item
-   * @param {Partial<import('./vocab-store').VocabItem>} newFields
+   * @param {Partial<VocabItem>} newFields
    */
   updateItem(id, item, newFields) {
     const book = this.books.find(book => book.id === id);
