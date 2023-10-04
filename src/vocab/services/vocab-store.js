@@ -4,6 +4,11 @@ import KindleVocab from './kindle-vocab';
 import config from '../../config';
 
 /**
+ * @typedef {import('../services/extension-vocab').DeckItem} DeckItem
+ * @typedef {import('../services/kindle-vocab').Book} Book
+ */
+
+/**
  * Vocab item type
  * @typedef {Object} VocabItem
  * @property {string} selection
@@ -28,7 +33,7 @@ class VocabStore extends ReplaySubject {
   /**
    * Get decks
    *
-   * @returns {any}
+   * @returns { {extensionDecks: DeckItem[], kindleBooks: Book[]} }
    */
   getDecks() {
     return {
