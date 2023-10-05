@@ -33,7 +33,7 @@ class VocabStore extends ReplaySubject {
   /**
    * Get decks
    *
-   * @returns { {extensionDecks: DeckItem[], kindleBooks: Book[]} }
+   * @returns {{extensionDecks: DeckItem[], kindleBooks: Book[]}}
    */
   getDecks() {
     return {
