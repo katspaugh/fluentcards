@@ -4,32 +4,29 @@ const localStorage = window.localStorage;
 const storageKey = 'fluentcards.kindleBooks';
 
 /**
- * @typedef {import('./vocab-store').VocabItem} VocabItem
+ * @typedef {import('./kindle').Vocab} Vocab
+ * @typedef {import('./kindle').Book} Book 
  *
- * @typedef {Object} Book
- * @property {string} id
- * @property {string} title
- * @property {string} authors
- * @property {string} language
- * @property {string} asin
- * @property {string} cover
- * @property {number} count
- * @property {number} lastLookup
- * @property {Array<VocabItem>} vocabs
+ * @typedef {undefined | string | Array<{ text: string }>} ExtendedDef
  *
- * @typedef {Object} GetBook
+ * @typedef {Object} Word
+ * @property {string} selection
+ * @property {string} context
+ * @property {ExtendedDef} def
+ *
+ * @typedef {Object} BookDeck a collection of words from a Kindle book
  * @property {string} title
  * @property {string} authors
  * @property {string} lang
  * @property {string} language
  * @property {string} cover
- * @property {Array<Pick<VocabItem, 'selection' | 'context' | 'def'>>} words
+ * @property {Word[]} words
  */
 
 class KindleVocab {
   constructor() {
     /**
-     * @type {Array<Book>} books
+     * @type {Book[]} books
      */
     this.books = [];
 
@@ -51,7 +48,7 @@ class KindleVocab {
   }
 
   /**
-   * Update books  and save into the storage
+   * Update books and save into the storage
    *
    * @param {Array<Book>} books
    */
@@ -61,10 +58,10 @@ class KindleVocab {
   }
 
   /**
-   * Get a book by id
+   * Get a book by id.
    *
-   * @param {string} id
-   * @returns {GetBook}
+   * @param {string} id the book id (must exist)
+   * @returns {BookDeck}
    */
   getBook(id) {
     const book = this.books.find(item => item.id === id);
@@ -102,7 +99,7 @@ class KindleVocab {
    *
    * @param {string} id
    * @param {import('./vocab-store').VocabItem} item
-   * @param {Partial<VocabItem>} newFields
+   * @param {Partial<Vocab>} newFields
    */
   updateItem(id, item, newFields) {
     const book = this.books.find(book => book.id === id);

@@ -4,17 +4,19 @@ import KindleVocab from './kindle-vocab';
 import config from '../../config';
 
 /**
- * @typedef {import('../services/extension-vocab').DeckItem} DeckItem
- * @typedef {import('../services/kindle-vocab').Book} Book
+ * @typedef {import('../services/extension-vocab').ExtensionDeck} ExtensionDeck
+ * @typedef {import('../services/kindle').Book} Book
+ * @typedef {import('../services/kindle-vocab').BookDeck} BookDeck
  */
 
 /**
  * Vocab item type
+ *
  * @typedef {Object} VocabItem
- * @property {string} selection
- * @property {string} context
+ * @property {string} baseForm word stem
+ * @property {string} selection the word as highlighted on the device
+ * @property {string} context word context
  * @property {string} language
- * @property {string} baseForm
  * @property {any[]} def
  * @property {boolean} _removed
  */
@@ -31,9 +33,9 @@ class VocabStore extends ReplaySubject {
   }
 
   /**
-   * Get decks
+   * Get decks.
    *
-   * @returns {{extensionDecks: DeckItem[], kindleBooks: Book[]}}
+   * @returns {{extensionDecks: ExtensionDeck[], kindleBooks: Book[]}}
    */
   getDecks() {
     return {
@@ -43,10 +45,12 @@ class VocabStore extends ReplaySubject {
   }
 
   /**
-   * Get a deck by id
+   * Get a deck by language or book id.
    *
-   * @param {string} id
-   * @returns {any}
+   * @param {string} id can either be a language code or a book id. If
+   *  language code, this method will attempt to retrieve an extension deck.
+   *  Otherwise, a book will be retrieved.
+   * @returns {BookDeck | ExtensionDeck}
    */
   getDeck(id) {
     return id in config.languages ? ExtensionVocab.getDeck(id) : KindleVocab.getBook(id);
