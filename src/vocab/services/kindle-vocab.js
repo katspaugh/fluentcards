@@ -88,7 +88,7 @@ class KindleVocab {
   }
 
   /**
-   * Returns the list of books managed by this instance.
+   * Returns the kindle vocabulary.
    *
    * @returns {Book[]}
    */

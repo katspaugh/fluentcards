@@ -34,8 +34,6 @@ class VocabStore extends ReplaySubject {
 
   /**
    * Gets the decks from the fluentcards extension and the Kindle library.
-   *
-   * @returns {{extensionDecks: ExtensionDeck[], kindleBooks: Book[]}}
    */
   getDecks() {
     return {
