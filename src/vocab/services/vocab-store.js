@@ -10,12 +10,12 @@ import config from '../../config';
  */
 
 /**
- * Vocab item type
+ * A looked up word.
  *
  * @typedef {Object} VocabItem
- * @property {string} baseForm word stem
+ * @property {string} baseForm the word stem
  * @property {string} selection the word as highlighted on the device
- * @property {string} context word context
+ * @property {string} context the context the word appears in
  * @property {string} language
  * @property {any[]} def
  * @property {boolean} _removed
@@ -33,7 +33,7 @@ class VocabStore extends ReplaySubject {
   }
 
   /**
-   * Get decks.
+   * Gets the decks from the fluentcards extension and the Kindle library.
    *
    * @returns {{extensionDecks: ExtensionDeck[], kindleBooks: Book[]}}
    */
@@ -45,21 +45,20 @@ class VocabStore extends ReplaySubject {
   }
 
   /**
-   * Get a deck by language or book id.
+   * Retrieves a deck of words by language code or book id.
    *
-   * @param {string} id can either be a language code or a book id. If
-   *  language code, this method will attempt to retrieve an extension deck.
-   *  Otherwise, a book will be retrieved.
-   * @returns {BookDeck | ExtensionDeck}
+   * @param {string} id can either be a language code or a book id.
+   *  If language code, this method will collect all words for that language.
+   *  Otherwise, the vocabulary from the book will be retrieved.
    */
   getDeck(id) {
     return id in config.languages ? ExtensionVocab.getDeck(id) : KindleVocab.getBook(id);
   }
 
   /**
-   * Update a vocabulary item
+   * Updates a vocabulary item.
    *
-   * @param {string} id
+   * @param {string} id a language code or a book id. If it is a language code, this method updates an extension vocabulary. Otherwies, it updates a book vocabulary item.
    * @param {VocabItem} item
    * @param {Partial<VocabItem>} newFields
    */
@@ -72,9 +71,9 @@ class VocabStore extends ReplaySubject {
   }
 
   /**
-   * Remove a vocabulary item
+   * Removes a word from this collection (sets the removed flag to `true`).
    *
-   * @param {string} id
+   * @param {string} id the collection id (either a language code or a book id)
    * @param {VocabItem} item
    */
   removeItem(id, item) {

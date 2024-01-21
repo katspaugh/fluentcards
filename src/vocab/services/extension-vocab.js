@@ -5,7 +5,6 @@ const localStorage = window.localStorage;
 const storageKey = 'fluentcards.extensionWords';
 
 /**
- * Vocab item type
  * @typedef {Object} VocabItem
  * @property {string} selection
  * @property {string} context
@@ -55,7 +54,9 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Restore words from the storage
+   * Restore words from local storage
+   *
+   * @see storageKey
    */
   restoreSavedWords() {
     const savedWords = localStorage.getItem(storageKey);
@@ -63,7 +64,7 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Update words and save into the storage
+   * Updates the words and saves them into local storage.
    *
    * @param {VocabItem[]} words
    */
@@ -73,9 +74,10 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Add words that aren't in the set
+   * Adds words that are not yet in the list.
    *
-   * @param {VocabItem[]} words
+   * @param {VocabItem[]} words the list of words to add. The `selection` and
+   *   `context` members will be used to establish item equality.
    */
   addUniqueWords(words) {
     const newWords = words.filter(word => {
@@ -90,9 +92,9 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Get a list of words by language
+   * Collects all words associated with a language into a deck.
    *
-   * @param {string} lang
+   * @param {string} lang the language code.
    * @returns {ExtensionDeck}
    */
   getDeck(lang) {
@@ -104,7 +106,7 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Get a list of lists of words
+   * Collects all words into decks.
    *
    * @returns {ExtensionDeck[]}
    */
@@ -128,7 +130,7 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Update a vocabulary item
+   * Updates a vocabulary item and saves everything to local storage.
    *
    * @param {VocabItem} item
    * @param {Partial<VocabItem>} newFields

@@ -6,13 +6,13 @@ const storageKey = 'fluentcards.kindleBooks';
 /**
  * @typedef {import('./kindle').Vocab} Vocab
  * @typedef {import('./kindle').Book} Book 
- *
- * @typedef {undefined | string | Array<{ text: string }>} ExtendedDef
+ * @typedef {import('./vocab-store').VocabItem} VocabItem
+ * @typedef {undefined | string | Array<{ text: string }>} WordDef
  *
  * @typedef {Object} Word
  * @property {string} selection
  * @property {string} context
- * @property {ExtendedDef} def
+ * @property {WordDef} def
  *
  * @typedef {Object} BookDeck a collection of words from a Kindle book
  * @property {string} title
@@ -26,7 +26,7 @@ const storageKey = 'fluentcards.kindleBooks';
 class KindleVocab {
   constructor() {
     /**
-     * @type {Book[]} books
+     * @type {Book[]}
      */
     this.books = [];
 
@@ -40,7 +40,9 @@ class KindleVocab {
   }
 
   /**
-   * Restore books from the storage
+   * Restores the books from local storage.
+   *
+   * @see storageKey
    */
   restoreSavedBooks() {
     const savedBooks = localStorage.getItem(storageKey);
@@ -50,7 +52,7 @@ class KindleVocab {
   /**
    * Update books and save into the storage
    *
-   * @param {Array<Book>} books
+   * @param {Book[]} books
    */
   setBooks(books) {
     this.books = books;
@@ -58,7 +60,7 @@ class KindleVocab {
   }
 
   /**
-   * Get a book by id.
+   * Retrieves a book by id.
    *
    * @param {string} id the book id (must exist)
    * @returns {BookDeck}
@@ -86,7 +88,7 @@ class KindleVocab {
   }
 
   /**
-   * Get a list of books
+   * Returns the list of books managed by this instance.
    *
    * @returns {Book[]}
    */
@@ -95,11 +97,13 @@ class KindleVocab {
   }
 
   /**
-   * Update a vocabulary item
+   * Updates a vocabulary item in a book managed by this instance.
    *
-   * @param {string} id
-   * @param {import('./vocab-store').VocabItem} item
-   * @param {Partial<Vocab>} newFields
+   * @param {string} id the book id (must exist)
+   * @param {VocabItem} item the item to update. Must exist. The `selection`
+   *  and `context` fields are used to find the matching vocabulary item in
+   *  the book.
+   * @param {Partial<Vocab>} newFields the values to update
    */
   updateItem(id, item, newFields) {
     const book = this.books.find(book => book.id === id);
