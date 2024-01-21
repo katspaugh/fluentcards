@@ -106,7 +106,7 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Collects all words into decks.
+   * Collects the words from all languages into decks.
    *
    * @returns {ExtensionDeck[]}
    */
