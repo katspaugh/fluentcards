@@ -4,32 +4,29 @@ const localStorage = window.localStorage;
 const storageKey = 'fluentcards.kindleBooks';
 
 /**
+ * @typedef {import('./kindle').Vocab} Vocab
+ * @typedef {import('./kindle').Book} Book 
  * @typedef {import('./vocab-store').VocabItem} VocabItem
+ * @typedef {undefined | string | Array<{ text: string }>} WordDef
  *
- * @typedef {Object} Book
- * @property {string} id
- * @property {string} title
- * @property {string} authors
- * @property {string} language
- * @property {string} asin
- * @property {string} cover
- * @property {number} count
- * @property {number} lastLookup
- * @property {Array<VocabItem>} vocabs
+ * @typedef {Object} Word
+ * @property {string} selection
+ * @property {string} context
+ * @property {WordDef} def
  *
- * @typedef {Object} GetBook
+ * @typedef {Object} BookDeck a collection of words from a Kindle book
  * @property {string} title
  * @property {string} authors
  * @property {string} lang
  * @property {string} language
  * @property {string} cover
- * @property {Array<Pick<VocabItem, 'selection' | 'context' | 'def'>>} words
+ * @property {Word[]} words
  */
 
 class KindleVocab {
   constructor() {
     /**
-     * @type {Array<Book>} books
+     * @type {Book[]}
      */
     this.books = [];
 
@@ -43,7 +40,9 @@ class KindleVocab {
   }
 
   /**
-   * Restore books from the storage
+   * Restore books from local storage.
+   *
+   * @see storageKey
    */
   restoreSavedBooks() {
     const savedBooks = localStorage.getItem(storageKey);
@@ -51,9 +50,9 @@ class KindleVocab {
   }
 
   /**
-   * Update books  and save into the storage
+   * Update books and save into local storage
    *
-   * @param {Array<Book>} books
+   * @param {Book[]} books
    */
   setBooks(books) {
     this.books = books;
@@ -61,10 +60,10 @@ class KindleVocab {
   }
 
   /**
-   * Get a book by id
+   * Retrieve a book by id.
    *
-   * @param {string} id
-   * @returns {GetBook}
+   * @param {string} id the book id (must exist)
+   * @returns {BookDeck}
    */
   getBook(id) {
     const book = this.books.find(item => item.id === id);
@@ -89,7 +88,7 @@ class KindleVocab {
   }
 
   /**
-   * Get a list of books
+   * Return the kindle vocabulary.
    *
    * @returns {Book[]}
    */
@@ -98,11 +97,13 @@ class KindleVocab {
   }
 
   /**
-   * Update a vocabulary item
+   * Update a vocabulary item in a book managed by this instance.
    *
-   * @param {string} id
-   * @param {import('./vocab-store').VocabItem} item
-   * @param {Partial<VocabItem>} newFields
+   * @param {string} id the book id (must exist)
+   * @param {VocabItem} item the item to update. Must exist. The `selection`
+   *  and `context` fields are used to find the matching vocabulary item in
+   *  the book.
+   * @param {Partial<Vocab>} newFields the values to update
    */
   updateItem(id, item, newFields) {
     const book = this.books.find(book => book.id === id);

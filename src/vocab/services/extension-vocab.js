@@ -5,7 +5,6 @@ const localStorage = window.localStorage;
 const storageKey = 'fluentcards.extensionWords';
 
 /**
- * Vocab item type
  * @typedef {Object} VocabItem
  * @property {string} selection
  * @property {string} context
@@ -15,8 +14,9 @@ const storageKey = 'fluentcards.extensionWords';
  */
 
 /**
- * Deck item type
- * @typedef {Object} DeckItem
+ * A deck of words from the fluentcards extension.
+ *
+ * @typedef {Object} ExtensionDeck
  * @property {string} lang
  * @property {string} language
  * @property {VocabItem[]} words
@@ -36,7 +36,7 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Add words from the extension
+   * Add words from the extension.
    */
   addExtensionWords() {
     Observable
@@ -54,7 +54,9 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Restore words from the storage
+   * Restore words from local storage
+   *
+   * @see storageKey
    */
   restoreSavedWords() {
     const savedWords = localStorage.getItem(storageKey);
@@ -62,7 +64,7 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Update words and save into the storage
+   * Update words and and save them into local storage.
    *
    * @param {VocabItem[]} words
    */
@@ -72,9 +74,10 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Add words that aren't in the set
+   * Add words that are not yet in the list.
    *
-   * @param {VocabItem[]} words
+   * @param {VocabItem[]} words the list of words to add. The `selection` and
+   *   `context` members will be used to establish item equality.
    */
   addUniqueWords(words) {
     const newWords = words.filter(word => {
@@ -89,10 +92,10 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Get a list of words by language
+   * Collect all words associated with a language into a deck.
    *
-   * @param {string} lang
-   * @returns {DeckItem}
+   * @param {string} lang the language code.
+   * @returns {ExtensionDeck}
    */
   getDeck(lang) {
     return {
@@ -103,9 +106,9 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Get a list of lists of words
+   * Collect the words from all languages into decks.
    *
-   * @returns {DeckItem[]}
+   * @returns {ExtensionDeck[]}
    */
   getDecks() {
     const words = this.words.filter(item => !item._removed);
@@ -127,10 +130,10 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Update a vocabulary item
+   * Update a vocabulary item and save everything to local storage.
    *
    * @param {VocabItem} item
-   * @param {any} newFields
+   * @param {Partial<VocabItem>} newFields
    */
   updateItem(item, newFields) {
     if (!this.words.includes(item)) return;

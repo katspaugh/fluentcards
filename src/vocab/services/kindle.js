@@ -1,13 +1,21 @@
 /**
- * @typedef {Object} DbBook
+ * @typedef {Object} Vocab a vocabulary entry in the database
+ * @property {string} baseForm word stem
+ * @property {string} selection the word as highlighted on the device
+ * @property {string} context word context
+ * @property {string | any[]} [def] definition
+ * @property {boolean} [_removed]
+ *
+ * @typedef {Object} Book
  * @property {string} id
  * @property {string} title
  * @property {string} authors
  * @property {string} language
  * @property {string} asin
- * @property {string} cover
+ * @property {string} cover an image URL
  * @property {number} count
  * @property {number} lastLookup
+ * @property {Vocab[]} [vocabs] `undefined` until the vocab items are resolved.
  */
 
 export default class KindleService {
@@ -31,7 +39,10 @@ export default class KindleService {
   }
 
   /**
-   * Fetches books from the database, sorted by the last lookup in descending order
+   * Fetch books from the database, sorted by the last lookup time in
+   * descending order.
+   *
+   * @returns {Book[]} the books in the database.
    */
   queryBooks() {
     let booksQuery;
@@ -70,6 +81,11 @@ export default class KindleService {
     return books;
   }
 
+  /**
+   * Retrieve the vocabulary entries associated with a book id.
+   * @param id the book id
+   * @return {Vocab}
+   */
   queryVocabs(id) {
     let escapedId = id.replace(/'/g, "''");
     let vocabsQuery = this.db.exec(`

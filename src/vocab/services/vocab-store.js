@@ -4,12 +4,19 @@ import KindleVocab from './kindle-vocab';
 import config from '../../config';
 
 /**
- * Vocab item type
+ * @typedef {import('../services/extension-vocab').ExtensionDeck} ExtensionDeck
+ * @typedef {import('../services/kindle').Book} Book
+ * @typedef {import('../services/kindle-vocab').BookDeck} BookDeck
+ */
+
+/**
+ * A looked up word.
+ *
  * @typedef {Object} VocabItem
- * @property {string} selection
- * @property {string} context
+ * @property {string} baseForm the word stem
+ * @property {string} selection the word as highlighted on the device
+ * @property {string} context the context the word appears in
  * @property {string} language
- * @property {string} baseForm
  * @property {any[]} def
  * @property {boolean} _removed
  */
@@ -26,9 +33,7 @@ class VocabStore extends ReplaySubject {
   }
 
   /**
-   * Get decks
-   *
-   * @returns {any}
+   * Gets the decks from the fluentcards extension and the Kindle library.
    */
   getDecks() {
     return {
@@ -38,19 +43,20 @@ class VocabStore extends ReplaySubject {
   }
 
   /**
-   * Get a deck by id
+   * Retrieves a deck of words by language code or book id.
    *
-   * @param {string} id
-   * @returns {any}
+   * @param {string} id can either be a language code or a book id.
+   *  If language code, this method will collect all words for that language.
+   *  Otherwise, the vocabulary from the book will be retrieved.
    */
   getDeck(id) {
     return id in config.languages ? ExtensionVocab.getDeck(id) : KindleVocab.getBook(id);
   }
 
   /**
-   * Update a vocabulary item
+   * Updates a vocabulary item.
    *
-   * @param {string} id
+   * @param {string} id a language code or a book id. If it is a language code, this method updates an extension vocabulary. Otherwies, it updates a book vocabulary item.
    * @param {VocabItem} item
    * @param {Partial<VocabItem>} newFields
    */
@@ -63,9 +69,9 @@ class VocabStore extends ReplaySubject {
   }
 
   /**
-   * Remove a vocabulary item
+   * Removes a word from this collection (sets the removed flag to `true`).
    *
-   * @param {string} id
+   * @param {string} id the collection id (either a language code or a book id)
    * @param {VocabItem} item
    */
   removeItem(id, item) {

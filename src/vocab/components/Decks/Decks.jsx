@@ -5,7 +5,17 @@ import VocabStore from '../../services/vocab-store';
 import styles from './Decks.css';
 
 /**
+ * @typedef {import('../../services/extension-vocab').ExtensionDeck} ExtensionDeck
+ * @typedef {import('../../services/kindle').Book} Book
+ *
+ * @typedef {object} State
+ * @prop {ExtensionDeck[] | null} decks
+ * @prop {Book[] | null} books
+ */
+
+/**
  * Decks component
+ * @extends {PureComponent<void, State, void>}
  */
 export default class Decks extends PureComponent {
   /**
@@ -14,6 +24,7 @@ export default class Decks extends PureComponent {
   constructor() {
     super();
 
+    /** @type {State} */
     this.state = {
       decks: null,
       books: null
