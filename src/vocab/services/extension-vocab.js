@@ -36,7 +36,7 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Add words from the extension
+   * Add words from the extension.
    */
   addExtensionWords() {
     Observable
@@ -64,7 +64,7 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Updates the words and saves them into local storage.
+   * Update words and and save them into local storage.
    *
    * @param {VocabItem[]} words
    */
@@ -74,7 +74,7 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Adds words that are not yet in the list.
+   * Add words that are not yet in the list.
    *
    * @param {VocabItem[]} words the list of words to add. The `selection` and
    *   `context` members will be used to establish item equality.
@@ -92,7 +92,7 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Collects all words associated with a language into a deck.
+   * Collect all words associated with a language into a deck.
    *
    * @param {string} lang the language code.
    * @returns {ExtensionDeck}
@@ -106,7 +106,7 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Collects the words from all languages into decks.
+   * Collect the words from all languages into decks.
    *
    * @returns {ExtensionDeck[]}
    */
@@ -130,7 +130,7 @@ class ExtensionVocab extends ReplaySubject {
   }
 
   /**
-   * Updates a vocabulary item and saves everything to local storage.
+   * Update a vocabulary item and save everything to local storage.
    *
    * @param {VocabItem} item
    * @param {Partial<VocabItem>} newFields
