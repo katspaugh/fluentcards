@@ -40,7 +40,7 @@ class KindleVocab {
   }
 
   /**
-   * Restores the books from local storage.
+   * Restore books from local storage.
    *
    * @see storageKey
    */
@@ -50,7 +50,7 @@ class KindleVocab {
   }
 
   /**
-   * Update books and save into the storage
+   * Update books and save into local storage
    *
    * @param {Book[]} books
    */
@@ -60,7 +60,7 @@ class KindleVocab {
   }
 
   /**
-   * Retrieves a book by id.
+   * Retrieve a book by id.
    *
    * @param {string} id the book id (must exist)
    * @returns {BookDeck}
@@ -88,7 +88,7 @@ class KindleVocab {
   }
 
   /**
-   * Returns the kindle vocabulary.
+   * Return the kindle vocabulary.
    *
    * @returns {Book[]}
    */
@@ -97,7 +97,7 @@ class KindleVocab {
   }
 
   /**
-   * Updates a vocabulary item in a book managed by this instance.
+   * Update a vocabulary item in a book managed by this instance.
    *
    * @param {string} id the book id (must exist)
    * @param {VocabItem} item the item to update. Must exist. The `selection`
