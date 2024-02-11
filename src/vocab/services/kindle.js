@@ -39,7 +39,7 @@ export default class KindleService {
   }
 
   /**
-   * Fetches the books from the database, sorted by the last lookup time in
+   * Fetch books from the database, sorted by the last lookup time in
    * descending order.
    *
    * @returns {Book[]} the books in the database.
